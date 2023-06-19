@@ -2,16 +2,21 @@
 #define HW5COMP_SINGLETON_H
 
 #include <iostream>
+#include <string>
 using namespace std;
 
 class Singleton {
 private:
     int x;
+    int curr_val;
     static Singleton *instance_pointer;
 
-    Singleton() {}
+
+    Singleton() : curr_val(0), in_making_statement("") {}
 
 public:
+    string in_making_statement;
+
     Singleton(const Singleton &obj) = delete;
 
     static Singleton *getInstance() {
@@ -31,10 +36,17 @@ public:
     {
         cout << this->x << endl;
     }
+
+    string getFreshVar()
+    {
+        string new_var_name = "var" + to_string(this->curr_val);
+        this->curr_val++;
+        return new_var_name;
+    }
 };
 
 Singleton* Singleton ::instance_pointer = NULL;
-
-Singleton *compi = Singleton::getInstance();
+//
+//Singleton *compi = Singleton::getInstance();
 
 #endif //HW5COMP_SINGLETON_H

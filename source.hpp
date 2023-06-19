@@ -28,6 +28,7 @@ public:
 class Exp : public Node
 {
 public:
+    string llvm_var;
     Exp(string type);
     Exp(Node& exp_1, string operation_val, Node& exp_2);
     Exp(Node& n);

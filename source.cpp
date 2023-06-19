@@ -1,6 +1,8 @@
 #include "source.hpp"
 #include <stdlib.h>
 #include <ctype.h>
+#include "llvm_utils.hpp"
+#include "singleton.hpp"
 
 TableStack table_stack;
 bool is_in_loop = false;
@@ -125,6 +127,9 @@ Exp::Exp(Node &n): Node(n.getType())
             exit(0);
         }
         this->type = "BYTE";
+        Singleton * test = Singleton::getInstance();
+        this->llvm_var = test->Singleton::getFreshVar();
+        cout << makeBinaryStatement(this->llvm_var,"ADD",n.getType(),0) << endl;
         return;
     }
     assert(true==false); //must not get here

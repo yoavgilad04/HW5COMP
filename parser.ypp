@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include "table_stack.hpp"
 #include "singleton.hpp"
+#include "llvm_utils.hpp"
 using namespace std;
 extern int yylex();
 void yyerror(const char*);
@@ -102,7 +103,8 @@ Statement:      LBRACE N Statements RBRACE C                                    
                 | Type ID SC                                                        {output::printProductionRule(17);
                                                                                     table_stack.addSymbolToLastTable($2->getType(), $1->getType());}
                 | Type ID ASSIGN Exp SC                                             {output::printProductionRule(18);
-                                                                                    table_stack.addSymbolToLastTable($2->getType(), $1->getType(), $4->getType());}
+                                                                                    table_stack.addSymbolToLastTable($2->getType(), $1->getType(), $4->getType());
+                                                                                    }
                 | ID ASSIGN Exp SC                                                  {output::printProductionRule(19);
                                                                                     table_stack.compareType($1->getType(), $3->getType());}
                 | Call SC                                                           {output::printProductionRule(20);}
@@ -189,8 +191,7 @@ void yyerror(const char * message)
 
 int main()
 {
+
     Singleton *compi = Singleton::getInstance();
-    compi->setInt(5);
-    compi->print();
 	return yyparse();
 }
