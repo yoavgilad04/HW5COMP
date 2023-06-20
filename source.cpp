@@ -1,7 +1,6 @@
 #include "source.hpp"
 #include <stdlib.h>
 #include <ctype.h>
-#include "llvm_utils.hpp"
 #include "singleton.hpp"
 
 TableStack table_stack;
@@ -38,7 +37,15 @@ bool isByte(const std::string &str) {
     return true;
 }
 
-Exp::Exp(string type) : Node(type) {}
+Exp::Exp(string type, string value) : Node(type)
+{
+    Singleton* shaked = Singleton::getInstance();
+    string new_var = shaked->getFreshVar();
+    shaked->addNumToBuffer(new_var, value);
+    this->llvm_var = new_var;
+}
+
+Exp::Exp(string type) : Node(type), llvm_var(""){}
 
 Exp::Exp(Node& exp_1, string operation_val, Node& exp_2)
 {
@@ -110,6 +117,7 @@ Exp::Exp(Node &exp, const string &conversion_type)
             output::errorUndef(yylineno, exp.getType());
         }
         this->type = t->getType();
+
         return;
     }
     assert(conversion_type == "call");
@@ -127,9 +135,6 @@ Exp::Exp(Node &n): Node(n.getType())
             exit(0);
         }
         this->type = "BYTE";
-        Singleton * test = Singleton::getInstance();
-        this->llvm_var = test->Singleton::getFreshVar();
-        cout << makeBinaryStatement(this->llvm_var,"ADD",n.getType(),0) << endl;
         return;
     }
     assert(true==false); //must not get here

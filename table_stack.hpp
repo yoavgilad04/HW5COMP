@@ -2,8 +2,8 @@
 #define HW3_TABLE_STACK_H
 #include <string>
 #include <iostream>
-#include "symbol_table.hpp"
-#include "hw3_output.hpp"
+#include "symbols/symbol_table.hpp"
+#include "staff/hw3_output.hpp"
 #include <stdio.h>
 #include <stdlib.h>
 

@@ -8,7 +8,7 @@
 #include <string>
 #include <iostream>
 #include <vector>
-#include "hw3_output.hpp"
+#include "../staff/hw3_output.hpp"
 
 
 
@@ -18,11 +18,12 @@ class Symbol
 {
     string name;
     string type;
+    string llvm_name;
     int offset;
     bool is_func;
 
 public:
-    Symbol(string name, string type,  int offset=0, bool is_func=false):
+    Symbol(string name, string type, string llvm_name, int offset=0, bool is_func=false):
     name(name), type(type), offset(offset), is_func(is_func){}
     int getOffset() const {return this->offset;}
     string getName() const {return this->name;}
@@ -30,12 +31,12 @@ public:
     void setOffset(int offset){this->offset = offset;}
     virtual ostream& printSymbol(std::ostream& os) const
     {
-//        os << this->getName() << " " << this->getType() <<  " " << this->getOffset();
+        os << this->getName() << " " << this->getType() <<  " " << this->getOffset();
         return os;
     }
     friend ostream& operator<<(ostream& os, const Symbol& s)
     {
-//        s.printSymbol(os);
+        s.printSymbol(os);
         return os;
     }
 };
@@ -51,21 +52,21 @@ public:
     vector<string> getArgs() const {return this->input_args;}
     ostream& printSymbol(std::ostream& os) const override
     {
-//        os << this->getName() << " ";
-//        os << "(";
-//        for(int i = 0; i < this->input_args.size(); ++i)
-//        {
-//            os << this->input_args[i];
-//            if (i + 1 < this->input_args.size())
-//                os << ",";
-//        }
-//        os << ")";
-//        os << "->" << this->getType() << " " << this->getOffset();
+        os << this->getName() << " ";
+        os << "(";
+        for(int i = 0; i < this->input_args.size(); ++i)
+        {
+            os << this->input_args[i];
+            if (i + 1 < this->input_args.size())
+                os << ",";
+        }
+        os << ")";
+        os << "->" << this->getType() << " " << this->getOffset();
         return os;
     }
     friend ostream& operator<<(ostream& os, const FuncSymbol& s)
     {
-//        s.printSymbol(os);
+        s.printSymbol(os);
         return os;
     }
 };

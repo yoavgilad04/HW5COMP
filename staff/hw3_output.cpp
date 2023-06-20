@@ -5,44 +5,44 @@
 using namespace std;
 
 void output::endScope(){
-//    cout << "---end scope---" << endl;
+    cout << "---end scope---" << endl;
 }
 
 void output::printID(const string& id, int offset, const string& type) {
-//    cout << id << " " << type <<  " " << offset <<  endl;
+    cout << id << " " << type <<  " " << offset <<  endl;
 }
 
 string typeListToString(const std::vector<string>& argTypes) {
-//    stringstream res;
-//    res << "(";
-//    for(int i = 0; i < argTypes.size(); ++i) {
-//        res << argTypes[i];
-//        if (i + 1 < argTypes.size())
-//            res << ",";
-//    }
-//    res << ")";
-//    return res.str();
-    return "";
+    stringstream res;
+    res << "(";
+    for(int i = 0; i < argTypes.size(); ++i) {
+        res << argTypes[i];
+        if (i + 1 < argTypes.size())
+            res << ",";
+    }
+    res << ")";
+    return res.str();
+//    return "";
 }
 
 string valueListsToString(const std::vector<string>& values) {
-//    stringstream res;
-//    res << "{";
-//    for(int i = 0; i < values.size(); ++i) {
-//        res << values[i];
-//        if (i + 1 < values.size())
-//            res << ",";
-//    }
-//    res << "}";
-//    return res.str();
-    return "";
+    stringstream res;
+    res << "{";
+    for(int i = 0; i < values.size(); ++i) {
+        res << values[i];
+        if (i + 1 < values.size())
+            res << ",";
+    }
+    res << "}";
+    return res.str();
+//    return "";
 }
 
 string output::makeFunctionType(const string& retType, std::vector<string>& argTypes) {
-//    stringstream res;
-//    res << typeListToString(argTypes) << "->" << retType;
-//    return res.str();
-    return "";
+    stringstream res;
+    res << typeListToString(argTypes) << "->" << retType;
+    return res.str();
+//    return "";
 }
 
 void output::errorLex(int lineno){

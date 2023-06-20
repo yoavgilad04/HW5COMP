@@ -1,6 +1,7 @@
-int function(int x)
+int test1()
 {
-    return x;
+    int y = 5;
+    return y;
 }
 
 void main()
@@ -10,47 +11,19 @@ void main()
 }
 
 
-x = 5 + 6;
-y = 3;
-z = y + 5;
-w = x + z;
+var0 = add 0, 5
+var1/y = add 0, var0
 
 
 
+y = x + 5;
+y = x + 5;
 
-x = 5 + 6;
-key:var1 val.name=var1 val.type=int
-%var1 = add 5,0
-%var2 = add 6,0
-%var3 = add %var1,%var2
-table[x].llvm_var = "%var3"
-
-x = 3;
-%x =
+EXP -> ID       $$->llvmname = $ID->getLLVMName;
+EXP + EXP  ->>>>> $1->getLLVMName, $3->getLLVMName
 
 
-y = 3;
-z = y + 5;
-w = x + z;
+var0 5, 0
+var1 var0,x->getllvmName()
+var3 var2, 0
 
-
-key:var1 val.name=var1 val.type=int
-key
-
-
-
-
-%var50 = %var49 + %var
-
-
- <test/im
-
-
-
- output
-
-
-
-
-
- shaked.sefjwoejfrijwe>>>

@@ -1,16 +1,17 @@
 %{
 #include "source.hpp"
-#include "hw3_output.hpp"
+#include "staff/hw3_output.hpp"
 #include <iostream>
 #include <stdlib.h>
 #include "table_stack.hpp"
 #include "singleton.hpp"
-#include "llvm_utils.hpp"
 using namespace std;
 extern int yylex();
 void yyerror(const char*);
 extern TableStack table_stack;
 extern int loop_count;
+Singleton* Singleton::sin_instance = nullptr;
+Singleton* compi = Singleton::getInstance();
 %}
 
 %nonassoc STRING;
@@ -104,6 +105,7 @@ Statement:      LBRACE N Statements RBRACE C                                    
                                                                                     table_stack.addSymbolToLastTable($2->getType(), $1->getType());}
                 | Type ID ASSIGN Exp SC                                             {output::printProductionRule(18);
                                                                                     table_stack.addSymbolToLastTable($2->getType(), $1->getType(), $4->getType());
+
                                                                                     }
                 | ID ASSIGN Exp SC                                                  {output::printProductionRule(19);
                                                                                     table_stack.compareType($1->getType(), $3->getType());}
@@ -157,7 +159,7 @@ Exp:            LPAREN Exp RPAREN                                               
                 | Call                                                              {output::printProductionRule(38);
                                                                                      $$ = new Exp(*$1, "call");}
                 | NUM                                                               {output::printProductionRule(39);
-                                                                                      $$ = new Exp("INT");}
+                                                                                     $$ = new Exp("INT", $1->getType());}
                 | NUM B                                                             {output::printProductionRule(40);
                                                                                      $$ = new Exp(*$1);}
                 | STRING                                                            {output::printProductionRule(41);
@@ -191,7 +193,5 @@ void yyerror(const char * message)
 
 int main()
 {
-
-    Singleton *compi = Singleton::getInstance();
 	return yyparse();
 }

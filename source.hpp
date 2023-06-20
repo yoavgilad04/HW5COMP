@@ -4,7 +4,7 @@
 #include <string>
 #include <iostream>
 #include "table_stack.hpp"
-#include "hw3_output.hpp"
+#include "staff/hw3_output.hpp"
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
@@ -27,12 +27,15 @@ public:
 
 class Exp : public Node
 {
-public:
     string llvm_var;
+
+public:
+    Exp(string type, string value);
     Exp(string type);
     Exp(Node& exp_1, string operation_val, Node& exp_2);
     Exp(Node& n);
     Exp(Node& exp, const string& conversion_type);
+    string getLLVMVar(){return this->llvm_var;}
     friend ostream& operator<<(ostream& os, const Exp& e)
     {
         os << "Type: " << e.type;
