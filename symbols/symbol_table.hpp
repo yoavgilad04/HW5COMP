@@ -15,7 +15,7 @@ class SymbolTable
     bool is_func_scope;
 public:
     SymbolTable(int next_offset=0, string table_return_type="VOID", bool is_func_scope = false):map(), vec(), next_offset(next_offset), func_arg_offset(-1){}
-    void insert(string name, string type, bool is_func_arg=false);
+    void insert(string name, string type, bool is_func_arg=false, string llvm_name="");
     void insertFunc(string name, string type, vector<string> input_args, bool is_override);
     void popBySymbol(Symbol* s);
     void popByOffset(int offset);

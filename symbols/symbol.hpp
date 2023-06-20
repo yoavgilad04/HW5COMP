@@ -23,9 +23,11 @@ class Symbol
     bool is_func;
 
 public:
-    Symbol(string name, string type, string llvm_name, int offset=0, bool is_func=false):
-    name(name), type(type), offset(offset), is_func(is_func){}
+    Symbol(string name, string type, int offset=0, bool is_func=false, string llvm_name="Def"):
+    name(name), type(type), llvm_name(llvm_name), offset(offset), is_func(is_func){}
     int getOffset() const {return this->offset;}
+    string getLLVMName(){return this->llvm_name;}
+    void setLLVMName(string llvm_name){this->llvm_name = llvm_name;}
     string getName() const {return this->name;}
     string getType() const {return this->type;}
     void setOffset(int offset){this->offset = offset;}
@@ -47,7 +49,7 @@ class FuncSymbol : public Symbol
     bool is_override;
 public:
     FuncSymbol(string name, string type, int offset, bool is_func, vector<string> input_args, bool is_override):
-            Symbol(name, type, offset, is_func), input_args(input_args), is_override(is_override){};
+            Symbol(name, type, offset, is_func, ""), input_args(input_args), is_override(is_override){};
     bool isOverride(){return this->is_override;}
     vector<string> getArgs() const {return this->input_args;}
     ostream& printSymbol(std::ostream& os) const override

@@ -32,10 +32,12 @@ class Exp : public Node
 public:
     Exp(string type, string value);
     Exp(string type);
-    Exp(Node& exp_1, string operation_val, Node& exp_2);
+    Exp(Node& exp_1, string operation_val, Node& exp_2, string op="fuckyou");
     Exp(Node& n);
     Exp(Node& exp, const string& conversion_type);
-    string getLLVMVar(){return this->llvm_var;}
+    string getLLVMName(){return this->llvm_var;}
+    void setLLVMName(string llvm_var){this->llvm_var = llvm_var;}
+
     friend ostream& operator<<(ostream& os, const Exp& e)
     {
         os << "Type: " << e.type;

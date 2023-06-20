@@ -122,17 +122,17 @@ FuncSymbol* TableStack::searchForFuncSymbol(string func_name)
     return func; //if the cast failed func = nullptr
 }
 
-void TableStack::addSymbolToLastTable(string name, string type, bool is_func_arg)
+void TableStack::addSymbolToLastTable(string name, string type, bool is_func_arg, string llvm_name)
 {
     if (this->tables.empty())
         throw std::invalid_argument("Trying to add element when there are no scopes in stack");
     Symbol* s = this->searchForSymbol(name);
     if (s != nullptr)
         output::errorDef(yylineno, name);
-    this->tables[this->tables.size()-1]->insert(name, type, is_func_arg);
+    this->tables[this->tables.size()-1]->insert(name, type, is_func_arg, llvm_name);
 }
 
-void TableStack::addSymbolToLastTable(string name, string type, string exp_type)
+void TableStack::addSymbolToLastTable(string name, string type, string exp_type, string llvm_name)
 {
     if (this->tables.empty())
         throw std::invalid_argument("Trying to add element when there are no scopes in stack");
@@ -141,7 +141,7 @@ void TableStack::addSymbolToLastTable(string name, string type, string exp_type)
         output::errorDef(yylineno, name);
     if (!isValidConvert(type, exp_type))
         output::errorMismatch(yylineno);
-    this->tables[this->tables.size()-1]->insert(name, type);
+    this->tables[this->tables.size()-1]->insert(name, type, false, llvm_name);
 }
 
 vector<FuncSymbol*> TableStack::getAllFunctionsWithName(string name)
@@ -229,6 +229,12 @@ void TableStack::compareType(string id_name, string exp_type)
 //    cout << "left type:" << s->getType() << "right type" << exp_type << endl;
     if (!isValidConvert(s->getType(), exp_type))
         output::errorMismatch(yylineno);
+}
+
+void TableStack::updateSymbolLLVMName(string id_name, string llvm_name)
+{
+    Symbol* s = this->searchForSymbol(id_name);
+    s->setLLVMName(llvm_name);
 }
 
 void TableStack::checkReturnType(std::string type) {

@@ -11,14 +11,12 @@ using namespace std;
 enum BranchLabelIndex {FIRST, SECOND};
 
 class CodeBuffer{
-	CodeBuffer();
-	CodeBuffer(CodeBuffer const&);
-    void operator=(CodeBuffer const&);
 	std::vector<std::string> buffer;
 	std::vector<std::string> globalDefs;
 public:
-	static CodeBuffer &instance();
-
+    CodeBuffer();
+    CodeBuffer(CodeBuffer const&);
+    void operator=(CodeBuffer const&);
 	// ******** Methods to handle the code section ******** //
 
 	//generates a jump location label for the next command, writes it to the buffer and returns it

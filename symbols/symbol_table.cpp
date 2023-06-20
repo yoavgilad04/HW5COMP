@@ -3,7 +3,7 @@
 //
 #include "symbol_table.hpp"
 
-void SymbolTable::insert(string name, string type, bool is_func_arg)
+void SymbolTable::insert(string name, string type, bool is_func_arg, string llvm_name)
 {
     int new_offset;
     if (is_func_arg)
@@ -16,7 +16,7 @@ void SymbolTable::insert(string name, string type, bool is_func_arg)
         new_offset = this->next_offset;
         this->next_offset++;
     }
-    Symbol* s = new Symbol(name, type, new_offset);
+    Symbol* s = new Symbol(name, type, new_offset, false, llvm_name);
     this->map.insert(pair<string, Symbol*>(s->getName(), s));
     this->vec.push_back(s);
 }

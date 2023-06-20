@@ -14,7 +14,7 @@ private:
     CodeBuffer* code_buffer;
     static Singleton* sin_instance;
 
-    Singleton() : curr_val(0), code_buffer(){}
+    Singleton() : curr_val(0), code_buffer(new CodeBuffer()){}
 
 public:
     static Singleton* getInstance() {
@@ -25,7 +25,6 @@ public:
         return sin_instance;
     }
     Singleton(const Singleton &obj) = delete;
-
     void setInt(int y) {
         this->x = y;
     }
@@ -42,12 +41,11 @@ public:
         return new_var_name;
     }
 
-    void addNumToBuffer(string target, string value1)
+    void addAssignmentCommand(string target, string value1)
     {
         Singleton* compi = Singleton::getInstance();
-        string full_command = compi->makeBinaryStatement(target, "ADD", "0", value1);
-        cout << full_command << endl;
-//        int line = code_buffer->emit(full_command);
+        string full_command = compi->makeBinaryStatement(target, "ADD", value1, "0");
+        compi->code_buffer->emit(full_command);
     }
 
     string makeZextConvertStatement(string target, string type, string value)
@@ -65,18 +63,29 @@ public:
     return output_string;
     }
 
+    void printBuffer()
+    {
+        this->code_buffer->printCodeBuffer();
+    }
+
     string makeBinaryStatement(string target, string op, string var1, string var2)
     {
         string output_string = "%" + target + " = ";
         if(op == "ADD")
-        {
             output_string += "add ";
-        }
-//        if (this->startsWith(var1, "var"))
-//            var1 = "%" + var1;
-//        if (this->startsWith(var2, "var"))
-//            var1 = "%" + var2;
+        if(op == "SUB")
+            output_string += "sub ";
+        if(op == "MUL")
+            output_string += "mul ";
+        if(op == "DIV")
+            output_string += "udiv ";
+        //todo: deal with dividing zero
+        if (this->startsWith(var1, "var"))
+            var1 = "%" + var1;
+        if (this->startsWith(var2, "var"))
+            var2 = "%" + var2;
         output_string += "i32 " + var1 + ", " + var2;
+        cout << output_string << endl;
         return output_string;
     }
 

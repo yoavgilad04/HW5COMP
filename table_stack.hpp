@@ -18,12 +18,13 @@ public:
     TableStack():tables(){}
     void openNewScope();
     void closeScope();
-    void addSymbolToLastTable(string name, string type, bool is_func_arg=false);
-    void addSymbolToLastTable(string name, string type, string exp_type);
+    void addSymbolToLastTable(string name, string type, bool is_func_arg=false, string llvm_name="");
+    void addSymbolToLastTable(string name, string type, string exp_type, string llvm_name="");
     void addFuncSymbol(string name, string type, string args, string is_override);
     vector<FuncSymbol*> getAllFunctionsWithName(string name);
     Symbol* searchForSymbol(string name);
     void compareType(string id_name, string exp_type);
+    void updateSymbolLLVMName(string id_name, string llvm_name);
     void printStack();
     bool isFuncExist(string func_name);
     void checkReturnType(string type);

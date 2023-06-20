@@ -41,13 +41,17 @@ Exp::Exp(string type, string value) : Node(type)
 {
     Singleton* shaked = Singleton::getInstance();
     string new_var = shaked->getFreshVar();
-    shaked->addNumToBuffer(new_var, value);
+    if (value == "true")
+        value = "1";
+    else if (value == "false")
+        value = "0";
+    shaked->addAssignmentCommand(new_var, value);
     this->llvm_var = new_var;
 }
 
 Exp::Exp(string type) : Node(type), llvm_var(""){}
 
-Exp::Exp(Node& exp_1, string operation_val, Node& exp_2)
+Exp::Exp(Node& exp_1, string operation_val, Node& exp_2, string op)
 {
     if ((exp_1.getType() == "INT" || exp_1.getType() == "BYTE") && (exp_2.getType() == "INT" || exp_2.getType() == "BYTE"))
     {
@@ -57,6 +61,19 @@ Exp::Exp(Node& exp_1, string operation_val, Node& exp_2)
                 this->type = "INT";
             else
                 this->type = "BYTE";
+            if (op == "+")
+                op = "ADD";
+            if (op == "-")
+                op = "SUB";
+            if (op == "*")
+                op = "MUL";
+            if (op == "/")
+                op = "DIV";
+            Exp* e1 = dynamic_cast<Exp*>(&exp_1);
+            Exp* e2 = dynamic_cast<Exp*>(&exp_2);
+            Singleton* shaked = Singleton::getInstance();
+            this->llvm_var = shaked->getFreshVar();
+            shaked->makeBinaryStatement(this->llvm_var, op, e1->getLLVMName(), e2->getLLVMName());
             return;
         }
         if (operation_val == "relop")
@@ -112,12 +129,13 @@ Exp::Exp(Node &exp, const string &conversion_type)
     if(conversion_type == "id")
     {
         Symbol* t = table_stack.searchForSymbol(exp.getType()); // in this case type will be the name of the id
+
         if (t == nullptr)
         {
             output::errorUndef(yylineno, exp.getType());
         }
         this->type = t->getType();
-
+        this->llvm_var = t->getLLVMName();
         return;
     }
     assert(conversion_type == "call");

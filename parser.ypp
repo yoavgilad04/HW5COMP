@@ -11,7 +11,7 @@ void yyerror(const char*);
 extern TableStack table_stack;
 extern int loop_count;
 Singleton* Singleton::sin_instance = nullptr;
-Singleton* compi = Singleton::getInstance();
+Singleton* shaked = Singleton::getInstance();
 %}
 
 %nonassoc STRING;
@@ -54,7 +54,8 @@ Singleton* compi = Singleton::getInstance();
 %%
 
 Program:        M Funcs                                                             {output::printProductionRule(1);
-                                                                                     table_stack.closeScope();};
+                                                                                     table_stack.closeScope();
+                                                                                     shaked->printBuffer();};
 Funcs:          epsilon                                                             {output::printProductionRule(2);}
                 | FuncDecl Funcs                                                    {output::printProductionRule(3);}
 ;
@@ -102,13 +103,26 @@ Statements:     Statement                                                       
 ;
 Statement:      LBRACE N Statements RBRACE C                                        {output::printProductionRule(16);}
                 | Type ID SC                                                        {output::printProductionRule(17);
-                                                                                    table_stack.addSymbolToLastTable($2->getType(), $1->getType());}
+                                                                                    table_stack.addSymbolToLastTable($2->getType(), $1->getType());
+                                                                                    string new_var = shaked->getFreshVar();
+                                                                                    shaked->addAssignmentCommand(new_var, "0");}
                 | Type ID ASSIGN Exp SC                                             {output::printProductionRule(18);
-                                                                                    table_stack.addSymbolToLastTable($2->getType(), $1->getType(), $4->getType());
-
+                                                                                    string new_var = shaked->getFreshVar();
+                                                                                    Exp* exp = dynamic_cast<Exp*>($4);
+                                                                                    string exp_llvm_name = exp->getLLVMName();
+                                                                                    table_stack.addSymbolToLastTable($2->getType(), $1->getType(), $4->getType(), new_var);
+                                                                                    // var1 = add exp_llvm_name , 0
+                                                                                    shaked->addAssignmentCommand(new_var, exp_llvm_name);
                                                                                     }
                 | ID ASSIGN Exp SC                                                  {output::printProductionRule(19);
-                                                                                    table_stack.compareType($1->getType(), $3->getType());}
+                                                                                    string new_var = shaked->getFreshVar();
+                                                                                    Exp* exp = dynamic_cast<Exp*>($3);
+                                                                                    string exp_llvm_name = exp->getLLVMName();
+                                                                                    table_stack.compareType($1->getType(), $3->getType());
+                                                                                    //update symbol in symbol_tables to be exp->llvmname
+                                                                                    shaked->addAssignmentCommand(new_var, exp_llvm_name);
+                                                                                    table_stack.updateSymbolLLVMName($1->getType(),new_var);
+                                                                                    }
                 | Call SC                                                           {output::printProductionRule(20);}
                 | RETURN SC                                                         {output::printProductionRule(21);
                                                                                      table_stack.checkReturnType("VOID");}
@@ -151,9 +165,9 @@ Type:           INT                                                             
 Exp:            LPAREN Exp RPAREN                                                   {output::printProductionRule(35);
                                                                                      $$ = $2;}
                 | Exp ADD Exp                                                       {output::printProductionRule(36);
-                                                                                     $$ = new Exp(*$1, "binop",  *$3);}
+                                                                                     $$ = new Exp(*$1, "binop",  *$3, $2->getType());}
                 | Exp MUL Exp                                                       {output::printProductionRule(36);
-                                                                                     $$ = new Exp(*$1, "binop", *$3);}
+                                                                                     $$ = new Exp(*$1, "binop", *$3, $2->getType());}
                 | ID                                                                {output::printProductionRule(37);
                                                                                      $$ = new Exp(*$1, "id");}
                 | Call                                                              {output::printProductionRule(38);
@@ -165,9 +179,9 @@ Exp:            LPAREN Exp RPAREN                                               
                 | STRING                                                            {output::printProductionRule(41);
                                                                                      $$ = new Exp("STRING");}
                 | TRUE                                                              {output::printProductionRule(42);
-                                                                                     $$ = new Exp("BOOL");}
+                                                                                     $$ = new Exp("BOOL", $1->getType());}
                 | FALSE                                                             {output::printProductionRule(43);
-                                                                                     $$ = new Exp("BOOL");}
+                                                                                     $$ = new Exp("BOOL", $1->getType());}
                 | NOT Exp                                                           {output::printProductionRule(44);
                                                                                      $$ = new Exp(*$2, "not");}
                 | Exp AND Exp                                                       {output::printProductionRule(45);
