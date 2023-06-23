@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include "singleton.hpp"
+#include "staff/bp.hpp"
 
 TableStack table_stack;
 bool is_in_loop = false;
@@ -14,8 +15,8 @@ bool isInt(const std::string &str) {
     } catch (const std::invalid_argument &e) {
         return false;
     }
-}
-
+}%is_even = icmp eq i32 %parity, 0
+br i1 %is_even, label %even_label, label %odd_label
 bool isString(const std::string &str) {
     if (str.length() < 2)
         return false;
@@ -39,14 +40,24 @@ bool isByte(const std::string &str) {
 
 Exp::Exp(string type, string value) : Node(type)
 {
+    // value can be NUM (int), false or true only!!
     Singleton* shaked = Singleton::getInstance();
     string new_var = shaked->getFreshVar();
+
     if (value == "true")
-        value = "1";
+        new_value = "1";
     else if (value == "false")
-        value = "0";
-    shaked->addAssignmentCommand(new_var, value);
+        new_value = "0";
+    shaked->addAssignmentCommand(new_var, new_value);
     this->llvm_var = new_var;
+    if (value == "true" || value == "false")
+    {
+        string comp_var = shaked->getFreshVar();
+        shaked->makeCompStatement(comp_var,"eq",e1->getLLVMName(),1);
+        int condition_address = yoav->code_buffer->emit(yoav->makeGoToCondStatement(comp_var));
+        this->trueList = &shaked->code_buffer->makelist(pair<int,BranchLabelIndex>{condition_address, FIRST});
+        this->falseList = &shaked->code_buffer->makelist(pair<int,BranchLabelIndex>{condition_address, SECOND});
+    }
 }
 
 Exp::Exp(string type) : Node(type), llvm_var(""){}
@@ -82,12 +93,37 @@ Exp::Exp(Node& exp_1, string operation_val, Node& exp_2, string op)
             return;
         }
     }
+    output::errorMismatch(yylineno);
+    exit(0);
+}
+
+Exp::Exp(Node& exp_1, string operation_val, Node& exp_2, string op, string exp_2_label)
+{
     if (exp_1.getType() == "BOOL" && exp_2.getType() == "BOOL"){
         if (operation_val == "bool_op"){
             this->type = "BOOL";
+            Exp* e1 = dynamic_cast<Exp*>(&exp_1);
+            Exp* e2 = dynamic_cast<Exp*>(&exp_2);
+            Singleton* yoav = Singleton::getInstance();
+            if (op == "OR")
+            {
+                this->trueList = e1->trueList;
+                yoav->code_buffer->bpatch(*e1->falseList,exp_2_label);
+                this->trueList = &yoav->code_buffer->merge(*this->trueList,*e2->trueList);
+                this->falseList = e2->falseList;
+            }
+            if (op == "AND")
+            {
+                this->falseList = e1->falseList;
+                yoav->code_buffer->bpatch(*e1->trueList,exp_2_label);
+                this->falseList = &yoav->code_buffer->merge(*this->falseList,*e2->falseList);
+                this->trueList = e2->trueList;
+            }
             return;
         }
     }
+    output::errorMismatch(yylineno);
+    exit(0);
 }
 
 Exp::Exp(Node &exp, const string &conversion_type)

@@ -184,10 +184,10 @@ Exp:            LPAREN Exp RPAREN                                               
                                                                                      $$ = new Exp("BOOL", $1->getType());}
                 | NOT Exp                                                           {output::printProductionRule(44);
                                                                                      $$ = new Exp(*$2, "not");}
-                | Exp AND Exp                                                       {output::printProductionRule(45);
-                                                                                     $$ = new Exp(*$1, "bool_op", *$3);}
-                | Exp OR Exp                                                        {output::printProductionRule(46);
-                                                                                     $$ = new Exp(*$1, "bool_op", *$3);}
+                | Exp AND MBP Exp                                                       {output::printProductionRule(45);
+                                                                                     $$ = new Exp(*$1, "bool_op", *$4, $2->getType(), $3->getType());}
+                | Exp OR MBP Exp                                                        {output::printProductionRule(46);
+                                                                                     $$ = new Exp(*$1, "bool_op", *$4, $2->getType(), $3->getType());}
                 | Exp RELOP Exp                                                     {output::printProductionRule(47);
                                                                                      $$ = new Exp(*$1, "relop",  *$3);}
                 | Exp EQLOP Exp                                                     {output::printProductionRule(47);
@@ -195,6 +195,10 @@ Exp:            LPAREN Exp RPAREN                                               
                 | LPAREN Type RPAREN Exp                                            {output::printProductionRule(48);
                                                                                      $$ = new Exp(*$4, $2->getType());}
 ;
+MBP:            epsilon                                                             {
+                                                                                        $$=new Node(shaked->code_buffer->genLabel());}
+;
+}
 epsilon:        %empty;
 
 %%

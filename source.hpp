@@ -28,11 +28,15 @@ public:
 class Exp : public Node
 {
     string llvm_var;
+    vector<pair<int,BranchLabelIndex>>* trueList;
+    vector<pair<int,BranchLabelIndex>>* falseList;
+//    vector<pair<int,BranchLabelIndex>>* nextList;
 
 public:
     Exp(string type, string value);
     Exp(string type);
-    Exp(Node& exp_1, string operation_val, Node& exp_2, string op="fuckyou");
+    Exp(Node& exp_1, string operation_val, Node& exp_2, string op="TihiyeLiBari");
+    Exp(Node& exp_1, string operation_val, Node& exp_2, string op="TihiyeLiBari", string exp_2_label);
     Exp(Node& n);
     Exp(Node& exp, const string& conversion_type);
     string getLLVMName(){return this->llvm_var;}

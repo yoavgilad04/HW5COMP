@@ -11,12 +11,13 @@ class Singleton {
 private:
     int x;
     int curr_val;
-    CodeBuffer* code_buffer;
     static Singleton* sin_instance;
 
     Singleton() : curr_val(0), code_buffer(new CodeBuffer()){}
 
 public:
+    CodeBuffer* code_buffer;
+
     static Singleton* getInstance() {
         if (sin_instance == nullptr) {
             sin_instance = new Singleton();
@@ -86,6 +87,26 @@ public:
             var2 = "%" + var2;
         output_string += "i32 " + var1 + ", " + var2;
         cout << output_string << endl;
+        return output_string;
+    }
+
+    string makeCompStatement(string target, string comp_op, string var1, string var2)
+    {
+        string output_string = "%" + target + " = icmp ";
+        if(op == "==")
+            output_string += "eq ";
+        if (this->startsWith(var1, "var"))
+            var1 = "%" + var1;
+        if (this->startsWith(var2, "var"))
+            var2 = "%" + var2;
+        output_string += "i32 " + var1 + ", " + var2;
+        cout << output_string << endl;
+        return output_string;
+    }
+
+    string makeGoToCondStatement(string target)
+    {
+        string output_string = "br i1 %" + target + ", label @, label @";
         return output_string;
     }
 

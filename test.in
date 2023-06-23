@@ -31,3 +31,39 @@ void main()
     return;
 }
 
+
+bool a = c or func1() or func2() or f;
+bool a = c and d;
+
+bool a = c;
+
+
+
+bool a =  c or M d;
+
+
+
+cmpi 1, c;
+br cond* label
+if true -> goto ____
+if false -> goto ____
+
+truelist : {41}
+falselist: {42}
+
+ hhhhh
+
+
+%is_even = icmp eq i32 %parity, 0
+br i1 %is_even, label %even_label, label %odd_label
+emit("br i1 %cond, label @, label @");
+
+
+bool a=5;
+bool a = EXP;
+string true_case = genLabel();
+addAssignmentCommand(a, 1);
+string false_case = genLabel();
+addAssignmentCommand(a, 0);
+bpatch(EXP->trueList,true_case);
+bpatch(EXP->falseList,false_case);
