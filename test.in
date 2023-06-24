@@ -1,87 +1,10 @@
-int test4()
-{
-    int y;
-    bool x = true;
-    bool z = false;
-}
-
-int test3()
-{
-    int asdf = 4 + 2 * 3 / 8;
-}
-int test1()
-{
-    int y = 5;
-    return y;
-}
-
-void test2()
-{
-    int y = 5;
-    int x = y + 6;
-    int z = x - 6;
-    int d = x * z;
-    int p = 2 / 3;
-    //return y;
-}
 
 void main()
 {
-    int x = 3 + 5;
-    return;
+    if (3<5)
+    {
+        return 3;
+    }
+    return 4;
 }
 
-
-if (5<3) IFM
-   return x;
-IFN
-return y;
-
-cmp var ult 5, 3
-br i1 %var, label @, label @
-(IFM-> QUED = genlable)
-(IFN-> QUED = genlable)
-(B -> makelist(
-
-
-
-
-
-
-
-
-bool a = c or func1() or func2() or f;
-bool a = c and d;
-
-bool a = c;
-
-
-
-bool a =  c or M d;
-
-
-
-cmpi 1, c;
-br cond* label
-if true -> goto ____
-if false -> goto ____
-
-truelist : {41}
-falselist: {42}
-
- hhhhh
-
-
-%is_even = icmp eq i32 %parity, 0
-br i1 %is_even, label %even_label, label %odd_label
-emit("br i1 %cond, label @, label @");
-
-
-bool a=5;
-bool a = EXP;
-string true_case = genLabel();
-addAssignmentCommand(a, 1);
-string false_case = genLabel();
-addAssignmentCommand(a, 0);
-bpatch(EXP->trueList,true_case);
-bpatch(EXP->falseList,false_case);
