@@ -19,8 +19,11 @@ using namespace std;
 class Node {
 protected:
     string type;
+    int line;
 public:
-    Node(string type=""): type(type){};
+    Node(string type=""): type(type), line(-1){};
+    Node(int line): type(""), line(line){};
+
     string getType(){return this->type;}
     virtual ~Node() = default;
 };
