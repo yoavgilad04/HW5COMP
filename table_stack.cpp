@@ -176,7 +176,7 @@ void TableStack::closeScope()
         throw std::invalid_argument("Trying to close scope when there are no scopes in stack");
     SymbolTable* t_to_delete = this->tables[this->tables.size()-1];
 
-    this->printStack();
+  //  this->printStack();
     if(this->tables.size() == 1)
     {
 //        cout <<"I'm in last scope" << endl;
