@@ -130,8 +130,8 @@ Statement:      LBRACE N Statements RBRACE C                                    
                 | RETURN Exp SC                                                     {output::printProductionRule(22);
                                                                                      table_stack.checkReturnType($2->getType());}
                 | IF LPAREN BOOLEXP RPAREN IFM N Statement C ELSEM                  {output::printProductionRule(23);
-                                                                                     code_buffer->bpatch(code_buffer->makeList({$3->getType(),First}, $5->getType());
-                                                                                     code_buffer->bpatch(code_buffer->makeList({$3->getType(),Second}, $9->getType());
+                                                                                     code_buffer->bpatch(code_buffer->makelist({$3->getType(),First}, $5->getType());
+                                                                                     code_buffer->bpatch(code_buffer->makelist({$3->getType(),Second}, $9->getType());
                                                                                      }
                 | IF LPAREN BOOLEXP RPAREN N Statement C ELSE N Statement C         {output::printProductionRule(24);}
                 | WHILE LPAREN BOOLEXP RPAREN N INLOOP Statement OFFLOOP C          {output::printProductionRule(25);}
