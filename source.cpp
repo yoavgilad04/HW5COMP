@@ -97,6 +97,7 @@ Exp::Exp(string operation_val, Node& exp_1, Node& exp_2, string op)
         }
         if (operation_val == "relop")    // \<|\>|\<\=|\>\=
         {
+            cout << "iM FUCKING HERE";
             if (op == "<")
                 op = "ult";
             if (op == ">")
@@ -109,7 +110,8 @@ Exp::Exp(string operation_val, Node& exp_1, Node& exp_2, string op)
                 op = "eq";
             if (op == "!=")
                 op = "ne";
-            cout << "not emitinig " << shaked->makeCompStatement(this->llvm_var, op, e1_name, e2_name);
+            string cmd = shaked->makeCompStatement(this->llvm_var, op, e1_name, e2_name);
+            shaked->code_buffer->emit(cmd);
             this->type = "BOOL";
             return;
         }
