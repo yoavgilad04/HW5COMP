@@ -63,7 +63,7 @@ Exp::Exp(string type, string value) : Node(type)
 
 Exp::Exp(string type) : Node(type), llvm_var(""){}
 
-Exp::Exp(Node& exp_1, string operation_val, Node& exp_2, string op)
+Exp::Exp(string operation_val, Node& exp_1, Node& exp_2, string op)
 {
     Singleton* shaked = Singleton::getInstance();
     this->llvm_var = shaked->getFreshVar();

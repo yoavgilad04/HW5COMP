@@ -201,9 +201,9 @@ Exp:            LPAREN Exp RPAREN                                               
                 | Exp OR MBP Exp                                                        {output::printProductionRule(46);
                                                                                      $$ = new Exp(*$1, "bool_op", *$4, $2->getType(), $3->getType());}
                 | Exp RELOP Exp                                                     {output::printProductionRule(47);
-                                                                                     $$ = new Exp(*$1, "relop",  *$3, $2->getType());}
+                                                                                     $$ = new Exp("relop", *$1, *$3, $2->getType());}
                 | Exp EQLOP Exp                                                     {output::printProductionRule(47);
-                                                                                     $$ = new Exp(*$1, "relop", *$3, $2->getType());}
+                                                                                     $$ = new Exp("relop", *$1, *$3, $2->getType());}
                 | LPAREN Type RPAREN Exp                                            {output::printProductionRule(48);
                                                                                      $$ = new Exp(*$4, $2->getType());}
 ;
