@@ -177,9 +177,9 @@ Type:           INT                                                             
 Exp:            LPAREN Exp RPAREN                                                   {output::printProductionRule(35);
                                                                                      $$ = $2;}
                 | Exp ADD Exp                                                       {output::printProductionRule(36);
-                                                                                     $$ = new Exp(*$1, "binop",  *$3, $2->getType());}
+                                                                                     $$ = new Exp("binop", *$1, *$3, $2->getType());}
                 | Exp MUL Exp                                                       {output::printProductionRule(36);
-                                                                                     $$ = new Exp(*$1, "binop", *$3, $2->getType());}
+                                                                                     $$ = new Exp("binop", *$1, *$3, $2->getType());}
                 | ID                                                                {output::printProductionRule(37);
                                                                                      $$ = new Exp(*$1, "id");}
                 | Call                                                              {output::printProductionRule(38);
