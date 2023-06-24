@@ -93,8 +93,19 @@ public:
     string makeCompStatement(string target, string comp_op, string var1, string var2)
     {
         string output_string = "%" + target + " = icmp ";
-        if(comp_op == "==")
-            output_string += "eq ";
+        if (comp_op == "<")
+            output_string += "ult";
+        if (comp_op == ">")
+            output_string += "ugt";
+        if (comp_op == "<=")
+            output_string += "ule";
+        if (comp_op == ">=")
+            output_string += "uge";
+        if (comp_op == "==")
+            output_string += "eq";
+        if (comp_op == "!=")
+            output_string += "ne";
+
         if (this->startsWith(var1, "var"))
             var1 = "%" + var1;
         if (this->startsWith(var2, "var"))
