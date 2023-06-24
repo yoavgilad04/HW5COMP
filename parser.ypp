@@ -114,7 +114,6 @@ Statement:      LBRACE N Statements RBRACE C                                    
                                                                                     Exp* exp = dynamic_cast<Exp*>($4);
                                                                                     string exp_llvm_name = exp->getLLVMName();
                                                                                     table_stack.addSymbolToLastTable($2->getType(), $1->getType(), $4->getType(), new_var);
-                                                                                    // var1 = add exp_llvm_name , 0
                                                                                     shaked->addAssignmentCommand(new_var, exp_llvm_name);
                                                                                     }
                 | ID ASSIGN Exp SC                                                  {output::printProductionRule(19);
