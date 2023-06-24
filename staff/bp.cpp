@@ -34,7 +34,7 @@ void CodeBuffer::bpatch(const vector<pair<int,BranchLabelIndex>>& address_list, 
 void CodeBuffer::printCodeBuffer(){
 	for (std::vector<string>::const_iterator it = buffer.begin(); it != buffer.end(); ++it) 
 	{
-		cout << *it << endl
+		cout << *it << endl;
     }
 }
 
