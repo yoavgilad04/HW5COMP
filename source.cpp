@@ -44,7 +44,7 @@ Exp::Exp(string type, string value) : Node(type)
     // value can be NUM (int), false or true only!!
     Singleton* shaked = Singleton::getInstance();
     string new_var = shaked->getFreshVar();
-
+    string new_value;
     if (value == "true")
         new_value = "1";
     else if (value == "false")
