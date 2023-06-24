@@ -15,8 +15,8 @@ bool isInt(const std::string &str) {
     } catch (const std::invalid_argument &e) {
         return false;
     }
-}%is_even = icmp eq i32 %parity, 0
-br i1 %is_even, label %even_label, label %odd_label
+}
+
 bool isString(const std::string &str) {
     if (str.length() < 2)
         return false;
@@ -64,6 +64,12 @@ Exp::Exp(string type) : Node(type), llvm_var(""){}
 
 Exp::Exp(Node& exp_1, string operation_val, Node& exp_2, string op)
 {
+    Singleton* shaked = Singleton::getInstance();
+    this->llvm_var = shaked->getFreshVar();
+    Exp* e1 = dynamic_cast<Exp*>(&exp_1);
+    Exp* e2 = dynamic_cast<Exp*>(&exp_2);
+    string e1_name = e1->getLLVMName();
+    string e2_name = e2->getLLVMName();
     if ((exp_1.getType() == "INT" || exp_1.getType() == "BYTE") && (exp_2.getType() == "INT" || exp_2.getType() == "BYTE"))
     {
         if (operation_val == "binop")
@@ -80,19 +86,29 @@ Exp::Exp(Node& exp_1, string operation_val, Node& exp_2, string op)
                 op = "MUL";
             if (op == "/")
                 op = "DIV";
-            Exp* e1 = dynamic_cast<Exp*>(&exp_1);
-            Exp* e2 = dynamic_cast<Exp*>(&exp_2);
-            Singleton* shaked = Singleton::getInstance();
-            this->llvm_var = shaked->getFreshVar();
-            shaked->makeBinaryStatement(this->llvm_var, op, e1->getLLVMName(), e2->getLLVMName());
+            cout << "not emitinig " << shaked->makeBinaryStatement(this->llvm_var, op, e1_name, e2_name);
             return;
         }
-        if (operation_val == "relop")
+        if (operation_val == "relop")    // \<|\>|\<\=|\>\=
         {
+            if (op == "<")
+                op = "ult";
+            if (op == ">")
+                op = "ugt";
+            if (op == "<=")
+                op = "ule";
+            if (op == ">=")
+                op = "uge";
+            if (op == "==")
+                op = "eq";
+            if (op == "!=")
+                op = "ne";
+            cout << "not emitinig " << shaked->makeCompStatement(this->llvm_var, op, e1_name, e2_name);
             this->type = "BOOL";
             return;
         }
     }
+    // todo: reduce freshvar by one beacuse we didn't use the new var
     output::errorMismatch(yylineno);
     exit(0);
 }

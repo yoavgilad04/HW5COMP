@@ -19,23 +19,15 @@
     <option name="openedFilesInfos">
       <list>
         <OpenedFileInfo>
-          <option name="caretOffset" value="5648" />
+          <option name="caretOffset" value="14706" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/parser.ypp" />
-        </OpenedFileInfo>
-        <OpenedFileInfo>
-          <option name="caretOffset" value="1007" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/source.cpp" />
-        </OpenedFileInfo>
-        <OpenedFileInfo>
-          <option name="caretOffset" value="226" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/test.in" />
         </OpenedFileInfo>
         <OpenedFileInfo>
           <option name="caretOffset" value="620" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/symbols/symbol.hpp" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="622" />
+          <option name="caretOffset" value="775" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/source.hpp" />
         </OpenedFileInfo>
         <OpenedFileInfo>
@@ -43,11 +35,11 @@
           <option name="fileUrl" value="file://$PROJECT_DIR$/table_stack.cpp" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="2644" />
+          <option name="caretOffset" value="2476" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/scanner.lex" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="2733" />
+          <option name="caretOffset" value="2724" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/staff/bp.hpp" />
         </OpenedFileInfo>
         <OpenedFileInfo>
@@ -55,8 +47,16 @@
           <option name="fileUrl" value="file://$PROJECT_DIR$/staff/bp.cpp" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="263" />
+          <option name="caretOffset" value="2345" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/singleton.hpp" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="389" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/llvm_ex/phi_example.llvm" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="2987" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/source.cpp" />
         </OpenedFileInfo>
       </list>
     </option>

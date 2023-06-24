@@ -32,6 +32,24 @@ void main()
 }
 
 
+if (5<3) IFM
+   return x;
+IFN
+return y;
+
+cmp var ult 5, 3
+br i1 %var, label @, label @
+(IFM-> QUED = genlable)
+(IFN-> QUED = genlable)
+(B -> makelist(
+
+
+
+
+
+
+
+
 bool a = c or func1() or func2() or f;
 bool a = c and d;
 

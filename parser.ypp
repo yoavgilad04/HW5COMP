@@ -12,6 +12,7 @@ extern TableStack table_stack;
 extern int loop_count;
 Singleton* Singleton::sin_instance = nullptr;
 Singleton* shaked = Singleton::getInstance();
+CodeBuffer* code_buffer = shaked->code_buffer;
 %}
 
 %nonassoc STRING;
@@ -128,7 +129,10 @@ Statement:      LBRACE N Statements RBRACE C                                    
                                                                                      table_stack.checkReturnType("VOID");}
                 | RETURN Exp SC                                                     {output::printProductionRule(22);
                                                                                      table_stack.checkReturnType($2->getType());}
-                | IF LPAREN BOOLEXP RPAREN N Statement C                            {output::printProductionRule(23);}
+                | IF LPAREN BOOLEXP RPAREN IFM N Statement C ELSEM                  {output::printProductionRule(23);
+                                                                                     code_buffer->bpatch(code_buffer->makeList({$3->getType(),First}, $5->getType());
+                                                                                     code_buffer->bpatch(code_buffer->makeList({$3->getType(),Second}, $9->getType());
+                                                                                     }
                 | IF LPAREN BOOLEXP RPAREN N Statement C ELSE N Statement C         {output::printProductionRule(24);}
                 | WHILE LPAREN BOOLEXP RPAREN N INLOOP Statement OFFLOOP C          {output::printProductionRule(25);}
                 | BREAK SC                                                          {if (loop_count == 0)
@@ -140,10 +144,15 @@ Statement:      LBRACE N Statements RBRACE C                                    
                                                                                      output::printProductionRule(27);}
 ;
 
+ELSEM: epsilon                                                                      {$$ = new Node(shaked->code_buffer->genLabel());}
+IFM: epsilon                                                                        {$$ = new Node(shaked->code_buffer->genLabel());}
 INLOOP: epsilon                                                                     {loop_count++;}
 OFFLOOP: epsilon                                                                    {loop_count--;}
 BOOLEXP: Exp                                                                        {if($1->getType()!="BOOL")
-                                                                                     output::errorMismatch(yylineno);}
+                                                                                    output::errorMismatch(yylineno);
+                                                                                    string comp_var = $1->getLLVMName();
+                                                                                    $$ = new Node(shaked->code_buffer->emit(yoav->makeGoToCondStatement(comp_var)));
+                                                                                    }
 
 Call:           ID LPAREN ExpList RPAREN                                            {output::printProductionRule(28);
                                                                                      $$ = new Call(*$1, $3);}
@@ -189,16 +198,14 @@ Exp:            LPAREN Exp RPAREN                                               
                 | Exp OR MBP Exp                                                        {output::printProductionRule(46);
                                                                                      $$ = new Exp(*$1, "bool_op", *$4, $2->getType(), $3->getType());}
                 | Exp RELOP Exp                                                     {output::printProductionRule(47);
-                                                                                     $$ = new Exp(*$1, "relop",  *$3);}
+                                                                                     $$ = new Exp(*$1, "relop",  *$3, $2->getType());}
                 | Exp EQLOP Exp                                                     {output::printProductionRule(47);
-                                                                                     $$ = new Exp(*$1, "relop", *$3);}
+                                                                                     $$ = new Exp(*$1, "relop", *$3, $2->getType());}
                 | LPAREN Type RPAREN Exp                                            {output::printProductionRule(48);
                                                                                      $$ = new Exp(*$4, $2->getType());}
 ;
-MBP:            epsilon                                                             {
-                                                                                        $$=new Node(shaked->code_buffer->genLabel());}
+MBP:            epsilon                                                             {$$=new Node(shaked->code_buffer->genLabel());}
 ;
-}
 epsilon:        %empty;
 
 %%
