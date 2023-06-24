@@ -45,10 +45,15 @@ Exp::Exp(string type, string value) : Node(type)
     Singleton* shaked = Singleton::getInstance();
     string new_var = shaked->getFreshVar();
     string new_value;
-    if (value == "true")
-        new_value = "1";
-    else if (value == "false")
-        new_value = "0";
+    if(type == "INT")
+        new_value = value;
+    else
+    {
+        if (value == "true")
+            new_value = "1";
+        else if (value == "false")
+            new_value = "0";
+    }
     shaked->addAssignmentCommand(new_var, new_value);
     this->llvm_var = new_var;
     if (value == "true" || value == "false")
