@@ -76,6 +76,7 @@ Exp::Exp(string operation_val, Node& exp_1, Node& exp_2, string op)
     Exp* e2 = dynamic_cast<Exp*>(&exp_2);
     string e1_name = e1->getLLVMName();
     string e2_name = e2->getLLVMName();
+    string cmd;
     if ((exp_1.getType() == "INT" || exp_1.getType() == "BYTE") && (exp_2.getType() == "INT" || exp_2.getType() == "BYTE"))
     {
         if (operation_val == "binop")
@@ -92,13 +93,14 @@ Exp::Exp(string operation_val, Node& exp_1, Node& exp_2, string op)
                 op = "MUL";
             if (op == "/")
                 op = "DIV";
-            cout << "not emitinig " << shaked->makeBinaryStatement(this->llvm_var, op, e1_name, e2_name);
+            cmd = shaked->makeBinaryStatement(this->llvm_var, op, e1_name, e2_name);
+            shaked->code_buffer->emit(cmd);
             return;
         }
         if (operation_val == "relop")    // \<|\>|\<\=|\>\=
         {
             cout << "iM FUCKING HERE: " << op;
-            string cmd = shaked->makeCompStatement(this->llvm_var, op, e1_name, e2_name);
+            cmd = shaked->makeCompStatement(this->llvm_var, op, e1_name, e2_name);
             shaked->code_buffer->emit(cmd);
             this->type = "BOOL";
             return;
