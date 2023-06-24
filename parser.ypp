@@ -152,8 +152,9 @@ INLOOP: epsilon                                                                 
 OFFLOOP: epsilon                                                                    {loop_count--;}
 BOOLEXP: Exp                                                                        {if($1->getType()!="BOOL")
                                                                                     output::errorMismatch(yylineno);
-                                                                                    string comp_var = $1->getLLVMName();
-                                                                                    $$ = new Node(shaked->code_buffer->emit(yoav->makeGoToCondStatement(comp_var)));
+                                                                                    Exp* exp = dynamic_cast<Exp*>($1);
+                                                                                    string comp_var = exp->getLLVMName();
+                                                                                    $$ = new Node(code_buffer->emit(shaked->makeGoToCondStatement(comp_var)));
                                                                                     }
 
 Call:           ID LPAREN ExpList RPAREN                                            {output::printProductionRule(28);
