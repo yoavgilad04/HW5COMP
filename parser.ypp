@@ -145,16 +145,20 @@ Statement:      LBRACE N Statements RBRACE C                                    
                                                                                      output::printProductionRule(27);}
 ;
 
-ELSEM: epsilon                                                                      {$$ = new Node(shaked->code_buffer->genLabel());};
-IFM: epsilon                                                                        {$$ = new Node(shaked->code_buffer->genLabel());};
-INLOOP: epsilon                                                                     {loop_count++;};
-OFFLOOP: epsilon                                                                    {loop_count--;};
+ELSEM: epsilon                                                                      {$$ = new Node(shaked->code_buffer->genLabel()); cout << "ELSEM" << endl;}
+;
+IFM: epsilon                                                                        {$$ = new Node(shaked->code_buffer->genLabel()); cout << "IFM" << endl;}
+;
+INLOOP: epsilon                                                                     {loop_count++;}
+;
+OFFLOOP: epsilon                                                                    {loop_count--;}
+;
 BOOLEXP: Exp                                                                        {if($1->getType()!="BOOL")
                                                                                     output::errorMismatch(yylineno);
                                                                                     Exp* exp = dynamic_cast<Exp*>($1);
                                                                                     string comp_var = exp->getLLVMName();
-                                                                                    $$ = new Node(code_buffer->emit(shaked->makeGoToCondStatement(comp_var)));
-                                                                                    };
+                                                                                    $$ = new Node(code_buffer->emit(shaked->makeGoToCondStatement(comp_var)));}
+;
 
 Call:           ID LPAREN ExpList RPAREN                                            {output::printProductionRule(28);
                                                                                      $$ = new Call(*$1, $3);}
