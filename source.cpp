@@ -126,14 +126,14 @@ Exp::Exp(Node& exp_1, string operation_val, Node& exp_2, string op, string exp_2
             {
                 this->trueList = e1->trueList;
                 yoav->code_buffer->bpatch(*e1->falseList,exp_2_label);
-                this->trueList = &yoav->code_buffer->merge(*this->trueList,*e2->trueList);
+                this->trueList = &yoav->code_buffer->merge(*(this->trueList),*(e2->trueList));
                 this->falseList = e2->falseList;
             }
             if (op == "AND")
             {
                 this->falseList = e1->falseList;
                 yoav->code_buffer->bpatch(*e1->trueList,exp_2_label);
-                this->falseList = &yoav->code_buffer->merge(*this->falseList,*e2->falseList);
+                this->falseList = &yoav->code_buffer->merge(*(this->falseList),*(e2->falseList));
                 this->trueList = e2->trueList;
             }
             return;
