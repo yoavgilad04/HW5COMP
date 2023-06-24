@@ -3,8 +3,8 @@ void main()
 {
     if (3 < 5)
     {
-        return 3;
+        return;
     }
-    return 4;
+    return;
 }
 

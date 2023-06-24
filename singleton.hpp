@@ -94,18 +94,17 @@ public:
     {
         string output_string = "%" + target + " = icmp ";
         if (comp_op == "<")
-            output_string += "ult";
+            output_string += "ult ";
         if (comp_op == ">")
-            output_string += "ugt";
+            output_string += "ugt ";
         if (comp_op == "<=")
-            output_string += "ule";
+            output_string += "ule ";
         if (comp_op == ">=")
-            output_string += "uge";
+            output_string += "uge ";
         if (comp_op == "==")
-            output_string += "eq";
+            output_string += "eq ";
         if (comp_op == "!=")
-            output_string += "ne";
-
+            output_string += "ne ";
         if (this->startsWith(var1, "var"))
             var1 = "%" + var1;
         if (this->startsWith(var2, "var"))
