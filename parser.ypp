@@ -3,6 +3,8 @@
 #include "staff/hw3_output.hpp"
 #include <iostream>
 #include <stdlib.h>
+#include "staff/bp.hpp"
+
 #include "table_stack.hpp"
 #include "singleton.hpp"
 using namespace std;
