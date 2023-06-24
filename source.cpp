@@ -53,11 +53,11 @@ Exp::Exp(string type, string value) : Node(type)
     this->llvm_var = new_var;
     if (value == "true" || value == "false")
     {
-        string comp_var = shaked->getFreshVar();
-        shaked->makeCompStatement(comp_var,"eq",e1->getLLVMName(),1);
-        int condition_address = yoav->code_buffer->emit(yoav->makeGoToCondStatement(comp_var));
-        this->trueList = &shaked->code_buffer->makelist(pair<int,BranchLabelIndex>{condition_address, FIRST});
-        this->falseList = &shaked->code_buffer->makelist(pair<int,BranchLabelIndex>{condition_address, SECOND});
+//        string comp_var = shaked->getFreshVar();
+//        shaked->makeCompStatement(comp_var,"eq",e1->getLLVMName(),1);
+//        int condition_address = yoav->code_buffer->emit(yoav->makeGoToCondStatement(comp_var));
+//        this->trueList = &shaked->code_buffer->makelist(pair<int,BranchLabelIndex>{condition_address, FIRST});
+//        this->falseList = &shaked->code_buffer->makelist(pair<int,BranchLabelIndex>{condition_address, SECOND});
     }
 }
 
