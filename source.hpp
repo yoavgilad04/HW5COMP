@@ -9,6 +9,8 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <vector>
+#include "staff/bp.hpp"
+
 
 extern int yylineno;
 using namespace std;
