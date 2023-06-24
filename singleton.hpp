@@ -93,7 +93,7 @@ public:
     string makeCompStatement(string target, string comp_op, string var1, string var2)
     {
         string output_string = "%" + target + " = icmp ";
-        if(op == "==")
+        if(comp_op == "==")
             output_string += "eq ";
         if (this->startsWith(var1, "var"))
             var1 = "%" + var1;
