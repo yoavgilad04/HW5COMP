@@ -105,8 +105,7 @@ FormalsList:    FormalDecl                                                      
                                                                                      $$ = new FormalList(*$1, *$3);}
 ;
 FormalDecl:     Type ID                                                             {output::printProductionRule(13);
-                                                                                     table_stack.addSymbolToLastTable($2->getType(), $1->getType(), true);
-                                                                                     fras}
+                                                                                     table_stack.addSymbolToLastTable($2->getType(), $1->getType(), true);}
 ;
 Statements:     Statement                                                           {output::printProductionRule(14);}
                 | Statements Statement                                              {output::printProductionRule(15);}
@@ -149,14 +148,13 @@ Statement:      LBRACE N Statements RBRACE C                                    
                                                                                      string next_label = code_buffer->genLabel();
                                                                                      code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{$8->getLine(),FIRST}), next_label);
                                                                                      }
-                | WHILE LPAREN BEFORELOOP BOOLEXP RPAREN N INLOOP IFN Statement OFFLOOP C       {
+                | WHILE LPAREN MBP BOOLEXP RPAREN N INLOOP IFN Statement OFFLOOP C   {
                                                                                       output::printProductionRule(25);
                                                                                       code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{$4->getLine(),FIRST}), $8->getType());
                                                                                       string next_label = code_buffer->genLabel();
                                                                                       code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{$4->getLine(),SECOND}),next_label);
                                                                                       string start_loop_label = $3->getType();
                                                                                       code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{$10->getLine(),FIRST}),start_loop_label);
-
                                                                                       }
 
                 | BREAK SC                                                          {if (loop_count == 0)
@@ -168,8 +166,6 @@ Statement:      LBRACE N Statements RBRACE C                                    
                                                                                      output::printProductionRule(27);}
 ;
 
-BEFORELOOP: epsilon                                                                   {$$ = new Node(code_buffer->genLabel());}
-;
 IFN: epsilon                                                                          {table_stack.openNewScope();
                                                                                        $$ = new Node(shaked->code_buffer->genLabel());}
 ;
@@ -244,6 +240,9 @@ Exp:            LPAREN Exp RPAREN                                               
                                                                                      $$ = new Exp(*$4, $2->getType());}
 ;
 MBP:            epsilon                                                             {$$=new Node(shaked->code_buffer->genLabel());}
+;
+NBP:            epsilon                                                             {$$=new Node(shaked->code_buffer->genLabel());
+                                                                                        }
 ;
 epsilon:        %empty;
 

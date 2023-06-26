@@ -144,7 +144,7 @@ public:
 
     string makeDefineCommand(FuncSymbol* s)
     {
-        string output_string = "define" + s->getType() + "@" + s->getLLVMName() + "(";
+        string output_string = "define " + s->getType() + " @" + s->getLLVMName() + "(";
         //todo : add the names of the func args;
         output_string += ")";
         return output_string;

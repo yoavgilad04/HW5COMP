@@ -19,7 +19,7 @@
     <option name="openedFilesInfos">
       <list>
         <OpenedFileInfo>
-          <option name="caretOffset" value="2180" />
+          <option name="caretOffset" value="19651" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/parser.ypp" />
         </OpenedFileInfo>
         <OpenedFileInfo>
@@ -27,7 +27,7 @@
           <option name="fileUrl" value="file://$PROJECT_DIR$/llvm_ex/print_1_to_100.llvm" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="4170" />
+          <option name="caretOffset" value="4065" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/singleton.hpp" />
         </OpenedFileInfo>
         <OpenedFileInfo>
@@ -47,12 +47,16 @@
           <option name="fileUrl" value="file://$PROJECT_DIR$/table_stack.cpp" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="24" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/test.in" />
+          <option name="caretOffset" value="1502" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/staff/bp.hpp" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="1033" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/staff/bp.hpp" />
+          <option name="caretOffset" value="0" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/source.cpp" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="179" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/test.in" />
         </OpenedFileInfo>
       </list>
     </option>
