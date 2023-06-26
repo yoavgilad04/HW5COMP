@@ -178,13 +178,15 @@ Exp::Exp(Node &exp, const string &conversion_type)
     if(conversion_type == "id")
     {
         Symbol* t = table_stack.searchForSymbol(exp.getType()); // in this case type will be the name of the id
-
         if (t == nullptr)
         {
             output::errorUndef(yylineno, exp.getType());
         }
+        Singleton* shaked = Singleton::getInstance();
+        string new_var = shaked->getFreshVar();
+        shaked->code_buffer->emit(shaked->makeLoadCommand(new_var, t->getType(), t->getLLVMName()));
         this->type = t->getType();
-        this->llvm_var = t->getLLVMName();
+        this->llvm_var = new_var;
         return;
     }
     assert(conversion_type == "call");

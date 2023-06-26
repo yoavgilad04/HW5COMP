@@ -26,6 +26,7 @@ public:
 
     string getType(){return this->type;}
     int getLine(){return this->line;}
+    void setLine(int line){this->line = line;}
     virtual ~Node() = default;
 };
 

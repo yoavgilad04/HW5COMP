@@ -21,11 +21,12 @@ void SymbolTable::insert(string name, string type, bool is_func_arg, string llvm
     this->vec.push_back(s);
 }
 
-void SymbolTable::insertFunc(string name, string type, vector<string> input_args, bool is_override)
+FuncSymbol* SymbolTable::insertFunc(string name, string type, vector<string> input_args, bool is_override, string llvm_name)
 {
-    FuncSymbol* s = new FuncSymbol(name, type, 0, true, input_args, is_override);
+    FuncSymbol* s = new FuncSymbol(name, type, 0, true, input_args, is_override, llvm_name);
     this->map.insert(pair<string, Symbol*>(s->getName(), s));
     this->vec.push_back(s);
+    return s;
 }
 
 vector<FuncSymbol*> SymbolTable::getAllFunctionWithName(string name)

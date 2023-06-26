@@ -14,13 +14,14 @@ extern int yylineno;
 class TableStack
 {
     std::vector<SymbolTable*> tables;
+    FuncSymbol* last_added_func_sym;
 public:
-    TableStack():tables(){}
+    TableStack():tables(), last_added_func_sym(nullptr){}
     void openNewScope();
     void closeScope();
     void addSymbolToLastTable(string name, string type, bool is_func_arg=false, string llvm_name="");
     void addSymbolToLastTable(string name, string type, string exp_type, string llvm_name="");
-    void addFuncSymbol(string name, string type, string args, string is_override);
+    void addFuncSymbol(string name, string type, string args, string is_override, string llvm_name="");
     vector<FuncSymbol*> getAllFunctionsWithName(string name);
     Symbol* searchForSymbol(string name);
     void compareType(string id_name, string exp_type);
@@ -29,6 +30,7 @@ public:
     bool isFuncExist(string func_name);
     void checkReturnType(string type);
     FuncSymbol* searchForFuncSymbol(string func_name);
+    FuncSymbol* getLastFuncSymbol() const {return last_added_func_sym;}
     ~TableStack();
 
     static std::vector<std::string> splitString(const std::string& inputString);

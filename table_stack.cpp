@@ -46,7 +46,7 @@ bool TableStack::isVectorEqualWithConvert(const std::vector<string>& left_v,cons
     return true;
 }
 
-void TableStack::addFuncSymbol(string name, string type, string args, string is_override)
+void TableStack::addFuncSymbol(string name, string type, string args, string is_override, string llvm_name)
 {
     if (this->tables.empty())
         throw std::invalid_argument("Trying to add element when there are no scopes in stack");
@@ -90,20 +90,21 @@ void TableStack::addFuncSymbol(string name, string type, string args, string is_
                 output::errorDef(yylineno, name);
         }
     }
+    FuncSymbol* s;
     if (this->tables.size() > 1)
     {
-        this->tables[this->tables.size() - 2]->insertFunc(name, type, input_args,
-                                                          is_over); // we want the func symbol to enter previous scope
+        s = this->tables[this->tables.size() - 2]->insertFunc(name, type, input_args,
+                                                          is_over, llvm_name); // we want the func symbol to enter previous scope
         this->tables[this->tables.size() - 2]->setTableReturnType(type);
         this->tables[this->tables.size() - 2]->setScopeAsFunc();
     }
     else
     {
-        this->tables[this->tables.size() - 1]->insertFunc(name, type, input_args, is_over);
+        s = this->tables[this->tables.size() - 1]->insertFunc(name, type, input_args, is_over, llvm_name);
         this->tables[this->tables.size() - 1]->setTableReturnType(type);
         this->tables[this->tables.size() - 1]->setScopeAsFunc();
     }
-
+    this->last_added_func_sym = s;
 }
 
 bool TableStack::isFuncExist(string func_name)
@@ -176,7 +177,7 @@ void TableStack::closeScope()
         throw std::invalid_argument("Trying to close scope when there are no scopes in stack");
     SymbolTable* t_to_delete = this->tables[this->tables.size()-1];
 
-  //  this->printStack();
+    this->printStack();
     if(this->tables.size() == 1)
     {
 //        cout <<"I'm in last scope" << endl;
