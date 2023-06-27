@@ -35,9 +35,9 @@ public:
 class Exp : public Node
 {
     string llvm_var;
-    vector<pair<int,BranchLabelIndex>>* trueList;
-    vector<pair<int,BranchLabelIndex>>* falseList;
-//    vector<pair<int,BranchLabelIndex>>* nextList;
+    vector<pair<int,BranchLabelIndex>> trueList;
+    vector<pair<int,BranchLabelIndex>> falseList;
+//    vector<pair<int,BranchLabelIndex>> nextList;
 
 public:
     Exp(string type, string value);
@@ -48,6 +48,8 @@ public:
     Exp(Node& exp, const string& conversion_type);
     string getLLVMName(){return this->llvm_var;}
     void setLLVMName(string llvm_var){this->llvm_var = llvm_var;}
+    vector<pair<int,BranchLabelIndex>> getTrueList(){return this->trueList;}
+    vector<pair<int,BranchLabelIndex>> getFalseList(){return this->falseList;}
 
     friend ostream& operator<<(ostream& os, const Exp& e)
     {

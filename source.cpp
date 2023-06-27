@@ -58,11 +58,11 @@ Exp::Exp(string type, string value) : Node(type)
     this->llvm_var = new_var;
     if (value == "true" || value == "false")
     {
-//        string comp_var = shaked->getFreshVar();
-//        shaked->makeCompStatement(comp_var,"eq",e1->getLLVMName(),1);
-//        int condition_address = yoav->code_buffer->emit(yoav->makeGoToCondStatement(comp_var));
-//        this->trueList = &shaked->code_buffer->makelist(pair<int,BranchLabelIndex>{condition_address, FIRST});
-//        this->falseList = &shaked->code_buffer->makelist(pair<int,BranchLabelIndex>{condition_address, SECOND});
+        string comp_var = shaked->getFreshVar();
+        shaked->makeCompStatement(comp_var,"==",new_value,"1");
+        int condition_address = shaked->code_buffer->emit(shaked->makeGoToCondStatement(comp_var));
+        this->trueList = shaked->code_buffer->makelist(pair<int,BranchLabelIndex>{condition_address, FIRST});
+        this->falseList = shaked->code_buffer->makelist(pair<int,BranchLabelIndex>{condition_address, SECOND});
     }
 }
 
@@ -120,17 +120,17 @@ Exp::Exp(Node& exp_1, string operation_val, Node& exp_2, string op, string exp_2
             Singleton* yoav = Singleton::getInstance();
             if (op == "OR")
             {
-//                this->trueList = e1->trueList;
-//                yoav->code_buffer->bpatch(*e1->falseList,exp_2_label);
-//                this->trueList = &yoav->code_buffer->merge(*(this->trueList),*(e2->trueList));
-//                this->falseList = e2->falseList;
+                this->trueList = e1->trueList;
+                yoav->code_buffer->bpatch(e1->falseList,exp_2_label);
+                this->trueList = yoav->code_buffer->merge(this->trueList,e2->trueList);
+                this->falseList = e2->falseList;
             }
             if (op == "AND")
             {
-//                this->falseList = e1->falseList;
-//                yoav->code_buffer->bpatch(*e1->trueList,exp_2_label);
-//                this->falseList = &yoav->code_buffer->merge(*(this->falseList),*(e2->falseList));
-//                this->trueList = e2->trueList;
+                this->falseList = e1->falseList;
+                yoav->code_buffer->bpatch(e1->trueList,exp_2_label);
+                this->falseList = yoav->code_buffer->merge(this->falseList,e2->falseList);
+                this->trueList = e2->trueList;
             }
             return;
         }

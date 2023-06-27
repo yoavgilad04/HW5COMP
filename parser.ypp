@@ -114,6 +114,7 @@ Statement:      LBRACE N Statements RBRACE C                                    
                 | Type ID SC                                                        {output::printProductionRule(17);
                                                                                     string new_var = shaked->getFreshVar();
                                                                                     table_stack.addSymbolToLastTable($2->getType(), $1->getType(), false, new_var);
+
                                                                                     code_buffer->emit(shaked->allocCommand(new_var, $1->getType()));
                                                                                     code_buffer->emit(shaked->storeCommand(new_var, $1->getType(), "0"));}
                 | Type ID ASSIGN Exp SC                                             {output::printProductionRule(18);
@@ -122,7 +123,17 @@ Statement:      LBRACE N Statements RBRACE C                                    
                                                                                     string exp_llvm_name = exp->getLLVMName();
                                                                                     table_stack.addSymbolToLastTable($2->getType(), $1->getType(), $4->getType(), new_var);
                                                                                     code_buffer->emit(shaked->allocCommand(new_var, $1->getType()));
+                                                                                    if ($1->getType() == "BOOL")
+                                                                                    {
+                                                                                        string true_case = code_buffer->genLabel();
+                                                                                        shaked->addAssignmentCommand(new_var, "1");
+                                                                                        string false_case = code_buffer->genLabel();
+                                                                                        shaked->addAssignmentCommand(new_var, "0");
+                                                                                        code_buffer->bpatch(exp->getTrueList(), true_case);
+                                                                                        code_buffer->bpatch(exp->getFalseList(), false_case);
+                                                                                    }
                                                                                     code_buffer->emit(shaked->storeCommand(new_var, $1->getType(), exp_llvm_name));
+
                                                                                     }
                 | ID ASSIGN Exp SC                                                  {output::printProductionRule(19);
                                                                                     Exp* exp = dynamic_cast<Exp*>($3);
