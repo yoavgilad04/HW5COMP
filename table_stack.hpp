@@ -6,10 +6,13 @@
 #include "staff/hw3_output.hpp"
 #include <stdio.h>
 #include <stdlib.h>
+#include "source.hpp"
 
 using namespace std;
 
 extern int yylineno;
+
+class Exp;
 
 class TableStack
 {
@@ -36,7 +39,7 @@ public:
     static std::vector<std::string> splitString(const std::string& inputString);
     static bool isValidConvert(string type_1, string type_2);
     static bool isVectorsEqual(const std::vector<string>& v1,const std::vector<string>& v2);
-    static bool isVectorEqualWithConvert(const std::vector<string>& v1,const std::vector<string>& v2);
+    static bool isVectorEqualWithConvert(const std::vector<string>& v1, std::vector<Exp>& v2);
 };
 
 

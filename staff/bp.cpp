@@ -4,6 +4,9 @@
 #include <sstream>
 using namespace std;
 
+bool in_function = false;
+bool after_label = false;
+
 bool replace(string& str, const string& from, const string& to, const BranchLabelIndex index);
 
 CodeBuffer::CodeBuffer() : buffer(), globalDefs() {}
@@ -15,10 +18,30 @@ string CodeBuffer::genLabel(){
 	std::string ret(label.str());
 	label << ":";
 	emit(label.str());
+    after_label = true;
 	return ret;
 }
 
 int CodeBuffer::emit(const string &s){
+    string new_s = s;
+    bool is_label = false;
+    string label = "label";
+    if(s.length() >= label.length())
+    {
+        is_label = s.substr(0, label.length()) == label;
+    }
+    if(in_function)
+    {
+        new_s = "    " + new_s;
+        if(after_label && !(is_label))
+        {
+            new_s = "    " + new_s;
+        }
+    }
+    return this->inner_emit(new_s);
+}
+
+int CodeBuffer::inner_emit(const string &s){
     buffer.push_back(s);
 	return buffer.size() - 1;
 }

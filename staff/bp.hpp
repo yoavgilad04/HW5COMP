@@ -13,6 +13,7 @@ enum BranchLabelIndex {FIRST, SECOND};
 class CodeBuffer{
 	std::vector<std::string> buffer;
 	std::vector<std::string> globalDefs;
+    int inner_emit(const std::string &command);
 public:
     CodeBuffer();
     CodeBuffer(CodeBuffer const&);
@@ -22,8 +23,8 @@ public:
 	//generates a jump location label for the next command, writes it to the buffer and returns it
 	std::string genLabel();
 
-	//writes command to the buffer, returns its location in the buffer
-	int emit(const std::string &command);
+    //writes command to the buffer, returns its location in the buffer
+    int emit(const std::string &command);
 
 	//gets a pair<int,BranchLabelIndex> item of the form {buffer_location, branch_label_index} and creates a list for it
 	static vector<pair<int,BranchLabelIndex>> makelist(pair<int,BranchLabelIndex> item);

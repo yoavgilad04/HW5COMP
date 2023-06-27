@@ -15,6 +15,8 @@ extern int loop_count;
 Singleton* Singleton::sin_instance = nullptr;
 Singleton* shaked = Singleton::getInstance();
 CodeBuffer* code_buffer = shaked->code_buffer;
+extern bool in_function;
+extern bool after_label;
 %}
 
 %nonassoc STRING;
@@ -64,10 +66,33 @@ Funcs:          epsilon                                                         
 ;
 
 M: epsilon                                                                          {table_stack.openNewScope();
-                                                                                     table_stack.addFuncSymbol("print", "VOID", "STRING", "default");
-                                                                                     table_stack.addFuncSymbol("printi", "VOID", "INT", "default");
+                                                                                     table_stack.addFuncSymbol("print", "VOID", "STRING", "default", "print");
+                                                                                     table_stack.addFuncSymbol("printi", "VOID", "INT", "default", "printi");
                                                                                      code_buffer->emitGlobal("declare i32 @printf(i8*, ...)");
-                                                                                     code_buffer->emitGlobal("declare void @exit(i32)");}
+                                                                                     code_buffer->emitGlobal("declare void @exit(i32)");
+                                                                                     code_buffer->emitGlobal("@.int_specifier = constant [4 x i8] c\"%d\\0A\\00\"");
+                                                                                     code_buffer->emitGlobal("@.str_specifier = constant [4 x i8] c\"%s\\0A\\00\"");
+                                                                                     code_buffer->emitGlobal("@.devide_by_zero_error = constant [24 x i8] c\"Error division by zero\\0A\\00\"");
+                                                                                     vector<string> emit_strings = vector<string>{
+                                                                                                                                         "",
+                                                                                                                                         "define void @printi(i32) {",
+                                                                                                                                         "    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.int_specifier, i32 0, i32 0",
+                                                                                                                                         "    call i32 (i8*, ...) @printf(i8* %spec_ptr, i32 %0)",
+                                                                                                                                         "    ret void",
+                                                                                                                                         "}",
+                                                                                                                                         "",
+                                                                                                                                         "define void @print(i8*) {",
+                                                                                                                                         "    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.str_specifier, i32 0, i32 0",
+                                                                                                                                         "    call i32 (i8*, ...) @printf(i8* %spec_ptr, i8* %0)",
+                                                                                                                                         "    ret void",
+                                                                                                                                         "}",
+                                                                                                                                         ""
+                                                                                                                                     };
+                                                                                     for(int i=0; i<emit_strings.size();i++)
+                                                                                     {
+                                                                                        code_buffer->emit(emit_strings[i]);
+                                                                                     }
+                                                                                     in_function = false;}
 ;
 N: epsilon                                                                          {table_stack.openNewScope();}
 ;
@@ -75,11 +100,15 @@ C: epsilon                                                                      
 ;
 X: OverRide RetType ID LPAREN Formals                                               {string new_var = shaked->getFreshVar();
                                                                                      table_stack.addFuncSymbol($3->getType(), $2->getType(), $5->getType(), $1->getType(), new_var);
-                                                                                     code_buffer->emit(shaked->makeDeclareCommand(table_stack.getLastFuncSymbol()));
-                                                                                     code_buffer->emit(shaked->makeDefineCommand(table_stack.getLastFuncSymbol()));
+                                                                                     shaked->addFunction(table_stack.getLastFuncSymbol());
+                                                                                     code_buffer->emit("{");
+                                                                                     in_function = true;
                                                                                      }
 ;
 FuncDecl:  X RPAREN LBRACE Statements RBRACE                                        {output::printProductionRule(4);
+                                                                                     in_function = false;
+                                                                                     code_buffer->emit("}");
+                                                                                     code_buffer->emit("");
                                                                                      table_stack.closeScope();}
 ;
 OverRide:       epsilon                                                             {output::printProductionRule(5);
@@ -122,16 +151,20 @@ Statement:      LBRACE N Statements RBRACE C                                    
                                                                                     Exp* exp = dynamic_cast<Exp*>($4);
                                                                                     string exp_llvm_name = exp->getLLVMName();
                                                                                     table_stack.addSymbolToLastTable($2->getType(), $1->getType(), $4->getType(), new_var);
-                                                                                    code_buffer->emit(shaked->allocCommand(new_var, $1->getType()));
                                                                                     if ($1->getType() == "BOOL")
                                                                                     {
                                                                                         string true_case = code_buffer->genLabel();
                                                                                         shaked->addAssignmentCommand(new_var, "1");
+                                                                                        int true_jump_address = code_buffer->emit(shaked->makeGoToStatement());
                                                                                         string false_case = code_buffer->genLabel();
                                                                                         shaked->addAssignmentCommand(new_var, "0");
                                                                                         code_buffer->bpatch(exp->getTrueList(), true_case);
                                                                                         code_buffer->bpatch(exp->getFalseList(), false_case);
+                                                                                        string next_case = code_buffer->genLabel();
+                                                                                        code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{true_jump_address, FIRST}),next_case);
+
                                                                                     }
+                                                                                    code_buffer->emit(shaked->allocCommand(new_var, $1->getType()));
                                                                                     code_buffer->emit(shaked->storeCommand(new_var, $1->getType(), exp_llvm_name));
 
                                                                                     }
@@ -232,7 +265,7 @@ Exp:            LPAREN Exp RPAREN                                               
                 | NUM B                                                             {output::printProductionRule(40);
                                                                                      $$ = new Exp(*$1);}
                 | STRING                                                            {output::printProductionRule(41);
-                                                                                     $$ = new Exp("STRING");}
+                                                                                     $$ = new Exp("STRING", $1->getType());}
                 | TRUE                                                              {output::printProductionRule(42);
                                                                                      $$ = new Exp("BOOL", $1->getType());}
                 | FALSE                                                             {output::printProductionRule(43);
@@ -251,9 +284,6 @@ Exp:            LPAREN Exp RPAREN                                               
                                                                                      $$ = new Exp(*$4, $2->getType());}
 ;
 MBP:            epsilon                                                             {$$=new Node(shaked->code_buffer->genLabel());}
-;
-NBP:            epsilon                                                             {$$=new Node(shaked->code_buffer->genLabel());
-                                                                                        }
 ;
 epsilon:        %empty;
 

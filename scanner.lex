@@ -21,8 +21,8 @@ incomment      ([^\x0a\x0d])
 
 %%
 {quote}                                 BEGIN(STR);
-<STR>{quote}                            yylval=new Node(yytext); BEGIN(INITIAL); return STRING;
-<STR>({instring}|\\[nrt"\\])+           ;
+<STR>{quote}                            BEGIN(INITIAL); return STRING;
+<STR>({instring}|\\[nrt"\\])+           yylval=new Node(yytext);
 <STR>.                                  output::errorLex(yylineno); exit(0);
 {whitespace}				            ;
 void                                    yylval=new Node("VOID"); return VOID;

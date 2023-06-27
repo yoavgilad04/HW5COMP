@@ -5,6 +5,7 @@
 #include <string>
 #include "staff/bp.hpp"
 #include "symbols/symbol.hpp"
+#include "source.hpp"
 using namespace std;
 
 
@@ -114,12 +115,14 @@ public:
 
     void printBuffer()
     {
+        cout << "===================================================================================================================" << endl;
+        this->code_buffer->printGlobalBuffer();
         this->code_buffer->printCodeBuffer();
     }
 
     void checkIfZero(string var)
     {
-//        string new_var = this->getFreshVar()
+//        string new_var = this->getFreshVar();
 //        string comp_cmd = this->makeCompStatement(new_var, "==", var, "0");
 //        string br_cmd = this->makeGoToCondStatement(new_var);
 //        string true_label = this->code_buffer->genLabel();
@@ -127,28 +130,34 @@ public:
 //        string false_label = this->code_buffer->genLabel();
     }
 
-    string makeDeclareCommand(FuncSymbol* s)
+    void addFunction(FuncSymbol* s)
     {
         vector<string> args = s->getArgs();
-        string output_string = "declare " + s->getType() + " @" + s->getLLVMName() + "(";
-        for(int i=0; i<args.size(); i++)
+        string base_string = s->getType() + " @" + s->getLLVMName() + "_" + s->getName()  + "(";
+//        string declare_string = "declare " + base_string;
+//        for(int i=0; i<args.size(); i++)
+//        {
+//            if (i == args.size()-1)
+//                declare_string += this->convertTypeToIType(args[i]);
+//            else
+//                declare_string += this->convertTypeToIType(args[i]) + ", ";
+//        }
+//        declare_string += ")";
+//        this->code_buffer->emit(declare_string);
+        string define_string = "define " + base_string;
+        int args_size = args.size();
+        for(int i=0; i<args_size - 1; i++)
         {
-            if (i == args.size()-1)
-                output_string += this->convertTypeToIType(args[i]);
-            else
-                output_string += this->convertTypeToIType(args[i]) + ", ";
+            define_string +=  "i32, ";
         }
-        output_string += ")";
-        return output_string;
+        if(args_size > 0)
+        {
+            define_string += "i32";
+        }
+        define_string += ")";
+        this->code_buffer->emit(define_string);
     }
 
-    string makeDefineCommand(FuncSymbol* s)
-    {
-        string output_string = "define " + s->getType() + " @" + s->getLLVMName() + "(";
-        //todo : add the names of the func args;
-        output_string += ")";
-        return output_string;
-    }
     string makeBinaryStatement(string target, string op, string var1, string var2)
     {
         string output_string = "%" + target + " = ";
@@ -214,6 +223,29 @@ public:
         }
 
         return str.substr(0, prefix.length()) == prefix;
+    }
+
+    void addStringStatement(string target, string input_string)
+    {
+        string output_string = "%" + target + " = alloca [" + std::to_string(int(input_string.size()) + 2) + "x i8] c\"";
+        output_string += input_string + "\\0A\\00\"";
+        this->code_buffer->emit(output_string);
+    }
+
+    void addFunctionCall(string target, string func_name, vector<Exp>& func_args)
+    {
+        string output_string = "%" + target + " = call i32 @" + func_name + "(";
+        int last_index = func_args.size()-1;
+        for(int i=0;i<last_index;i++)
+        {
+            output_string += "i32 %" + func_args[i].getLLVMName() + ", ";
+        }
+        if(last_index >= 0)
+        {
+            output_string += "i32 %" + func_args[last_index].getLLVMName();
+        }
+        output_string += ")";
+        this->code_buffer->emit(output_string);
     }
 
 };

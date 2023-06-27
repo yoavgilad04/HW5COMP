@@ -37,7 +37,7 @@ class Exp : public Node
     string llvm_var;
     vector<pair<int,BranchLabelIndex>> trueList;
     vector<pair<int,BranchLabelIndex>> falseList;
-//    vector<pair<int,BranchLabelIndex>> nextList;
+    vector<pair<int,BranchLabelIndex>> nextList;
 
 public:
     Exp(string type, string value);
@@ -74,23 +74,27 @@ public:
 
 class ExpList : public Node
 {
-    vector<string> exp_list;
+    std::vector<Exp> exp_list;
 public:
     ExpList(Node& exp)
     {
-            this->exp_list.insert(this->exp_list.begin(), exp.getType());
+//        this->exp_list.insert(this->exp_list.begin(), exp.getType());
+        Exp* e = dynamic_cast<Exp*>(&exp);
+        this->insert(*e);
     }
     ExpList(Node& exp, Node* exp_list){
         ExpList* old_exp_list = dynamic_cast<ExpList*>(exp_list);
         this->exp_list = *(old_exp_list->getExpList());
         delete old_exp_list;
-        this->exp_list.insert(this->exp_list.begin(),exp.getType());
+        Exp* e = dynamic_cast<Exp*>(&exp);
+        this->insert(*e);
+//        this->exp_list.insert(this->exp_list.begin(),exp.getType());
     }
-    void insert(Exp& exp)
+    void insert(Exp exp)
     {
-        this->exp_list.insert(this->exp_list.begin(),exp.getType());
+        this->exp_list.push_back(exp);
     }
-    vector<string>* getExpList()
+    vector<Exp>* getExpList()
     {
         return &(this->exp_list);
     }
@@ -98,9 +102,11 @@ public:
 
 class Call : public Node
 {
+    string llvm_var;
 public:
     Call(Node& function_name, Node* exp_list);
     Call(Node& function_name);
+    string getLLVMName(){return this->llvm_var;}
 };
 
 #endif

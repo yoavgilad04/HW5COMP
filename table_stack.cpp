@@ -34,13 +34,13 @@ bool TableStack::isVectorsEqual(const std::vector<string>& v1,const std::vector<
     return true;
 }
 
-bool TableStack::isVectorEqualWithConvert(const std::vector<string>& left_v,const std::vector<string>& right_v)
+bool TableStack::isVectorEqualWithConvert(const std::vector<string>& left_v, std::vector<Exp>& right_v)
 {
     if (left_v.size() != right_v.size())
         return false;
     for(int i=0; i<left_v.size(); i++)
     {
-        if (!isValidConvert(left_v[i],right_v[i]))
+        if (!isValidConvert(left_v[i],right_v[i].getType()))
             return false;
     }
     return true;

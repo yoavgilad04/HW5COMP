@@ -48,11 +48,13 @@ class FuncSymbol : public Symbol
 {
     vector<string> input_args;
     bool is_override;
+    int cur_val;
 public:
     FuncSymbol(string name, string type, int offset, bool is_func, vector<string> input_args, bool is_override, string llvm_name):
-            Symbol(name, type, offset, is_func, llvm_name), input_args(input_args), is_override(is_override){};
+            Symbol(name, type, offset, is_func, llvm_name), input_args(input_args), is_override(is_override), cur_val(0){};
     bool isOverride(){return this->is_override;}
     vector<string> getArgs() const {return this->input_args;}
+    int getNextVarNum() {return this->cur_val++;}
     ostream& printSymbol(std::ostream& os) const override
     {
         os << this->getName() << " ";
