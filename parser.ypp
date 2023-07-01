@@ -17,6 +17,8 @@ Singleton* shaked = Singleton::getInstance();
 CodeBuffer* code_buffer = shaked->code_buffer;
 extern bool in_function;
 extern bool after_label;
+vector<int> gotolines_break;
+vector<int> gotolines_cont;
 %}
 
 %nonassoc STRING;
@@ -73,25 +75,8 @@ M: epsilon                                                                      
                                                                                      code_buffer->emitGlobal("@.int_specifier = constant [4 x i8] c\"%d\\0A\\00\"");
                                                                                      code_buffer->emitGlobal("@.str_specifier = constant [4 x i8] c\"%s\\0A\\00\"");
                                                                                      code_buffer->emitGlobal("@.devide_by_zero_error = constant [24 x i8] c\"Error division by zero\\0A\\00\"");
-                                                                                     vector<string> emit_strings = vector<string>{
-                                                                                                                                         "",
-                                                                                                                                         "define void @printi(i32) {",
-                                                                                                                                         "    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.int_specifier, i32 0, i32 0",
-                                                                                                                                         "    call i32 (i8*, ...) @printf(i8* %spec_ptr, i32 %0)",
-                                                                                                                                         "    ret void",
-                                                                                                                                         "}",
-                                                                                                                                         "",
-                                                                                                                                         "define void @print(i8*) {",
-                                                                                                                                         "    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.str_specifier, i32 0, i32 0",
-                                                                                                                                         "    call i32 (i8*, ...) @printf(i8* %spec_ptr, i8* %0)",
-                                                                                                                                         "    ret void",
-                                                                                                                                         "}",
-                                                                                                                                         ""
-                                                                                                                                     };
-                                                                                     for(int i=0; i<emit_strings.size();i++)
-                                                                                     {
-                                                                                        code_buffer->emit(emit_strings[i]);
-                                                                                     }
+                                                                                     shaked->makePrintImplementation();
+                                                                                     shaked->addCheckIfZeroFunction();
                                                                                      in_function = false;}
 ;
 N: epsilon                                                                          {table_stack.openNewScope();}
@@ -181,33 +166,36 @@ Statement:      LBRACE N Statements RBRACE C                                    
                                                                                      code_buffer->emit(shaked->retCommand());}
                 | RETURN Exp SC                                                     {output::printProductionRule(22);
                                                                                      table_stack.checkReturnType($2->getType());}
-                | IF LPAREN BOOLEXP RPAREN IFN Statement                            {output::printProductionRule(23);
+                | IF LPAREN BOOLEXP RPAREN IFN Statement C                           {output::printProductionRule(23);
                                                                                      string false_label = code_buffer->genLabel();
                                                                                      code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{$3->getLine(),FIRST}), $5->getType());
                                                                                      code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{$3->getLine(),SECOND}), false_label);
                                                                                      }
-                | IF LPAREN BOOLEXP RPAREN IFN Statement ELSE IFN2 Statement {output::printProductionRule(24);
+                | IF LPAREN BOOLEXP RPAREN IFN Statement C ELSE IFN2 Statement C       {output::printProductionRule(24);
                                                                                      code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{$3->getLine(),FIRST}), $5->getType());
                                                                                      code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{$3->getLine(),SECOND}), $8->getType());
                                                                                      string next_label = code_buffer->genLabel();
-                                                                                     code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{$8->getLine(),FIRST}), next_label);
+                                                                                     code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{$9->getLine(),FIRST}), next_label);
                                                                                      }
-                | WHILE LPAREN MBP BOOLEXP RPAREN N INLOOP IFN Statement OFFLOOP C   {
+                | WHILE LPAREN MBP BOOLEXP RPAREN INLOOP IFN Statement OFFLOOP C   {
                                                                                       output::printProductionRule(25);
-                                                                                      code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{$4->getLine(),FIRST}), $8->getType());
+                                                                                      code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{$4->getLine(),FIRST}), $7->getType());
                                                                                       string next_label = code_buffer->genLabel();
                                                                                       code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{$4->getLine(),SECOND}),next_label);
                                                                                       string start_loop_label = $3->getType();
-                                                                                      code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{$10->getLine(),FIRST}),start_loop_label);
+                                                                                      code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{$9->getLine(),FIRST}),start_loop_label);
+
                                                                                       }
 
                 | BREAK SC                                                          {if (loop_count == 0)
                                                                                      output::errorUnexpectedBreak(yylineno);
-                                                                                     output::printProductionRule(26);}
+                                                                                     output::printProductionRule(26);
+                                                                                     gotolines_break.push_back(code_buffer->emit(shaked->makeGoToStatement()));}
 
                 | CONTINUE SC                                                       {if (loop_count == 0)
                                                                                      output::errorUnexpectedContinue(yylineno);
-                                                                                     output::printProductionRule(27);}
+                                                                                     output::printProductionRule(27);
+                                                                                     gotolines_cont.push_back(code_buffer->emit(shaked->makeGoToStatement()));}
 ;
 
 IFN: epsilon                                                                          {table_stack.openNewScope();

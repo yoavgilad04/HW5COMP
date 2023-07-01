@@ -46,6 +46,8 @@ public:
             i_type = "i1";
         if(type == "BYTE")
             i_type = "i8";
+        if(type == "VOID")
+            i_type = "void"; //todo: what i type is void?
         return i_type;
     }
 
@@ -98,9 +100,14 @@ public:
         compi->code_buffer->emit(full_command);
     }
 
-    string makeZextConvertStatement(string target, string type, string value)
+    string makeZextConvertStatement(string target, string type, string value, isZext=true)
     {
-    string output_string = "%" + target + " = zext i";
+        string action;
+        if (isZext)
+            action = "zext";
+        else
+            action = "trunc";
+    string output_string = "%" + target + " = " + action " i";
     if (type == "BYTE")
     {
         output_string += "8 ";
@@ -109,6 +116,7 @@ public:
     {
         output_string += "1 ";
     }
+
     output_string += value + " to i32";
     return output_string;
     }
@@ -120,20 +128,40 @@ public:
         this->code_buffer->printCodeBuffer();
     }
 
+    void addCheckIfZeroFunction()
+    {
+        vector<string> emit_strings = vector<string>{
+                "",
+                "define void @divByZero() {",
+                "    %spec_ptr = getelementptr [24 x i8], [24 x i8]* @.divide_by_zero_error, i32 0, i32 0",
+                "    call i32 (i8*, ...) @printf(i8* %spec_ptr, i32 %0)",
+                "    %exitCode = add i32 0, 0",
+                "    call void @exit(i32 %exitCode)",
+                "}",
+                "",
+                };
+        for(int i=0; i<emit_strings.size();i++)
+        {
+            code_buffer->emit(emit_strings[i]);
+        }
+
+    }
     void checkIfZero(string var)
     {
-//        string new_var = this->getFreshVar();
-//        string comp_cmd = this->makeCompStatement(new_var, "==", var, "0");
-//        string br_cmd = this->makeGoToCondStatement(new_var);
-//        string true_label = this->code_buffer->genLabel();
-//        string
-//        string false_label = this->code_buffer->genLabel();
+        string new_var = this->getFreshVar();
+        this->code_buffer->emit(this->makeCompStatement(new_var, "==", var, "0"));
+        int line = this->code_buffer->emit(this->makeGoToCondStatement(new_var));
+        string true_label = this->code_buffer->genLabel();
+        code_buffer->emit("call i32 @divByZero()");
+        string false_label = this->code_buffer->genLabel();
+        code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{line,FIRST}), true_label);
+        code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{line ,SECOND}), false_label);
     }
 
     void addFunction(FuncSymbol* s)
     {
         vector<string> args = s->getArgs();
-        string base_string = s->getType() + " @" + s->getLLVMName() + "_" + s->getName()  + "(";
+        string base_string = this->convertTypeToIType(s->getType()) + " @" + s->getLLVMName() + "_" + s->getName()  + "(";
 //        string declare_string = "declare " + base_string;
 //        for(int i=0; i<args.size(); i++)
 //        {
@@ -158,7 +186,7 @@ public:
         this->code_buffer->emit(define_string);
     }
 
-    string makeBinaryStatement(string target, string op, string var1, string var2)
+    string makeBinaryStatement(string target, string op, string var1, string var2, bool isByte=false)
     {
         string output_string = "%" + target + " = ";
         if(op == "ADD")
@@ -172,12 +200,14 @@ public:
             this->checkIfZero(var2);
             output_string += "udiv ";
         }
-        //todo: deal with dividing zero
         if (this->startsWith(var1, "var"))
             var1 = "%" + var1;
         if (this->startsWith(var2, "var"))
             var2 = "%" + var2;
-        output_string += "i32 " + var1 + ", " + var2;
+        string type = "i32";
+        if (isByte)
+            type = "i8";
+        output_string += type + " " + var1 + ", " + var2;
         return output_string;
     }
 
@@ -232,6 +262,29 @@ public:
         this->code_buffer->emit(output_string);
     }
 
+    void makePrintImplementation()
+    {
+        vector<string> emit_strings = vector<string>{
+                "",
+                "define void @printi(i32) {",
+                "    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.int_specifier, i32 0, i32 0",
+                "    call i32 (i8*, ...) @printf(i8* %spec_ptr, i32 %0)",
+                "    ret void",
+                "}",
+                "",
+                "define void @print(i8*) {",
+                "    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.str_specifier, i32 0, i32 0",
+                "    call i32 (i8*, ...) @printf(i8* %spec_ptr, i8* %0)",
+                "    ret void",
+                "}",
+                ""
+        };
+        for(int i=0; i<emit_strings.size();i++)
+        {
+            code_buffer->emit(emit_strings[i]);
+        }
+
+    }
     void addFunctionCall(string target, string func_name, vector<Exp>& func_args)
     {
         string output_string = "%" + target + " = call i32 @" + func_name + "(";

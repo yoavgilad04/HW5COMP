@@ -48,6 +48,7 @@ Exp::Exp(string type, string value) : Node(type)
     if(type == "STRING")
     {
         shaked->addStringStatement(new_var, value);
+        this->llvm_var = new_var;
         return;
     }
     string new_value;
@@ -99,8 +100,13 @@ Exp::Exp(string operation_val, Node& exp_1, Node& exp_2, string op)
                 op = "MUL";
             if (op == "/")
                 op = "DIV";
-
-            cmd = shaked->makeBinaryStatement(this->llvm_var, op, e1_name, e2_name);
+            if (this->type == "BYTE")
+            {
+                shaked->code_buffer->emit("%" + e1->getLLVMName()_name + " = i32 trunc to i8");
+                cmd = shaked->makeBinaryStatement(this->llvm_var, op, e1_name, e2_name, true);
+            }
+            else
+                cmd = shaked->makeBinaryStatement(this->llvm_var, op, e1_name, e2_name);
             shaked->code_buffer->emit(cmd);
             return;
         }
@@ -255,6 +261,8 @@ Call::Call(Node &function_name, Node* exp_list)
 {
     ExpList* expList = dynamic_cast<ExpList*>(exp_list);
     vector<Exp>* true_exp_list = expList->getExpList();
+    if (!true_exp_list->empty())
+        cout << "NAME:  " << function_name.getType()  << " Expression list: " << true_exp_list->front().getType();
     int candidate_funcs = 0;
     string func_type ="";
     string name = function_name.getType();
