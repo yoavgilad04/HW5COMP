@@ -116,7 +116,7 @@ public:
         string array_name = this->array_stack.back();
         string new_var = this->getFreshVar();
         code_buffer->emit("%" + new_var + " = getelementptr [10 x i32], [10 x i32]* % " + array_name + ", i32 0, i32 " + to_string(offset));
-        code_buffer->emit("store i32 %" + to_string(offset) + ", i32* %" + new_var);
+        code_buffer->emit("store i32 %" + var + ", i32* %" + new_var);
 //        string output_string = "store " + i_type + " ";
 //        if (this->startsWith(var, "var"))
 //            output_string +="%";
