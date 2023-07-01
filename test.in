@@ -1,6 +1,6 @@
 int foo(int x, int y, bool isShakedGay)
 {
-    return 1;
+    int z = x + y;
 }
 void main()
 {

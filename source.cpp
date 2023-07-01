@@ -207,7 +207,11 @@ Exp::Exp(Node &exp, const string &conversion_type)
         }
         Singleton* shaked = Singleton::getInstance();
         string new_var = shaked->getFreshVar();
-        shaked->makeLoadCommand(new_var, t->getType(), t->getLLVMName(), t->getOffset());
+        int offset = t->getOffset();
+        if (offset >= 0)
+            shaked->makeLoadCommand(new_var, t->getType(), t->getLLVMName(), t->getOffset());
+        else
+            shaked->makeBinaryStatement(new_var, "ADD", "%" + to_string(((-1 * offset) -1)) , "0");
         this->type = t->getType();
         this->llvm_var = new_var;
         return;
