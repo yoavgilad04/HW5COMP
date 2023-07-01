@@ -5,5 +5,5 @@ int foo(byte x, byte y, bool isShakedGay)
 }
 void main()
 {
-    foo(1,2,false);
+    foo(1b,2b,false);
 }

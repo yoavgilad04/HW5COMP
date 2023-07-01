@@ -269,8 +269,6 @@ Call::Call(Node &function_name, Node* exp_list)
 {
     ExpList* expList = dynamic_cast<ExpList*>(exp_list);
     vector<Exp>* true_exp_list = expList->getExpList();
-    if (!true_exp_list->empty())
-        cout << "NAME:  " << function_name.getType()  << " Expression list: " << true_exp_list->front().getType();
     int candidate_funcs = 0;
     string func_type ="";
     string name = function_name.getType();
