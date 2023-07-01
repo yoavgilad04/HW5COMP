@@ -1,6 +1,6 @@
 int foo(byte x, byte y, bool isShakedGay)
 {
-    int z = x + y;
+    byte z = x + y;
 }
 void main()
 {
