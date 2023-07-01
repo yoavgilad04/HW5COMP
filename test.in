@@ -1,4 +1,4 @@
-int foo(byte x, byte y, bool isShakedGay)
+int foo(int x, int y, bool isShakedGay)
 {
     int z = x + y;
     return z;
