@@ -160,7 +160,7 @@ Statement:      LBRACE N Statements RBRACE C                                    
                                                                                     string exp_llvm_name = exp->getLLVMName();
                                                                                     table_stack.compareType($1->getType(), $3->getType());
                                                                                     Symbol* s = table_stack.searchForSymbol($1->getType());
-                                                                                    code_buffer->emit(shaked->storeCommand(s->getLLVMName(), s->getType(), exp_llvm_name, s->getOffset()));
+                                                                                    shaked->storeCommand(s->getLLVMName(), s->getType(), exp_llvm_name, s->getOffset());
                                                                                     }
                 | Call SC                                                           {output::printProductionRule(20);}
                 | RETURN SC                                                         {output::printProductionRule(21);
