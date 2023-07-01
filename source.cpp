@@ -102,8 +102,9 @@ Exp::Exp(string operation_val, Node& exp_1, Node& exp_2, string op)
                 op = "DIV";
             if (this->type == "BYTE")
             {
-                shaked->code_buffer->emit("%" + e1->getLLVMName()_name + " = i32 trunc to i8");
-                cmd = shaked->makeBinaryStatement(this->llvm_var, op, e1_name, e2_name, true);
+                string new_var = shaked->getFreshVar();
+
+                shaked->code_buffer->emit("%" + new_var + " = i32 %" + e1_name + " trunc to i8")cmd = shaked->makeBinaryStatement(this->llvm_var, op, e1_name, e2_name, true);
             }
             else
                 cmd = shaked->makeBinaryStatement(this->llvm_var, op, e1_name, e2_name);

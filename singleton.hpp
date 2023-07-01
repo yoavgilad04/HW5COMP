@@ -116,7 +116,6 @@ public:
     {
         output_string += "1 ";
     }
-
     output_string += value + " to i32";
     return output_string;
     }
