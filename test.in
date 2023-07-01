@@ -8,7 +8,14 @@ void main()
         {
             x = x - 1;
             continue;
+            break;
+            continue;
+            break;
         }
       int y = 9;
+      continue;
+      continue;
+      break;
+      break;
    }
 }
