@@ -1,6 +1,6 @@
 #include "table_stack.hpp"
 
-std::vector<std::string> splitString(const std::string& inputString) {
+std::vector<std::string> TableStack::splitString(const std::string& inputString) {
     std::vector<std::string> words;
     std::stringstream ss(inputString);
     std::string word;
@@ -58,7 +58,7 @@ void TableStack::addFuncSymbol(string name, string type, string args, string is_
         if(is_override == "OVERRIDE")
             output::errorMainOverride(yylineno);
     }
-    vector<string> input_args = splitString(args);
+    vector<string> input_args = TableStack::splitString(args);
     if(input_args.size() > 0 && this->tables.size() > 1)
     {
         SymbolTable* last_table = this->tables[this->tables.size()-1];

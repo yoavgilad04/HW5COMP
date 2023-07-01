@@ -109,4 +109,13 @@ public:
     string getLLVMName(){return this->llvm_var;}
 };
 
+class BreakOrCont
+{
+    int cond_line;
+    int loop_num;
+public:
+    BreakOrCont(int cond_line, int loop_num):cond_line(cond_line), loop_num(loop_num){}
+    int getLine(){return cond_line;}
+    int getLoopNum(){return loop_num;}
+};
 #endif

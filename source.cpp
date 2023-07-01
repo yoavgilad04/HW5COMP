@@ -8,6 +8,9 @@
 TableStack table_stack;
 bool is_in_loop = false;
 int loop_count = 0;
+int last_loop_num = 0;
+vector<BreakOrCont> gotolines_break;
+vector<BreakOrCont> gotolines_cont;
 
 bool isInt(const std::string &str) {
     try {

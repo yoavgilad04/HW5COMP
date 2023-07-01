@@ -19,23 +19,23 @@
     <option name="openedFilesInfos">
       <list>
         <OpenedFileInfo>
-          <option name="caretOffset" value="0" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/llvm_ex/fibonacci.llvm" />
+          <option name="caretOffset" value="2795" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/source.hpp" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="15044" />
+          <option name="caretOffset" value="16778" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/parser.ypp" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="1581" />
+          <option name="caretOffset" value="1365" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/table_stack.hpp" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="412" />
+          <option name="caretOffset" value="65" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/table_stack.cpp" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="78" />
+          <option name="caretOffset" value="270" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/test.in" />
         </OpenedFileInfo>
         <OpenedFileInfo>
@@ -47,16 +47,12 @@
           <option name="fileUrl" value="file://$PROJECT_DIR$/tests/t01.out" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="3119" />
+          <option name="caretOffset" value="300" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/source.cpp" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="676" />
+          <option name="caretOffset" value="306" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/singleton.hpp" />
-        </OpenedFileInfo>
-        <OpenedFileInfo>
-          <option name="caretOffset" value="2049" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/source.hpp" />
         </OpenedFileInfo>
       </list>
     </option>

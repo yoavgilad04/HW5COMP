@@ -8,6 +8,10 @@
 #include "source.hpp"
 using namespace std;
 
+extern int last_loop_num;
+extern vector<BreakOrCont> gotolines_break;
+extern vector<BreakOrCont> gotolines_cont;
+
 
 class Singleton {
 private:
@@ -36,6 +40,23 @@ public:
     void print()
     {
         cout << this->x << endl;
+    }
+
+    void handleBreakAndCont(string next_label,string start_loop_label)
+    {
+        if (!gotolines_break.empty())
+        {
+            BreakOrCont b = gotolines_break.back();
+            if (b.getLoopNum() == last_loop_num)
+                code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{b.getLine(),FIRST}),next_label);
+
+        }
+        if (!gotolines_cont.empty())
+        {
+            BreakOrCont c = gotolines_cont.back();
+            if (c.getLoopNum() == last_loop_num)
+                code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{c.getLine(),FIRST}),start_loop_label);
+        }
     }
 
     string convertTypeToIType(string type)
@@ -75,7 +96,7 @@ public:
     void addFuncVars(int num_of_args)
     {
         string array_name = "myArr_" + to_string(this->array_stack.size());
-        code_buffer->emit(array_name + " = alloca [" + num_of_args + " x i32]");
+        code_buffer->emit(array_name + " = alloca [" + to_string(num_of_args) + " x i32]");
         this->array_stack.push_back(array_name);
         for (int i = 0; i < num_of_args; i++)
         {
@@ -114,14 +135,9 @@ public:
         compi->code_buffer->emit(full_command);
     }
 
-    string makeZextConvertStatement(string target, string type, string value, isZext=true)
+    string makeZextConvertStatement(string target, string type, string value)
     {
-        string action;
-        if (isZext)
-            action = "zext";
-        else
-            action = "trunc";
-    string output_string = "%" + target + " = " + action " i";
+    string output_string = "%" + target + " = zext i";
     if (type == "BYTE")
     {
         output_string += "8 ";

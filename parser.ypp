@@ -17,8 +17,9 @@ Singleton* shaked = Singleton::getInstance();
 CodeBuffer* code_buffer = shaked->code_buffer;
 extern bool in_function;
 extern bool after_label;
-vector<int> gotolines_break;
-vector<int> gotolines_cont;
+extern int last_loop_num;
+extern vector<BreakOrCont> gotolines_break;
+extern vector<BreakOrCont> gotolines_cont;
 %}
 
 %nonassoc STRING;
@@ -187,18 +188,22 @@ Statement:      LBRACE N Statements RBRACE C                                    
                                                                                       code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{$4->getLine(),SECOND}),next_label);
                                                                                       string start_loop_label = $3->getType();
                                                                                       code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{$9->getLine(),FIRST}),start_loop_label);
-
-                                                                                      }
-
+                                                                                      shaked->handleBreakAndCont(next_label, start_loop_label);
+                                                                                       }
                 | BREAK SC                                                          {if (loop_count == 0)
                                                                                      output::errorUnexpectedBreak(yylineno);
                                                                                      output::printProductionRule(26);
-                                                                                     gotolines_break.push_back(code_buffer->emit(shaked->makeGoToStatement()));}
+                                                                                     int goto_line = code_buffer->emit(shaked->makeGoToStatement());
+                                                                                     BreakOrCont b(goto_line, loop_count);
+                                                                                     gotolines_break.push_back(b);}
 
                 | CONTINUE SC                                                       {if (loop_count == 0)
                                                                                      output::errorUnexpectedContinue(yylineno);
                                                                                      output::printProductionRule(27);
-                                                                                     gotolines_cont.push_back(code_buffer->emit(shaked->makeGoToStatement()));}
+                                                                                     int goto_line = code_buffer->emit(shaked->makeGoToStatement());
+                                                                                     BreakOrCont c(goto_line, loop_count);
+                                                                                     gotolines_cont.push_back(c);
+                                                                                     }
 ;
 
 IFN: epsilon                                                                          {table_stack.openNewScope();
@@ -213,7 +218,8 @@ IFN2: epsilon                                                                   
 
 INLOOP: epsilon                                                                     {loop_count++;}
 ;
-OFFLOOP: epsilon                                                                    {loop_count--;
+OFFLOOP: epsilon                                                                    {last_loop_num = loop_count;
+                                                                                     loop_count--;
                                                                                      int br_line = code_buffer->emit(shaked->makeGoToStatement());
                                                                                      $$ = new Node(br_line);}
 ;
@@ -221,6 +227,7 @@ BOOLEXP: Exp                                                                    
                                                                                     output::errorMismatch(yylineno);
                                                                                     Exp* exp = dynamic_cast<Exp*>($1);
                                                                                     string comp_var = exp->getLLVMName();
+                                                                                    cout << "comp_ar name : " << comp_var << endl << endl;
                                                                                     $$ = new Node(code_buffer->emit(shaked->makeGoToCondStatement(comp_var)));}
 ;
 

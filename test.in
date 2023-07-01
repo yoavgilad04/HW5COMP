@@ -1,49 +1,18 @@
-override int foo(int x)
-{
-    int y = 2;      //var0 = alloc i32 -> var0 = store(2) ->y=var0
-    if(x == 0)
-        return 0;
-    foo(1);
-    printi(y);
-}
-
-override int foo(int x)
-{
-    int y = 1; // var1 = alloci32 -> var1 = store(1) -> y=var1
-    if(x == 0)
-        return 0;
-    foo(0);
-    printi(y);
-}
-
-override int foo(int x)
-{
-    int y = 0; var2 = alloc i32 -> var2=stroe(0) ->y=var2 ;
-    if(x == 0)
-        return 0;
-    foo(x-1);
-    printi(y);
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 void main()
 {
-    bool x = true or false or 6 > 8;
-    //bool x = not true;
-    int w = foo(6,7);
-    print("my name is melissa");
+    while(true)
+    {
+        int x = 1;
+        while(true)
+        {
+            int y = 2;
+            while(true)
+            {
+                break;
+                int x4 = 4;
+                int z = 3;
+            }
+        }
+        break;
+    }
 }
