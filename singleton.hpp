@@ -9,8 +9,7 @@
 using namespace std;
 
 extern int last_loop_num;
-extern vector<BreakOrCont> gotolines_break;
-extern vector<BreakOrCont> gotolines_cont;
+extern vector<While*> whiles;
 
 
 class Singleton {
@@ -42,24 +41,24 @@ public:
         cout << this->x << endl;
     }
 
-    void handleBreakAndCont(string next_label,string start_loop_label)
-    {
-        cout << endl << endl << "Im in handle break" << endl << endl;
-        if (!gotolines_break.empty())
-        {
-            BreakOrCont b = gotolines_break.back();
-            cout << endl << "Im in if breakpoint, next_label: " << next_label << "last loop" << last_loop_num << " " << b.getLoopNum() << endl;
-            if (b.getLoopNum() == last_loop_num)
-                code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{b.getLine(),FIRST}),next_label);
-
-        }
-        if (!gotolines_cont.empty())
-        {
-            BreakOrCont c = gotolines_cont.back();
-            if (c.getLoopNum() == last_loop_num)
-                code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{c.getLine(),FIRST}),start_loop_label);
-        }
-    }
+//    void handleBreakAndCont(string next_label,string start_loop_label)
+//    {
+//        cout << endl << endl << "Im in handle break" << endl << endl;
+//        if (!gotolines_break.empty())
+//        {
+//            BreakOrCont b = gotolines_break.back();
+//            cout << endl << "Im in if breakpoint, next_label: " << next_label << "last loop" << last_loop_num << " " << b.getLoopNum() << endl;
+//            if (b.getLoopNum() == last_loop_num)
+//                code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{b.getLine(),FIRST}),next_label);
+//
+//        }
+//        if (!gotolines_cont.empty())
+//        {
+//            BreakOrCont c = gotolines_cont.back();
+//            if (c.getLoopNum() == last_loop_num)
+//                code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{c.getLine(),FIRST}),start_loop_label);
+//        }
+//    }
 
     string convertTypeToIType(string type)
     {

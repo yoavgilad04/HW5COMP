@@ -109,13 +109,15 @@ public:
     string getLLVMName(){return this->llvm_var;}
 };
 
-class BreakOrCont
+class While
 {
-    int cond_line;
-    int loop_num;
+    string goto_label;
+    vector<pair<int,BranchLabelIndex>> nextList;
+
 public:
-    BreakOrCont(int cond_line, int loop_num):cond_line(cond_line), loop_num(loop_num){}
-    int getLine(){return cond_line;}
-    int getLoopNum(){return loop_num;}
+    While(string goto_label): goto_label(goto_label), nextList(){}
+    string getLabel(){return goto_label;}
+    vector<pair<int,BranchLabelIndex>> getList(){return nextList;}
+    void setList(vector<pair<int,BranchLabelIndex>> v1){this->nextList = v1;}
 };
 #endif

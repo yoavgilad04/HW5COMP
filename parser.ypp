@@ -17,9 +17,7 @@ Singleton* shaked = Singleton::getInstance();
 CodeBuffer* code_buffer = shaked->code_buffer;
 extern bool in_function;
 extern bool after_label;
-extern int last_loop_num;
-extern vector<BreakOrCont> gotolines_break;
-extern vector<BreakOrCont> gotolines_cont;
+extern vector<While*> whiles;
 %}
 
 %nonassoc STRING;
@@ -185,7 +183,7 @@ Statement:      LBRACE N Statements RBRACE C                                    
                                                                                      code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{$9->getLine(),FIRST}), next_label);
                                                                                      }
 
-                | WHILE LPAREN MBP BOOLEXP RPAREN INLOOP IFN Statement OFFLOOP C   {
+                | WHILE LPAREN MBPW BOOLEXP RPAREN INLOOP IFN Statement OFFLOOP C   {
                                                                                       output::printProductionRule(25);
                                                                                       Exp* boolexp = dynamic_cast<Exp*>($4);
                                                                                       code_buffer->bpatch(boolexp->getTrueList(), $7->getType());
@@ -194,27 +192,38 @@ Statement:      LBRACE N Statements RBRACE C                                    
                                                                                       string start_loop_label = $3->getType();
                                                                                       code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{$9->getLine(),FIRST}),start_loop_label);
                                                                                       shaked->handleBreakAndCont(next_label, start_loop_label);
-                                                                                       }
+                                                                                      While* last_while = whiles.back();
+                                                                                      next_list = last_while->getList();
+                                                                                      code_buffer->bpatch(code_buffer->merge(boolexp->getFalseList(), last_while->getList()),next_label);
+                                                                                      while.pop_back();
+                                                                                      delete last_while;
+                                                                                     }
 
                 | BREAK SC                                                          {if (loop_count == 0)
                                                                                      output::errorUnexpectedBreak(yylineno);
                                                                                      output::printProductionRule(26);
                                                                                      int goto_line = code_buffer->emit(shaked->makeGoToStatement());
-                                                                                     BreakOrCont b(goto_line, loop_count);
-                                                                                     gotolines_break.push_back(b);}
+                                                                                     While* last_while = whiles.back();
+                                                                                     last_while->setList(code_buffer->merge(last_while->getList(), code_buffer->makeList({goto_line, FIRST})));}
 
                 | CONTINUE SC                                                       {if (loop_count == 0)
                                                                                      output::errorUnexpectedContinue(yylineno);
                                                                                      output::printProductionRule(27);
                                                                                      int goto_line = code_buffer->emit(shaked->makeGoToStatement());
-                                                                                     BreakOrCont c(goto_line, loop_count);
-                                                                                     gotolines_cont.push_back(c);
+                                                                                     While* last_while = whiles.back();
+                                                                                     code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{goto_line,FIRST}),last_while->getLabel());
                                                                                      }
 ;
 
 IFN: epsilon                                                                          {table_stack.openNewScope();
                                                                                        $$ = new Node(shaked->code_buffer->genLabel());}
 ;
+
+MBPW:   epsilon                                                                    {string goto_label = shaked->code_buffer->genLabel();
+                                                                                    $$=new Node(goto_label);
+                                                                                    While w = new While(goto_label);
+                                                                                    shaked->whiles.push_back(w);
+                                                                                    }
 
 IFN2: epsilon                                                                          {table_stack.openNewScope();
                                                                                        int br_line = code_buffer->emit(shaked->makeGoToStatement());
