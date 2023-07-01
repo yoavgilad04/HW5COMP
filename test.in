@@ -5,5 +5,5 @@ int foo(int x, int y, bool isShakedGay)
 }
 void main()
 {
-    foo(1b,2b,false);
+    foo(1,2,false);
 }
