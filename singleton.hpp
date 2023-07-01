@@ -96,8 +96,8 @@ public:
 
     void addFuncVars(int num_of_args)
     {
-        string array_name = "    myArr_" + to_string(this->array_stack.size());
-        code_buffer->emit(array_name + " = alloca [50 x i32]");
+        string array_name = "myArr_" + to_string(this->array_stack.size());
+        code_buffer->emit("     " + array_name + " = alloca [50 x i32]");
         this->array_stack.push_back(array_name);
 
     }
