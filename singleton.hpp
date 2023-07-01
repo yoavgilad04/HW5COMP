@@ -97,7 +97,7 @@ public:
     void addFuncVars(int num_of_args)
     {
         string array_name = "myArr_" + to_string(this->array_stack.size());
-        code_buffer->emit("     %" + array_name + " = alloca [50 x i32]");
+        code_buffer->emit("    %" + array_name + " = alloca [50 x i32]");
         this->array_stack.push_back(array_name);
 
     }
@@ -106,7 +106,7 @@ public:
     {
         string array_name = this->array_stack.back();
         string new_var = this->getFreshVar();
-        code_buffer->emit("%" + new_var + " = getelementptr [50 x i32], [50 x i32]* % " + array_name + ", i32 0, i32 " + to_string(offset));
+        code_buffer->emit("%" + new_var + " = getelementptr [50 x i32], [50 x i32]* %" + array_name + ", i32 0, i32 " + to_string(offset));
         code_buffer->emit("%" + target + " = load i32* %" + new_var);
 //        return output_string;
     }
@@ -115,7 +115,7 @@ public:
     {
         string array_name = this->array_stack.back();
         string new_var = this->getFreshVar();
-        code_buffer->emit("%" + new_var + " = getelementptr [50 x i32], [50 x i32]* % " + array_name + ", i32 0, i32 " + to_string(offset));
+        code_buffer->emit("%" + new_var + " = getelementptr [50 x i32], [50 x i32]* %" + array_name + ", i32 0, i32 " + to_string(offset));
         code_buffer->emit("store i32 %" + var + ", i32* %" + new_var);
 //        string output_string = "store " + i_type + " ";
 //        if (this->startsWith(var, "var"))
