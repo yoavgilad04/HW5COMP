@@ -1,8 +1,8 @@
-int foo(int x, int y, bool isShakedGay)
+int foo(byte x, byte y, bool isShakedGay)
 {
     int z = x + y;
 }
 void main()
 {
-    return;
+    foo(1,2,false);
 }
