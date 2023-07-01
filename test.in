@@ -1,21 +1,8 @@
+int foo(int x, int y, bool isShakedGay)
+{
+    return;
+}
 void main()
 {
-    int x = 10;
-   while(true)
-   {
-      break;
-        while(true)
-        {
-            x = x - 1;
-            continue;
-            break;
-            continue;
-            break;
-        }
-      int y = 9;
-      continue;
-      continue;
-      break;
-      break;
-   }
+    return;
 }
