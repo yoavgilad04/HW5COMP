@@ -211,7 +211,7 @@ Exp::Exp(Node &exp, const string &conversion_type)
         if (offset >= 0)
             shaked->makeLoadCommand(new_var, t->getType(), t->getLLVMName(), t->getOffset());
         else
-            shaked->makeBinaryStatement(new_var, "ADD", "%" + to_string(((-1 * offset) -1)) , "0");
+            shaked->code_buffer->emit(shaked->makeBinaryStatement(new_var, "ADD", "%" + to_string(((-1 * offset) -1)) , "0"));
         this->type = t->getType();
         this->llvm_var = new_var;
         return;
