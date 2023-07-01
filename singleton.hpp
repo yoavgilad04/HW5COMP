@@ -97,38 +97,48 @@ public:
     void addFuncVars(int num_of_args)
     {
         string array_name = "myArr_" + to_string(this->array_stack.size());
-        code_buffer->emit(array_name + " = alloca [" + to_string(num_of_args) + " x i32]");
+        code_buffer->emit(array_name + " = alloca [50 x i32]");
         this->array_stack.push_back(array_name);
-        for (int i = 0; i < num_of_args; i++)
-        {
-            string new_var = this->getFreshVar();
-            code_buffer->emit("%" + new_var + " = getelementptr [10 x i32], [10 x i32]* % " + array_name + ", i32 0, i32 " + to_string(i));
-            code_buffer->emit("store i32 %" + to_string(i) + ", i32* %" + new_var);
-        }
+
     }
 
-    string makeLoadCommand(string target, string type, string var)
+    void makeLoadCommand(string target, string type, string var, int offset=0)
     {
-        string output_string = "%" + target + " = load " + this->convertTypeToIType(type) + "* %" + var;
-        return output_string;
+        string array_name = this->array_stack.back();
+        string new_var = this->getFreshVar();
+        code_buffer->emit("%" + new_var + " = getelementptr [10 x i32], [10 x i32]* % " + array_name + ", i32 0, i32 " + to_string(offset));
+        code_buffer->emit("%" + target + " = load i32* %" + new_var);
+//        return output_string;
     }
 
-    string storeCommand(string target, string type, string var)
+    void storeCommand(string target, string type, string var, int offset=0)
     {
-        string i_type = this->convertTypeToIType(type);
-        string output_string = "store " + i_type + " ";
-        if (this->startsWith(var, "var"))
-            output_string +="%";
-        output_string += var + ", " + i_type + "* %" + target;
-        return output_string;
+        string array_name = this->array_stack.back();
+        string new_var = this->getFreshVar();
+        code_buffer->emit("%" + new_var + " = getelementptr [10 x i32], [10 x i32]* % " + array_name + ", i32 0, i32 " + to_string(offset));
+        code_buffer->emit("store i32 %" + to_string(offset) + ", i32* %" + new_var);
+//        string output_string = "store " + i_type + " ";
+//        if (this->startsWith(var, "var"))
+//            output_string +="%";
+//        output_string += var + ", " + i_type + "* %" + target;
+//        return output_string;
     }
-    string allocCommand(string target, string type)
-    {
-        string output_string = "%" + target + " = alloca ";
-        string i_type = this->convertTypeToIType(type);
-        output_string += i_type;
-        return output_string;
-    }
+//
+//    for (int i = 0; i < num_of_args; i++)
+//    {
+//        string new_var = this->getFreshVar();
+//        code_buffer->emit("%" + new_var + " = getelementptr [10 x i32], [10 x i32]* % " + array_name + ", i32 0, i32 " + to_string(i));
+//        code_buffer->emit("store i32 %" + to_string(i) + ", i32* %" + new_var);
+//    }
+//
+
+//    string allocCommand(string target, string type)
+//    {
+//        string output_string = "%" + target + " = alloca ";
+//        string i_type = this->convertTypeToIType(type);
+//        output_string += i_type;
+//        return output_string;
+//    }
     void addAssignmentCommand(string target, string value1)
     {
         Singleton* compi = Singleton::getInstance();

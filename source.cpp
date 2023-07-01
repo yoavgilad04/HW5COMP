@@ -84,7 +84,6 @@ Exp::Exp(string operation_val, Node& exp_1, Node& exp_2, string op)
     Exp* e2 = dynamic_cast<Exp*>(&exp_2);
     string e1_name = e1->getLLVMName();
     string e2_name = e2->getLLVMName();
-    string cmd;
     if ((exp_1.getType() == "INT" || exp_1.getType() == "BYTE") && (exp_2.getType() == "INT" || exp_2.getType() == "BYTE"))
     {
         if (operation_val == "binop")
@@ -104,13 +103,15 @@ Exp::Exp(string operation_val, Node& exp_1, Node& exp_2, string op)
             if (this->type == "BYTE")
             {
                 string new_var = shaked->getFreshVar();
-
-                shaked->code_buffer->emit("%" + new_var + " = i32 %" + e1_name + " trunc to i8");
-                cmd = shaked->makeBinaryStatement(this->llvm_var, op, e1_name, e2_name, true);
+                shaked->code_buffer->emit("%" + new_var + " = trunc i32 %" + e1_name + " to i8");
+                string new_var2 = shaked->getFreshVar();
+                shaked->code_buffer->emit("%" + new_var2 + " = trunc i32 %" + e2_name + " to i8");
+                string result_in_i32 = shaked->getFreshVar();
+                shaked->code_buffer->emit(shaked->makeBinaryStatement(result_in_i32, op, new_var, new_var2, true));
+                shaked->code_buffer->emit("%" + this->llvm_var + " = zext i8 %" + result_in_i32 + " to i32");
             }
             else
-                cmd = shaked->makeBinaryStatement(this->llvm_var, op, e1_name, e2_name);
-            shaked->code_buffer->emit(cmd);
+                shaked->code_buffer->emit(shaked->makeBinaryStatement(this->llvm_var, op, e1_name, e2_name));
             return;
         }
         if (operation_val == "relop")    // \<|\>|\<\=|\>\=
@@ -206,7 +207,7 @@ Exp::Exp(Node &exp, const string &conversion_type)
         }
         Singleton* shaked = Singleton::getInstance();
         string new_var = shaked->getFreshVar();
-        shaked->code_buffer->emit(shaked->makeLoadCommand(new_var, t->getType(), t->getLLVMName()));
+        shaked->code_buffer->emit(shaked->makeLoadCommand(new_var, t->getType(), t->getLLVMName(), t->getOffset()));
         this->type = t->getType();
         this->llvm_var = new_var;
         return;

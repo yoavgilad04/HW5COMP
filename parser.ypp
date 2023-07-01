@@ -86,7 +86,6 @@ X: OverRide RetType ID LPAREN Formals                                           
                                                                                      table_stack.addFuncSymbol($3->getType(), $2->getType(), $5->getType(), $1->getType(), new_var);
                                                                                      shaked->addFunction(table_stack.getLastFuncSymbol());
                                                                                      code_buffer->emit("{");
-
                                                                                      int num_of_args = TableStack::splitString($5->getType()).size();
                                                                                      shaked->addFuncVars(num_of_args);
                                                                                      in_function = true;
@@ -130,13 +129,13 @@ Statement:      LBRACE N Statements RBRACE C                                    
                 | Type ID SC                                                        {output::printProductionRule(17);
                                                                                     string new_var = shaked->getFreshVar();
                                                                                     table_stack.addSymbolToLastTable($2->getType(), $1->getType(), false, new_var);
-
-                                                                                    code_buffer->emit(shaked->allocCommand(new_var, $1->getType()));
-                                                                                    code_buffer->emit(shaked->storeCommand(new_var, $1->getType(), "0"));}
+                                                                                    Symbol* inserted_symbol = table_stack.searchForSymbol($2->getType());
+                                                                                    //code_buffer->emit(shaked->allocCommand(new_var, $1->getType()));
+                                                                                    code_buffer->emit(shaked->storeCommand(new_var, $1->getType(), "0", inserted_symbol->getOffset()));}
                 | Type ID ASSIGN Exp SC                                             {output::printProductionRule(18);
                                                                                     string new_var = shaked->getFreshVar();
                                                                                     Exp* exp = dynamic_cast<Exp*>($4);
-                                                                                    string exp_llvm_name = exp->getLLVMName();
+                                                                                    string exp_llvm_name = exp->getLLVMNamegetLLVMName();
                                                                                     table_stack.addSymbolToLastTable($2->getType(), $1->getType(), $4->getType(), new_var);
                                                                                     if ($1->getType() == "BOOL")
                                                                                     {
@@ -151,8 +150,9 @@ Statement:      LBRACE N Statements RBRACE C                                    
                                                                                         code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{true_jump_address, FIRST}),next_case);
 
                                                                                     }
-                                                                                    code_buffer->emit(shaked->allocCommand(new_var, $1->getType()));
-                                                                                    code_buffer->emit(shaked->storeCommand(new_var, $1->getType(), exp_llvm_name));
+                                                                                    Symbol* inserted_symbol = table_stack.searchForSymbol($2->getType());
+                                                                                    //code_buffer->emit(shaked->allocCommand(new_var, $1->getType()));
+                                                                                    code_buffer->emit(shaked->storeCommand(new_var, $1->getType(), exp_llvm_name, inserted_symbol->getOffset()));
 
                                                                                     }
                 | ID ASSIGN Exp SC                                                  {output::printProductionRule(19);
@@ -160,7 +160,7 @@ Statement:      LBRACE N Statements RBRACE C                                    
                                                                                     string exp_llvm_name = exp->getLLVMName();
                                                                                     table_stack.compareType($1->getType(), $3->getType());
                                                                                     Symbol* s = table_stack.searchForSymbol($1->getType());
-                                                                                    code_buffer->emit(shaked->storeCommand(s->getLLVMName(), s->getType(), exp_llvm_name));
+                                                                                    code_buffer->emit(shaked->storeCommand(s->getLLVMName(), s->getType(), exp_llvm_name, s->getOffset()));
                                                                                     }
                 | Call SC                                                           {output::printProductionRule(20);}
                 | RETURN SC                                                         {output::printProductionRule(21);
