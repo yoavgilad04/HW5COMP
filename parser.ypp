@@ -131,11 +131,11 @@ Statement:      LBRACE N Statements RBRACE C                                    
                                                                                     table_stack.addSymbolToLastTable($2->getType(), $1->getType(), false, new_var);
                                                                                     Symbol* inserted_symbol = table_stack.searchForSymbol($2->getType());
                                                                                     //code_buffer->emit(shaked->allocCommand(new_var, $1->getType()));
-                                                                                    code_buffer->emit(shaked->storeCommand(new_var, $1->getType(), "0", inserted_symbol->getOffset()));}
+                                                                                    shaked->storeCommand(new_var, $1->getType(), "0", inserted_symbol->getOffset());}
                 | Type ID ASSIGN Exp SC                                             {output::printProductionRule(18);
                                                                                     string new_var = shaked->getFreshVar();
                                                                                     Exp* exp = dynamic_cast<Exp*>($4);
-                                                                                    string exp_llvm_name = exp->getLLVMNamegetLLVMName();
+                                                                                    string exp_llvm_name = exp->getLLVMName();
                                                                                     table_stack.addSymbolToLastTable($2->getType(), $1->getType(), $4->getType(), new_var);
                                                                                     if ($1->getType() == "BOOL")
                                                                                     {
@@ -152,7 +152,7 @@ Statement:      LBRACE N Statements RBRACE C                                    
                                                                                     }
                                                                                     Symbol* inserted_symbol = table_stack.searchForSymbol($2->getType());
                                                                                     //code_buffer->emit(shaked->allocCommand(new_var, $1->getType()));
-                                                                                    code_buffer->emit(shaked->storeCommand(new_var, $1->getType(), exp_llvm_name, inserted_symbol->getOffset()));
+                                                                                    shaked->storeCommand(new_var, $1->getType(), exp_llvm_name, inserted_symbol->getOffset());
 
                                                                                     }
                 | ID ASSIGN Exp SC                                                  {output::printProductionRule(19);

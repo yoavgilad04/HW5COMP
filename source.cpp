@@ -116,7 +116,7 @@ Exp::Exp(string operation_val, Node& exp_1, Node& exp_2, string op)
         }
         if (operation_val == "relop")    // \<|\>|\<\=|\>\=
         {
-            cmd = shaked->makeCompStatement(this->llvm_var, op, e1_name, e2_name);
+            string cmd = shaked->makeCompStatement(this->llvm_var, op, e1_name, e2_name);
             shaked->code_buffer->emit(cmd);
             this->type = "BOOL";
             int condition_address = shaked->code_buffer->emit(shaked->makeGoToCondStatement(this->llvm_var));
@@ -207,7 +207,7 @@ Exp::Exp(Node &exp, const string &conversion_type)
         }
         Singleton* shaked = Singleton::getInstance();
         string new_var = shaked->getFreshVar();
-        shaked->code_buffer->emit(shaked->makeLoadCommand(new_var, t->getType(), t->getLLVMName(), t->getOffset()));
+        shaked->makeLoadCommand(new_var, t->getType(), t->getLLVMName(), t->getOffset());
         this->type = t->getType();
         this->llvm_var = new_var;
         return;
