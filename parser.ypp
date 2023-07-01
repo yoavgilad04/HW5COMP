@@ -87,6 +87,9 @@ X: OverRide RetType ID LPAREN Formals                                           
                                                                                      table_stack.addFuncSymbol($3->getType(), $2->getType(), $5->getType(), $1->getType(), new_var);
                                                                                      shaked->addFunction(table_stack.getLastFuncSymbol());
                                                                                      code_buffer->emit("{");
+
+                                                                                     int num_of_args = TableStack::splitString($5->getType()).size();
+                                                                                     shaked->addFuncVars(num_of_args);
                                                                                      in_function = true;
                                                                                      }
 ;

@@ -13,9 +13,10 @@ class Singleton {
 private:
     int x;
     int curr_val;
+    vector<string> array_stack;
     static Singleton* sin_instance;
 
-    Singleton() : curr_val(0), code_buffer(new CodeBuffer()){}
+    Singleton() : curr_val(0), code_buffer(new CodeBuffer()), array_stack(){}
 
 public:
     CodeBuffer* code_buffer;
@@ -69,6 +70,19 @@ public:
         string new_var_name = "var" + to_string(this->curr_val);
         this->curr_val++;
         return new_var_name;
+    }
+
+    void addFuncVars(int num_of_args)
+    {
+        string array_name = "myArr_" + to_string(this->array_stack.size());
+        code_buffer->emit(array_name + " = alloca [" + num_of_args + " x i32]");
+        this->array_stack.push_back(array_name);
+        for (int i = 0; i < num_of_args; i++)
+        {
+            string new_var = this->getFreshVar();
+            code_buffer->emit("%" + new_var + " = getelementptr [10 x i32], [10 x i32]* % " + array_name + ", i32 0, i32 " + to_string(i));
+            code_buffer->emit("store i32 %" + to_string(i) + ", i32* %" + new_var);
+        }
     }
 
     string makeLoadCommand(string target, string type, string var)

@@ -1,6 +1,6 @@
 #include "table_stack.hpp"
 
-std::vector<std::string> TableStack::splitString(const std::string& inputString) {
+std::vector<std::string> splitString(const std::string& inputString) {
     std::vector<std::string> words;
     std::stringstream ss(inputString);
     std::string word;
