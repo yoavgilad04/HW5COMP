@@ -231,7 +231,7 @@ IFN2: epsilon                                                                   
 
 INLOOP: epsilon                                                                     {loop_count++;}
 ;
-OFFLOOP: epsilon                                                                    {last_loop_num = loop_count;
+OFFLOOP: epsilon                                                                    {
                                                                                      loop_count--;
                                                                                      int br_line = code_buffer->emit(shaked->makeGoToStatement());
                                                                                      $$ = new Node(br_line);}
