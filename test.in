@@ -1,6 +1,6 @@
 int foo(int x, int y, bool isShakedGay)
 {
-    return;
+    return 1;
 }
 void main()
 {
