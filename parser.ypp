@@ -172,24 +172,30 @@ Statement:      LBRACE N Statements RBRACE C                                    
                                                                                      table_stack.checkReturnType($2->getType());}
                 | IF LPAREN BOOLEXP RPAREN IFN Statement C                           {output::printProductionRule(23);
                                                                                      string false_label = code_buffer->genLabel();
-                                                                                     code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{$3->getLine(),FIRST}), $5->getType());
-                                                                                     code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{$3->getLine(),SECOND}), false_label);
+                                                                                     Exp* boolexp = dynamic_cast<Exp*>($3);
+                                                                                     code_buffer->bpatch(boolexp->getTrueList(), $5->getType());
+                                                                                     code_buffer->bpatch(boolexp->getFalseList(), false_label);
                                                                                      }
-                | IF LPAREN BOOLEXP RPAREN IFN Statement C ELSE IFN2 Statement C       {output::printProductionRule(24);
-                                                                                     code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{$3->getLine(),FIRST}), $5->getType());
-                                                                                     code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{$3->getLine(),SECOND}), $8->getType());
+
+                | IF LPAREN BOOLEXP RPAREN IFN Statement C ELSE IFN2 Statement C     {output::printProductionRule(24);
+                                                                                     Exp* boolexp = dynamic_cast<Exp*>($3);
+                                                                                     code_buffer->bpatch(boolexp->getTrueList(), $5->getType());
+                                                                                     code_buffer->bpatch(boolexp->getFalseList(), $9->getType());
                                                                                      string next_label = code_buffer->genLabel();
                                                                                      code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{$9->getLine(),FIRST}), next_label);
                                                                                      }
+
                 | WHILE LPAREN MBP BOOLEXP RPAREN INLOOP IFN Statement OFFLOOP C   {
                                                                                       output::printProductionRule(25);
-                                                                                      code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{$4->getLine(),FIRST}), $7->getType());
+                                                                                      Exp* boolexp = dynamic_cast<Exp*>($4);
+                                                                                      code_buffer->bpatch(boolexp->getTrueList(), $7->getType());
                                                                                       string next_label = code_buffer->genLabel();
-                                                                                      code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{$4->getLine(),SECOND}),next_label);
+                                                                                      code_buffer->bpatch(boolexp->getFalseList(),next_label);
                                                                                       string start_loop_label = $3->getType();
                                                                                       code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{$9->getLine(),FIRST}),start_loop_label);
                                                                                       shaked->handleBreakAndCont(next_label, start_loop_label);
                                                                                        }
+
                 | BREAK SC                                                          {if (loop_count == 0)
                                                                                      output::errorUnexpectedBreak(yylineno);
                                                                                      output::printProductionRule(26);
@@ -225,10 +231,8 @@ OFFLOOP: epsilon                                                                
 ;
 BOOLEXP: Exp                                                                        {if($1->getType()!="BOOL")
                                                                                     output::errorMismatch(yylineno);
-                                                                                    Exp* exp = dynamic_cast<Exp*>($1);
-                                                                                    string comp_var = exp->getLLVMName();
-                                                                                    cout << "comp_ar name : " << comp_var << endl << endl;
-                                                                                    $$ = new Node(code_buffer->emit(shaked->makeGoToCondStatement(comp_var)));}
+                                                                                    $$ = $1;
+                                                                                    }
 ;
 
 Call:           ID LPAREN ExpList RPAREN                                            {output::printProductionRule(28);

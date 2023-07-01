@@ -1,18 +1,14 @@
 void main()
 {
-    while(true)
-    {
-        int x = 1;
+    int x = 10;
+   while(true)
+   {
+      break;
         while(true)
         {
-            int y = 2;
-            while(true)
-            {
-                break;
-                int x4 = 4;
-                int z = 3;
-            }
+            x = x - 1;
+            break;
         }
-        break;
-    }
+      int y = 9;
+   }
 }

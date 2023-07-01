@@ -44,9 +44,11 @@ public:
 
     void handleBreakAndCont(string next_label,string start_loop_label)
     {
+        cout << endl << endl << "Im in handle break" << endl << endl;
         if (!gotolines_break.empty())
         {
             BreakOrCont b = gotolines_break.back();
+            cout << endl << "Im in if breakpoint, next_label: " << next_label << "last loop" << last_loop_num << " " << b.getLoopNum() << endl;
             if (b.getLoopNum() == last_loop_num)
                 code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{b.getLine(),FIRST}),next_label);
 
