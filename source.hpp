@@ -20,13 +20,15 @@ class Node {
 protected:
     string type;
     int line;
+    int str_length;
 public:
-    Node(string type=""): type(type), line(-1){};
+    Node(string type=""): type(type), line(-1), str_length(0){};
     Node(int line): type(""), line(line){};
 
     string getType() const {return this->type;}
     int getLine(){return this->line;}
     void setLine(int line){this->line = line;}
+    int getLength(){return this->str_length;}
     virtual ~Node() = default;
 };
 
@@ -50,6 +52,9 @@ public:
     void setLLVMName(string llvm_var){this->llvm_var = llvm_var;}
     vector<pair<int,BranchLabelIndex>> getTrueList(){return this->trueList;}
     vector<pair<int,BranchLabelIndex>> getFalseList(){return this->falseList;}
+    void setFalseList(vector<pair<int,BranchLabelIndex>> lst){this->falseList = lst;}
+    void setTrueList(vector<pair<int,BranchLabelIndex>> lst){this->trueList = lst;}
+
 
     friend ostream& operator<<(ostream& os, const Exp& e)
     {

@@ -145,21 +145,28 @@ Statement:      LBRACE N Statements RBRACE C                                    
                                                                                     Exp* exp = dynamic_cast<Exp*>($4);
                                                                                     string exp_llvm_name = exp->getLLVMName();
                                                                                     table_stack.addSymbolToLastTable($2->getType(), $1->getType(), $4->getType(), new_var);
-                                                                                    if ($1->getType() == "BOOL")
-                                                                                    {
-                                                                                        string true_case = code_buffer->genLabel();
-                                                                                        shaked->addAssignmentCommand(new_var, "1");
-                                                                                        int true_jump_address = code_buffer->emit(shaked->makeGoToStatement());
-                                                                                        string false_case = code_buffer->genLabel();
-                                                                                        shaked->addAssignmentCommand(new_var, "0");
-                                                                                        code_buffer->bpatch(exp->getTrueList(), true_case);
-                                                                                        code_buffer->bpatch(exp->getFalseList(), false_case);
-                                                                                        string next_case = code_buffer->genLabel();
-                                                                                        code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{true_jump_address, FIRST}),next_case);
-
-                                                                                    }
                                                                                     Symbol* inserted_symbol = table_stack.searchForSymbol($2->getType());
-                                                                                    //code_buffer->emit(shaked->allocCommand(new_var, $1->getType()));
+                                                                                    if (exp->getType() == "BOOL")
+                                                                                    {
+                                                                                        string comp_var = shaked->getFreshVar();
+                                                                                      shaked->code_buffer->emit(shaked->makeCompStatement(comp_var,"==",exp_llvm_name ,"1"));
+                                                                                      int goto_line = code_buffer->emit(shaked->makeGoToCondStatement(comp_var));
+                                                                                      string true_case = code_buffer->genLabel();
+                                                                                      int true_jump_address = code_buffer->emit(shaked->makeGoToStatement());
+                                                                                      string false_case = code_buffer->genLabel();
+                                                                                      int false_jump_address = code_buffer->emit(shaked->makeGoToStatement());
+                                                                                      vector<pair<int,BranchLabelIndex>> merged_true = code_buffer->merge(code_buffer->makelist(pair<int,BranchLabelIndex>{goto_line, FIRST}), exp->getTrueList());
+                                                                                      vector<pair<int,BranchLabelIndex>> merged_false = code_buffer->merge(code_buffer->makelist(pair<int,BranchLabelIndex>{goto_line, SECOND}), exp->getFalseList());
+                                                                                      code_buffer->bpatch(merged_true, true_case);
+                                                                                      code_buffer->bpatch(merged_false, false_case);
+                                                                                      string next_case = code_buffer->genLabel();
+                                                                                      string new_var = shaked->getFreshVar();
+                                                                                      code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{true_jump_address, FIRST}),next_case);
+                                                                                      code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{false_jump_address, FIRST}),next_case);
+                                                                                      code_buffer->emit("%" + new_var + " = phi i32 [1, %" + true_case + "], [0, %" + false_case + "]");
+                                                                                      string comp2_var = shaked->getFreshVar();
+                                                                                      inserted_symbol->setLLVMName(comp2_var);
+                                                                                    }
                                                                                     shaked->storeCommand(new_var, $1->getType(), exp_llvm_name, inserted_symbol->getOffset());
 
                                                                                     }
@@ -189,8 +196,11 @@ Statement:      LBRACE N Statements RBRACE C                                    
                                                                                      Exp* boolexp = dynamic_cast<Exp*>($3);
                                                                                      code_buffer->bpatch(boolexp->getTrueList(), $5->getType());
                                                                                      code_buffer->bpatch(boolexp->getFalseList(), $9->getType());
+                                                                                     int goto_line = code_buffer->emit(shaked->makeGoToStatement());
                                                                                      string next_label = code_buffer->genLabel();
                                                                                      code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{$9->getLine(),FIRST}), next_label);
+                                                                                     code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{goto_line,FIRST}), next_label);
+
                                                                                      }
 
                 | WHILE LPAREN MBPW BOOLEXP RPAREN INLOOP IFN Statement OFFLOOP C   {
@@ -248,6 +258,12 @@ OFFLOOP: epsilon                                                                
 ;
 BOOLEXP: Exp                                                                        {if($1->getType()!="BOOL")
                                                                                     output::errorMismatch(yylineno);
+                                                                                  //  Exp* exp = dynamic_cast<Exp*>($1);
+                                                                                  //  string comp_var = shaked->getFreshVar();
+                                                                                //    code_buffer->emit(shaked->makeCompStatement(comp_var, "==", exp->getLLVMName(), "1"));
+                                                                              //      int goto_line = code_buffer->emit(shaked->makeGoToCondStatement(comp_var));
+                                                                            //        exp->setFalseList(shaked->code_buffer->makelist(pair<int,BranchLabelIndex>{goto_line, FIRST}));
+                                                                          //          exp->setTrueList(shaked->code_buffer->makelist(pair<int,BranchLabelIndex>{goto_line, SECOND}));
                                                                                     $$ = $1;
                                                                                     }
 ;

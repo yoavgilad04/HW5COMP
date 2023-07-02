@@ -193,17 +193,8 @@ public:
     void addFunction(FuncSymbol* s)
     {
         vector<string> args = s->getArgs();
-        string base_string = this->convertTypeToIType(s->getType()) + " @" + s->getLLVMName() + s->getName()  + "(";
-//        string declare_string = "declare " + base_string;
-//        for(int i=0; i<args.size(); i++)
-//        {
-//            if (i == args.size()-1)
-//                declare_string += this->convertTypeToIType(args[i]);
-//            else
-//                declare_string += this->convertTypeToIType(args[i]) + ", ";
-//        }
-//        declare_string += ")";
-//        this->code_buffer->emit(declare_string);
+        s->setLLVMName(s->getLLVMName() + s->getName());
+        string base_string = this->convertTypeToIType(s->getType()) + " @" + s->getLLVMName() + "(";
         string define_string = "define " + base_string;
         int args_size = args.size();
         for(int i=0; i<args_size - 1; i++)
@@ -317,9 +308,13 @@ public:
         }
 
     }
-    void addFunctionCall(string target, string func_name, vector<Exp>& func_args)
+    void addFunctionCall(string target, string func_name, vector<Exp>& func_args, string func_type)
     {
-        string output_string = "%" + target + " = call i32 @" + func_name + "(";
+        string output_string;
+        if (func_type == "VOID")
+            output_string = "call void @" + func_name + "(";
+        else
+            output_string = "%" + target + " = call " + this->convertTypeToIType(func_type) + " @" + func_name + "(";
         int last_index = func_args.size()-1;
         for(int i=0;i<last_index;i++)
         {
