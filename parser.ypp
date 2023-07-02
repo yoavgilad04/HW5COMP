@@ -74,7 +74,7 @@ M: epsilon                                                                      
                                                                                      code_buffer->emitGlobal("declare void @exit(i32)");
                                                                                      code_buffer->emitGlobal("@.int_specifier = constant [4 x i8] c\"%d\\0A\\00\"");
                                                                                      code_buffer->emitGlobal("@.str_specifier = constant [4 x i8] c\"%s\\0A\\00\"");
-                                                                                     code_buffer->emitGlobal("@.divide_by_zero_error = constant [24 x i8] c\"Error division by zero\\0A\\00\"");
+                                                                                     code_buffer->emitGlobal("@.divide_by_zero_error = constant [23 x i8] c\"Error division by zero\\00\"");
                                                                                      shaked->makePrintImplementation();
                                                                                      shaked->addCheckIfZeroFunction();
                                                                                      in_function = false;}
@@ -101,6 +101,8 @@ FuncDecl:  X RPAREN LBRACE Statements RBRACE                                    
                                                                                      FuncSymbol* f = table_stack.getLastFuncSymbol();
                                                                                      if (f->getType() == "VOID")
                                                                                         code_buffer->emit("ret void");
+                                                                                     else
+                                                                                        code_buffer->emit("ret i32 0");
                                                                                      in_function = false;
                                                                                      code_buffer->emit("}");
                                                                                      code_buffer->emit("");
@@ -149,23 +151,9 @@ Statement:      LBRACE N Statements RBRACE C                                    
                                                                                     Symbol* inserted_symbol = table_stack.searchForSymbol($2->getType());
                                                                                     if (exp->getType() == "BOOL")
                                                                                     {
-                                                                                     // string comp_var = shaked->getFreshVar();
-                                                                                     // shaked->code_buffer->emit(shaked->makeCompStatement(comp_var,"==",exp_llvm_name ,"1"));
-                                                                                     // int goto_line = code_buffer->emit(shaked->makeGoToCondStatement(comp_var));
-                                                                                      string true_case = code_buffer->genLabel();
-                                                                                      int true_jump_address = code_buffer->emit(shaked->makeGoToStatement());
-                                                                                      string false_case = code_buffer->genLabel();
-                                                                                      int false_jump_address = code_buffer->emit(shaked->makeGoToStatement());
-                                                                                      vector<pair<int,BranchLabelIndex>> merged_true = code_buffer->merge(code_buffer->makelist(pair<int,BranchLabelIndex>{true_jump_address, FIRST}), exp->getTrueList());
-                                                                                      vector<pair<int,BranchLabelIndex>> merged_false = code_buffer->merge(code_buffer->makelist(pair<int,BranchLabelIndex>{false_jump_address, SECOND}), exp->getFalseList());
-                                                                                      code_buffer->bpatch(merged_true, true_case);
-                                                                                      code_buffer->bpatch(merged_false, false_case);
-                                                                                      string next_case = code_buffer->genLabel();
-                                                                                      code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{true_jump_address, FIRST}),next_case);
-                                                                                      code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{false_jump_address, FIRST}),next_case);
-                                                                                      code_buffer->emit("%" + new_var + " = phi i32 [1, %" + true_case + "], [0, %" + false_case + "]");
-                                                                                      string new_var2 = shaked->getFreshVar();
-                                                                                      shaked->storeCommand(new_var2, $1->getType(), new_var, inserted_symbol->getOffset());
+                                                                                        shaked->addPhiStatements(*exp,new_var);
+                                                                                        string new_var2 = shaked->getFreshVar();
+                                                                                        shaked->storeCommand(new_var2, $1->getType(), new_var, inserted_symbol->getOffset());
                                                                                     }
                                                                                     else
                                                                                         shaked->storeCommand(new_var, $1->getType(), exp_llvm_name, inserted_symbol->getOffset());
@@ -175,10 +163,20 @@ Statement:      LBRACE N Statements RBRACE C                                    
                                                                                     string exp_llvm_name = exp->getLLVMName();
                                                                                     table_stack.compareType($1->getType(), $3->getType());
                                                                                     Symbol* s = table_stack.searchForSymbol($1->getType());
+                                                                                    //
                                                                                     string new_var = shaked->getFreshVar();
-                                                                                    shaked->storeCommand(new_var, s->getType(), exp_llvm_name, s->getOffset());
-                                                                                    Exp* exp2 = dynamic_cast<Exp*>($$);
-                                                                                    s->setLLVMName(new_var);
+                                                                                    if (exp->getType() == "BOOL")
+                                                                                    {
+                                                                                        shaked->addPhiStatements(*exp,new_var);
+                                                                                        string new_var2 = shaked->getFreshVar();
+                                                                                        shaked->storeCommand(new_var2, $1->getType(), new_var, s->getOffset());
+                                                                                    }
+                                                                                    //
+                                                                                    else
+                                                                                    {
+                                                                                        shaked->storeCommand(new_var, s->getType(), exp_llvm_name, s->getOffset());
+                                                                                    }
+                                                                                    //s->setLLVMName(new_var);
 
                                                                                     }
                 | Call SC                                                           {output::printProductionRule(20);}
@@ -188,7 +186,14 @@ Statement:      LBRACE N Statements RBRACE C                                    
                 | RETURN Exp SC                                                     {output::printProductionRule(22);
                                                                                      table_stack.checkReturnType($2->getType());
                                                                                      Exp* exp = dynamic_cast<Exp*>($2);
-                                                                                     code_buffer->emit(shaked->retCommand(exp->getType(), exp->getLLVMName()));}
+                                                                                     if (exp->getType() == "BOOL")
+                                                                                     {
+                                                                                        string new_var = shaked->getFreshVar();
+                                                                                        shaked->addPhiStatements(*exp,new_var);
+                                                                                        code_buffer->emit(shaked->retCommand(exp->getType(), new_var));
+                                                                                     }
+                                                                                     else
+                                                                                        code_buffer->emit(shaked->retCommand(exp->getType(), exp->getLLVMName()));}
                 | IF LPAREN BOOLEXP RPAREN IFN Statement C                           {output::printProductionRule(23);
                                                                                      int goto_line = code_buffer->emit(shaked->makeGoToStatement());
                                                                                      string false_label = code_buffer->genLabel();
@@ -285,8 +290,16 @@ Call:           ID LPAREN ExpList RPAREN                                        
 ;
 ExpList:        Exp                                                                 {output::printProductionRule(30);
                                                                                      $$ = new ExpList(*$1);}
-                | Exp COMMA ExpList                                                 {output::printProductionRule(31);
+                | ExpPHI COMMA ExpList                                               {output::printProductionRule(31);
                                                                                      $$ = new ExpList(*$1, $3);}
+;
+ExpPHI:          Exp                                                                {Exp* exp = dynamic_cast<Exp*>($1);
+                                                                                     //string goto_label = shaked->code_buffer->genLabel();
+                                                                                     //shaked->code_buffer->emit("br label %" + goto_label);
+                                                                                     string new_var = shaked->getFreshVar();
+                                                                                     shaked->addPhiStatements(*exp,new_var);
+                                                                                     exp->setLLVMName(new_var);
+                                                                                     $$=$1;}
 ;
 Type:           INT                                                                 {output::printProductionRule(32);
                                                                                      $$ = new Node("INT");}

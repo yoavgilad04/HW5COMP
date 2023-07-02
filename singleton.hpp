@@ -65,9 +65,9 @@ public:
         if(type == "INT")
             i_type = "i32";
         if(type == "BOOL")
-            i_type = "i1";
+            i_type = "i32";
         if(type == "BYTE")
-            i_type = "i8";
+            i_type = "i32";
         if(type == "VOID")
             i_type = "void"; //todo: what i type is void?
         return i_type;
@@ -113,7 +113,9 @@ public:
     {
         string array_name = this->array_stack.back();
         code_buffer->emit("%" + target + " = getelementptr [50 x i32], [50 x i32]* %" + array_name + ", i32 0, i32 " + to_string(offset));
-        code_buffer->emit("store i32 %" + var + ", i32* %" + target);
+        if (this->startsWith(var, "var"))
+            var = "%" + var;
+        code_buffer->emit("store i32 " + var + ", i32* %" + target);
     }
 //
 //    for (int i = 0; i < num_of_args; i++)
@@ -164,7 +166,7 @@ public:
         vector<string> emit_strings = vector<string>{
                 "",
                 "define void @divByZero() {",
-                "    %spec_ptr = getelementptr [24 x i8], [24 x i8]* @.divide_by_zero_error, i32 0, i32 0",
+                "    %spec_ptr = getelementptr [23 x i8], [23 x i8]* @.divide_by_zero_error, i32 0, i32 0",
                 "    call void (i8*) @print(i8* %spec_ptr)",
                 "    %exitCode = add i32 0, 0",
                 "    call void @exit(i32 %exitCode)",
@@ -178,10 +180,11 @@ public:
         }
 
     }
-    void checkIfZero(string var)
+    void checkIfZero(string var, bool isByte)
     {
         string new_var = this->getFreshVar();
-        this->code_buffer->emit(this->makeCompStatement(new_var, "==", var, "0"));
+
+        this->code_buffer->emit(this->makeCompStatement(new_var, "==", var, "0", isByte));
         int line = this->code_buffer->emit(this->makeGoToCondStatement(new_var));
         string true_label = this->code_buffer->genLabel();
         code_buffer->emit("call void @divByZero()");
@@ -222,7 +225,7 @@ public:
             output_string += "mul ";
         if(op == "DIV")
         {
-            this->checkIfZero(var2);
+            this->checkIfZero(var2, isByte);
             output_string += "udiv ";
         }
         if (this->startsWith(var1, "var"))
@@ -236,7 +239,7 @@ public:
         return output_string;
     }
 
-    string makeCompStatement(string target, string comp_op, string var1, string var2)
+    string makeCompStatement(string target, string comp_op, string var1, string var2, bool isByte=false)
     {
         string output_string = "%" + target + " = icmp ";
         if (comp_op == "<")
@@ -255,7 +258,10 @@ public:
             var1 = "%" + var1;
         if (this->startsWith(var2, "var"))
             var2 = "%" + var2;
-        output_string += "i32 " + var1 + ", " + var2;
+        if(isByte)
+            output_string += "i8 " + var1 + ", " + var2;
+        else
+            output_string += "i32 " + var1 + ", " + var2;
         return output_string;
     }
 
@@ -310,6 +316,7 @@ public:
         }
 
     }
+
     void addFunctionCall(string target, string func_name, vector<Exp>& func_args, string func_type)
     {
         string output_string;
@@ -328,6 +335,20 @@ public:
         }
         output_string += ")";
         this->code_buffer->emit(output_string);
+    }
+
+    void addPhiStatements(Exp& exp, string target)
+    {
+        string true_case = code_buffer->genLabel();
+        int true_jump_address = code_buffer->emit(this->makeGoToStatement());
+        string false_case = code_buffer->genLabel();
+        int false_jump_address = code_buffer->emit(this->makeGoToStatement());
+        code_buffer->bpatch(exp.getTrueList(), true_case);
+        code_buffer->bpatch(exp.getFalseList(), false_case);
+        string next_case = code_buffer->genLabel();
+        code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{true_jump_address, FIRST}),next_case);
+        code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{false_jump_address, FIRST}),next_case);
+        code_buffer->emit("%" + target + " = phi i32 [1, %" + true_case + "], [0, %" + false_case + "]");
     }
 
 };

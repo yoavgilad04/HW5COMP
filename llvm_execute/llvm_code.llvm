@@ -2,7 +2,8 @@ declare i32 @printf(i8*, ...)
 declare void @exit(i32)
 @.int_specifier = constant [4 x i8] c"%d\0A\00"
 @.str_specifier = constant [4 x i8] c"%s\0A\00"
-@.divide_by_zero_error = constant [24 x i8] c"Error division by zero\0A\00"
+@.divide_by_zero_error = constant [23 x i8] c"Error division by zero\00"
+@.var1 = constant [10 x i8] c"EPIC BOOL\00"
 
 define void @printi(i32) {
     %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.int_specifier, i32 0, i32 0
@@ -18,41 +19,94 @@ define void @print(i8*) {
 
 
 define void @divByZero() {
-    %spec_ptr = getelementptr [24 x i8], [24 x i8]* @.divide_by_zero_error, i32 0, i32 0
+    %spec_ptr = getelementptr [23 x i8], [23 x i8]* @.divide_by_zero_error, i32 0, i32 0
     call void (i8*) @print(i8* %spec_ptr)
     %exitCode = add i32 0, 0
     call void @exit(i32 %exitCode)
     ret void
 }
 
-define void @main()
+define i32 @var0epicBool(i32, i32, i32)
 {
     %myArr_0 = alloca [50 x i32]
-    %var0 = add i32 5, 0
-    %var1 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 0
-    store i32 %var0, i32* %var1
-    %var2 = add i32 5, 0
-    %var3 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 1
-    store i32 %var2, i32* %var3
-    %var4 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 0
-    %var5 = load i32, i32* %var4
-    %var6 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 1
-    %var7 = load i32, i32* %var6
-    %var8 = sub i32 %var5, %var7
-    %var9 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 2
-    store i32 %var8, i32* %var9
-    %var10 = add i32 10, 0
-    %var11 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 2
-    %var12 = load i32, i32* %var11
-    %var14 = icmp eq i32 %var12, 0
-    br i1 %var14, label %label_43, label %label_46
-    label_43:
-        call void @divByZero()
-        br label %label_46
+    %var2 = getelementptr [10 x i8] , [10 x i8]* @.var1, i32 0, i32 0
+    call void (i8*) @print(i8* %var2)
+    %var3 = add i32 %0, 0
+    %var4 = icmp eq i32 %var3, 1
+    br i1 %var4, label %label_30, label %label_34
+    label_30:
+        %var5 = add i32 1, 0
+        ret i32 %var5
+        br label %label_34
+    label_34:
+        %var6 = add i32 %1, 0
+        %var7 = icmp eq i32 %var6, 1
+        br i1 %var7, label %label_38, label %label_42
+    label_38:
+        %var8 = add i32 2, 0
+        ret i32 %var8
+        br label %label_52
+    label_42:
+        %var9 = add i32 %2, 0
+        %var10 = icmp eq i32 %var9, 1
+        br i1 %var10, label %label_46, label %label_50
     label_46:
-        %var13 = udiv i32 %var10, %var12
-        %var15 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 3
-        store i32 %var13, i32* %var15
+        %var11 = add i32 3, 0
+        ret i32 %var11
+        br label %label_50
+    label_50:
+        br label %label_52
+    label_52:
+        %var12 = add i32 %0, 0
+        %var13 = icmp eq i32 %var12, 1
+        br i1 %var13, label %label_60, label %label_56
+    label_56:
+        %var14 = add i32 %1, 0
+        %var15 = icmp eq i32 %var14, 1
+        br i1 %var15, label %label_60, label %label_66
+    label_60:
+        %var16 = add i32 0, 0
+        %var17 = add i32 1, 0
+        %var18 = sub i32 %var16, %var17
+        ret i32 %var18
+        br label %label_66
+    label_66:
+        ret i32 0
+}
+
+define void @main()
+{
+    %myArr_1 = alloca [50 x i32]
+        %var19 = add i32 1, 0
+        %var20 = icmp eq i32 %var19, 1
+        br i1 %var20, label %label_76, label %label_78
+    label_76:
+        br label %label_80
+    label_78:
+        br label %label_80
+    label_80:
+        %var21 = phi i32 [1, %label_76], [0, %label_78]
+        %var22 = add i32 1, 0
+        %var23 = icmp eq i32 %var22, 1
+        br i1 %var23, label %label_85, label %label_87
+    label_85:
+        br label %label_89
+    label_87:
+        br label %label_89
+    label_89:
+        %var24 = phi i32 [1, %label_85], [0, %label_87]
+        %var25 = add i32 1, 0
+        %var26 = add i32 2, 0
+        %var27 = icmp ugt i32 %var25, %var26
+        br i1 %var27, label %label_95, label %label_97
+    label_95:
+        br label %label_99
+    label_97:
+        br label %label_99
+    label_99:
+        %var28 = phi i32 [1, %label_95], [0, %label_97]
+        %var29 = call i32 @var0epicBool(i32 %var21, i32 %var24, i32 %var28)
+        call void @printi(i32 %var29)
         ret void
 }
 

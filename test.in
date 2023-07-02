@@ -1,8 +1,23 @@
+int epicBool(bool a, bool d, bool c) {
+    print("EPIC BOOL");
+    if (a) {
+        return 1;
+    }
+    if (d) {
+        return 2;
+    }
+    else {
+        if (c) {
+            return 3;
+        }
+    }
 
-void main() {
-    int x = 5;
-    int z = 5;
-    int y = x - z;
-    int k = 10 / y;
-	
+    if (a or d) {
+        return 0-1;
+    }
+}
+
+void main ()
+{
+    printi(epicBool(true, true, 1 > 2));
 }

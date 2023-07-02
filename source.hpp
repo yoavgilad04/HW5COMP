@@ -81,20 +81,8 @@ class ExpList : public Node
 {
     std::vector<Exp> exp_list;
 public:
-    ExpList(Node& exp)
-    {
-//        this->exp_list.insert(this->exp_list.begin(), exp.getType());
-        Exp* e = dynamic_cast<Exp*>(&exp);
-        this->insert(*e);
-    }
-    ExpList(Node& exp, Node* exp_list){
-        ExpList* old_exp_list = dynamic_cast<ExpList*>(exp_list);
-        this->exp_list = *(old_exp_list->getExpList());
-        delete old_exp_list;
-        Exp* e = dynamic_cast<Exp*>(&exp);
-        this->insert(*e);
-//        this->exp_list.insert(this->exp_list.begin(),exp.getType());
-    }
+    ExpList(Node& exp);
+    ExpList(Node& exp, Node* exp_list);
     void insert(Exp exp) {this->exp_list.insert(this->exp_list.begin(), exp);}
     vector<Exp>* getExpList() {return &(this->exp_list);}
 };

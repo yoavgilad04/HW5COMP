@@ -1,0 +1,39 @@
+override void foo(int x)
+{
+    print("hello");
+}
+
+override void foo(int x, int y)
+{
+    print("my name is melissa");
+}
+
+override int bar(int x, int z)
+{
+    if(z == 0)
+        return x;
+    printi(x);
+    int y = x;
+    int ret = bar(x*y,z-1);
+    return ret;
+}
+
+//override int bar(int x, int y)
+//{
+//    return x*y;
+//}
+
+void main() {
+	foo(6);
+	foo(6,6);
+	printi(bar(6,10));
+//	printi(bar(6,5));
+    byte x = 200b;
+    byte y = 220b;
+    int z = x;
+    int w = y;
+    printi(z+w);
+    int a = 80;
+    byte c = (byte)a;
+//    printi(c);
+}

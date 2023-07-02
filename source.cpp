@@ -189,9 +189,10 @@ Exp::Exp(Node &exp, const string &conversion_type)
                 this->getType() = "INT";
             else // conversion type == "BYTE"
             {
+                Exp* e = dynamic_cast<Exp*>(&exp);
                 Singleton* shaked = Singleton::getInstance();
                 string new_var = shaked->getFreshVar();
-                shaked->code_buffer->emit("%" + new_var + " = trunc i32 %" + this->llvm_var + " to i8");
+                shaked->code_buffer->emit("%" + new_var + " = trunc i32 %" + e->getLLVMName() + " to i8");
                 string new_var2 = shaked->getFreshVar();
                 shaked->code_buffer->emit("%" + new_var2 + " = zext i8 %" + new_var + " to i32");
                 this->type = "BYTE";
@@ -255,6 +256,16 @@ Exp::Exp(Node &exp, const string &conversion_type)
 
     Call* call = dynamic_cast<Call*>(&exp);
     this->llvm_var = call->getLLVMName();
+    if(this->type == "BOOL")
+    {
+        Singleton* yoav = Singleton::getInstance();
+        string comp_var = yoav->getFreshVar();
+        yoav->code_buffer->emit(yoav->makeCompStatement(comp_var, "==", this->llvm_var, "1"));
+        int condition_address = yoav->code_buffer->emit(yoav->makeGoToCondStatement(comp_var));
+        this->trueList = yoav->code_buffer->makelist(pair<int,BranchLabelIndex>{condition_address, FIRST});
+        this->falseList = yoav->code_buffer->makelist(pair<int,BranchLabelIndex>{condition_address, SECOND});
+        this->llvm_var = comp_var;
+    }
 }
 
 Exp::Exp(Node &n): Node(n.getType())
@@ -276,6 +287,44 @@ Exp::Exp(Node &n): Node(n.getType())
     assert(true==false); //must not get here
 }
 
+ExpList::ExpList(Node &exp)
+{
+    Exp* e = dynamic_cast<Exp*>(&exp);
+
+    Singleton* yoav = Singleton::getInstance();
+    if(e->getType() == "BOOL")
+    {
+//        string goto_label = yoav->code_buffer->genLabel();
+//        yoav->code_buffer->emit("br label %" + goto_label);
+        string new_var = yoav->getFreshVar();
+        yoav->addPhiStatements(*e,new_var);
+        e->setLLVMName(new_var);
+    }
+
+    this->insert(*e);
+}
+
+
+ExpList::ExpList(Node &exp, Node *exp_list)
+{
+    ExpList* old_exp_list = dynamic_cast<ExpList*>(exp_list);
+    this->exp_list = *(old_exp_list->getExpList());
+    delete old_exp_list;
+    Exp* e = dynamic_cast<Exp*>(&exp);
+
+    Singleton* yoav = Singleton::getInstance();
+    if(e->getType() == "BOOL")
+    {
+//        yoav->code_buffer->emit("br label %" + goto_label);
+//        string new_var = yoav->getFreshVar();
+//        yoav->addPhiStatements(*e,new_var);
+//        e->setLLVMName(new_var);
+    }
+
+    this->insert(*e);
+}
+
+
 Call::Call(Node &function_name)
 {
     string name = function_name.getType();
@@ -287,6 +336,7 @@ Call::Call(Node &function_name)
     }
     bool foundEligibleFunc = false;
     string func_type ="";
+    string func_var_name = "func_var_name";
     for (int i=0; i<funcs.size(); i++)
     {
         vector<string> func_args = funcs[i]->getArgs();
@@ -294,12 +344,17 @@ Call::Call(Node &function_name)
         {
             foundEligibleFunc = true;
             func_type = funcs[i]->getType();
+            func_var_name = funcs[i]->getLLVMName();
             break; // as no two functions whereas their only different is their return type is allowed
         }
     }
     if(!foundEligibleFunc)
         output::errorPrototypeMismatch(yylineno,name);
     this->type = func_type;
+    Singleton* yoav = Singleton::getInstance();
+    this->llvm_var = yoav->getFreshVar();
+    vector<Exp> empty_list = {};
+    yoav->addFunctionCall(this->llvm_var,func_var_name,empty_list, func_type);
 }
 
 Call::Call(Node &function_name, Node* exp_list)
@@ -337,26 +392,16 @@ Call::Call(Node &function_name, Node* exp_list)
     this->type = func_type;
     Singleton* yoav = Singleton::getInstance();
 
-    for(int i =0; i<true_exp_list->size(); i++)
-    {
-        Exp& exp = true_exp_list->operator[](i);
-        if (exp.getType() == "BOOL")
-        {
-            CodeBuffer* code_buffer = yoav->code_buffer;
-            string true_case = code_buffer->genLabel();
-            int true_jump_address = code_buffer->emit(yoav->makeGoToStatement());
-            string false_case = code_buffer->genLabel();
-            int false_jump_address = code_buffer->emit(yoav->makeGoToStatement());
-            code_buffer->bpatch(exp.getTrueList(), true_case);
-            code_buffer->bpatch(exp.getFalseList(), false_case);
-            string next_case = code_buffer->genLabel();
-            string new_var = yoav->getFreshVar();
-            code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{true_jump_address, FIRST}),next_case);
-            code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{false_jump_address, FIRST}),next_case);
-            code_buffer->emit("%" + new_var + " = phi i32 [1, %" + true_case + "], [0, %" + false_case + "]");
-            exp.setLLVMName(new_var);
-        }
-    }
+//    for(int i =0; i<true_exp_list->size(); i++)
+//    {
+//        Exp& exp = true_exp_list->operator[](i);
+//        if (exp.getType() == "BOOL")
+//        {
+//            string new_var = yoav->getFreshVar();
+//            yoav->addPhiStatements(exp,new_var)
+//            exp.setLLVMName(new_var);
+//        }
+//    }
     if (name == "print")
     {
         Exp exp = true_exp_list->front();
@@ -377,9 +422,5 @@ Call::Call(Node &function_name, Node* exp_list)
     }
     this->llvm_var = yoav->getFreshVar();
     yoav->addFunctionCall(this->llvm_var,func_var_name,*true_exp_list, func_type);
-
-
-    // TODO: special care needed for calling print and printi
-
 }
 
