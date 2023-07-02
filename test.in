@@ -1,9 +1,6 @@
-int foo(byte x, byte y, bool isShakedGay)
-{
-    int z = x + y;
-    return z;
-}
 void main()
 {
-    foo(1b,2b,false);
+    int x = 1 + 2;
+    printi(x);
+    print("mellisa");
 }

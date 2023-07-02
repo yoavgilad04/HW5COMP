@@ -24,7 +24,7 @@ public:
     Node(string type=""): type(type), line(-1){};
     Node(int line): type(""), line(line){};
 
-    string getType(){return this->type;}
+    string getType() const {return this->type;}
     int getLine(){return this->line;}
     void setLine(int line){this->line = line;}
     virtual ~Node() = default;
@@ -90,14 +90,8 @@ public:
         this->insert(*e);
 //        this->exp_list.insert(this->exp_list.begin(),exp.getType());
     }
-    void insert(Exp exp)
-    {
-        this->exp_list.push_back(exp);
-    }
-    vector<Exp>* getExpList()
-    {
-        return &(this->exp_list);
-    }
+    void insert(Exp exp) {this->exp_list.insert(this->exp_list.begin(), exp);}
+    vector<Exp>* getExpList() {return &(this->exp_list);}
 };
 
 class Call : public Node

@@ -19,16 +19,28 @@
     <option name="openedFilesInfos">
       <list>
         <OpenedFileInfo>
-          <option name="caretOffset" value="45" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/test.in" />
-        </OpenedFileInfo>
-        <OpenedFileInfo>
-          <option name="caretOffset" value="1298" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/source.hpp" />
-        </OpenedFileInfo>
-        <OpenedFileInfo>
-          <option name="caretOffset" value="15688" />
+          <option name="caretOffset" value="5701" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/parser.ypp" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="4880" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/singleton.hpp" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="11461" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/source.cpp" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="199" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/llvm_ex/phi_example.llvm" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="2131" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/table_stack.cpp" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="804" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/llvm_execute/llvm_code.llvm" />
         </OpenedFileInfo>
       </list>
     </option>

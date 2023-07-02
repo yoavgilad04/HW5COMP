@@ -73,7 +73,7 @@ M: epsilon                                                                      
                                                                                      code_buffer->emitGlobal("declare void @exit(i32)");
                                                                                      code_buffer->emitGlobal("@.int_specifier = constant [4 x i8] c\"%d\\0A\\00\"");
                                                                                      code_buffer->emitGlobal("@.str_specifier = constant [4 x i8] c\"%s\\0A\\00\"");
-                                                                                     code_buffer->emitGlobal("@.devide_by_zero_error = constant [24 x i8] c\"Error division by zero\\0A\\00\"");
+                                                                                     code_buffer->emitGlobal("@.divide_by_zero_error = constant [24 x i8] c\"Error division by zero\\0A\\00\"");
                                                                                      shaked->makePrintImplementation();
                                                                                      shaked->addCheckIfZeroFunction();
                                                                                      in_function = false;}
@@ -82,7 +82,12 @@ N: epsilon                                                                      
 ;
 C: epsilon                                                                          {table_stack.closeScope();}
 ;
-X: OverRide RetType ID LPAREN Formals                                               {string new_var = shaked->getFreshVar();
+X: OverRide RetType ID LPAREN Formals                                               {
+                                                                                     string new_var;
+                                                                                     if ($3->getType() == "main")
+                                                                                        new_var = "";
+                                                                                     else
+                                                                                        new_var = shaked->getFreshVar();
                                                                                      table_stack.addFuncSymbol($3->getType(), $2->getType(), $5->getType(), $1->getType(), new_var);
                                                                                      shaked->addFunction(table_stack.getLastFuncSymbol());
                                                                                      code_buffer->emit("{");
@@ -92,6 +97,9 @@ X: OverRide RetType ID LPAREN Formals                                           
                                                                                      }
 ;
 FuncDecl:  X RPAREN LBRACE Statements RBRACE                                        {output::printProductionRule(4);
+                                                                                     FuncSymbol* f = table_stack.getLastFuncSymbol();
+                                                                                     if (f->getType() == "VOID")
+                                                                                        code_buffer->emit("ret void");
                                                                                      in_function = false;
                                                                                      code_buffer->emit("}");
                                                                                      code_buffer->emit("");
@@ -167,7 +175,9 @@ Statement:      LBRACE N Statements RBRACE C                                    
                                                                                      table_stack.checkReturnType("VOID");
                                                                                      code_buffer->emit(shaked->retCommand());}
                 | RETURN Exp SC                                                     {output::printProductionRule(22);
-                                                                                     table_stack.checkReturnType($2->getType());}
+                                                                                     table_stack.checkReturnType($2->getType());
+                                                                                     Exp* exp = dynamic_cast<Exp*>($2);
+                                                                                     code_buffer->emit(shaked->retCommand(exp->getType(), exp->getLLVMName()));}
                 | IF LPAREN BOOLEXP RPAREN IFN Statement C                           {output::printProductionRule(23);
                                                                                      string false_label = code_buffer->genLabel();
                                                                                      Exp* boolexp = dynamic_cast<Exp*>($3);

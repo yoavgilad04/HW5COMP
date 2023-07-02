@@ -27,7 +27,6 @@ public:
     static Singleton* getInstance() {
         if (sin_instance == nullptr) {
             sin_instance = new Singleton();
-            std::cout << "Creating a new singleton instance." << std::endl;
         }
         return sin_instance;
     }
@@ -79,11 +78,13 @@ public:
         string output_string = "ret";
         if(type != "")
         {
-            output_string += " " + this->convertTypeToIType(type);
+            output_string += " i32";
             if(this->startsWith(var, "var"))
                 output_string += " %";
             output_string += var;
         }
+        else
+            output_string += " void";
         return output_string;
 
     }
@@ -99,29 +100,20 @@ public:
         string array_name = "myArr_" + to_string(this->array_stack.size());
         code_buffer->emit("    %" + array_name + " = alloca [50 x i32]");
         this->array_stack.push_back(array_name);
-
     }
 
-    void makeLoadCommand(string target, string type, string var, int offset=0)
+    void makeLoadCommand(string target, string ptr_name, string type, int offset)
     {
         string array_name = this->array_stack.back();
-        string new_var = this->getFreshVar();
-        code_buffer->emit("%" + new_var + " = getelementptr [50 x i32], [50 x i32]* %" + array_name + ", i32 0, i32 " + to_string(offset));
-        code_buffer->emit("%" + target + " = load i32* %" + new_var);
-//        return output_string;
+        code_buffer->emit("%" + ptr_name + " = getelementptr [50 x i32], [50 x i32]* %" + array_name + ", i32 0, i32 " + to_string(offset));
+        code_buffer->emit("%" + target + " = load i32, i32* %" + ptr_name);
     }
 
-    void storeCommand(string target, string type, string var, int offset=0)
+    void storeCommand(string target, string type, string var, int offset)
     {
         string array_name = this->array_stack.back();
-        string new_var = this->getFreshVar();
-        code_buffer->emit("%" + new_var + " = getelementptr [50 x i32], [50 x i32]* %" + array_name + ", i32 0, i32 " + to_string(offset));
-        code_buffer->emit("store i32 %" + var + ", i32* %" + new_var);
-//        string output_string = "store " + i_type + " ";
-//        if (this->startsWith(var, "var"))
-//            output_string +="%";
-//        output_string += var + ", " + i_type + "* %" + target;
-//        return output_string;
+        code_buffer->emit("%" + target + " = getelementptr [50 x i32], [50 x i32]* %" + array_name + ", i32 0, i32 " + to_string(offset));
+        code_buffer->emit("store i32 %" + var + ", i32* %" + target);
     }
 //
 //    for (int i = 0; i < num_of_args; i++)
@@ -163,7 +155,6 @@ public:
 
     void printBuffer()
     {
-        cout << "===================================================================================================================" << endl;
         this->code_buffer->printGlobalBuffer();
         this->code_buffer->printCodeBuffer();
     }
@@ -174,9 +165,10 @@ public:
                 "",
                 "define void @divByZero() {",
                 "    %spec_ptr = getelementptr [24 x i8], [24 x i8]* @.divide_by_zero_error, i32 0, i32 0",
-                "    call i32 (i8*, ...) @printf(i8* %spec_ptr, i32 %0)",
+                "    call void (i8*) @print(i8* %spec_ptr)",
                 "    %exitCode = add i32 0, 0",
                 "    call void @exit(i32 %exitCode)",
+                "    ret void",
                 "}",
                 "",
                 };
@@ -201,7 +193,7 @@ public:
     void addFunction(FuncSymbol* s)
     {
         vector<string> args = s->getArgs();
-        string base_string = this->convertTypeToIType(s->getType()) + " @" + s->getLLVMName() + "_" + s->getName()  + "(";
+        string base_string = this->convertTypeToIType(s->getType()) + " @" + s->getLLVMName() + s->getName()  + "(";
 //        string declare_string = "declare " + base_string;
 //        for(int i=0; i<args.size(); i++)
 //        {
@@ -297,9 +289,9 @@ public:
 
     void addStringStatement(string target, string input_string)
     {
-        string output_string = "%" + target + " = alloca [" + std::to_string(int(input_string.size()) + 2) + "x i8] c\"";
+        string output_string = "@." + target + " = constant [" + std::to_string(int(input_string.size()) + 2) + " x i8] c\"";
         output_string += input_string + "\\0A\\00\"";
-        this->code_buffer->emit(output_string);
+        this->code_buffer->emitGlobal(output_string);
     }
 
     void makePrintImplementation()
