@@ -68,11 +68,12 @@ Exp::Exp(string type, string value) : Node(type)
     if (value == "true" || value == "false")
     {
         string comp_var = shaked->getFreshVar();
-        shaked->code_buffer->emit(shaked->makeCompStatement(comp_var,"==",new_value,"1"));
+        shaked->code_buffer->emit(shaked->makeCompStatement(comp_var, "==", new_var, "1"));
         int condition_address = shaked->code_buffer->emit(shaked->makeGoToCondStatement(comp_var));
         this->trueList = shaked->code_buffer->makelist(pair<int,BranchLabelIndex>{condition_address, FIRST});
         this->falseList = shaked->code_buffer->makelist(pair<int,BranchLabelIndex>{condition_address, SECOND});
-        this->llvm_var = new_var;
+        this->llvm_var = comp_var;
+//        shaked->code_buffer->emit("___________________________________________________________________");
     }
 }
 
@@ -339,28 +340,28 @@ Call::Call(Node &function_name, Node* exp_list)
     for(int i =0; i<true_exp_list->size(); i++)
     {
         Exp& exp = true_exp_list->operator[](i);
-//        if (exp.getType() == "BOOL")
-//        {
-//            CodeBuffer* code_buffer = yoav->code_buffer;
-//            string true_case = code_buffer->genLabel();
-//            int true_jump_address = code_buffer->emit(yoav->makeGoToStatement());
-//            string false_case = code_buffer->genLabel();
-//            int false_jump_address = code_buffer->emit(yoav->makeGoToStatement());
-//            code_buffer->bpatch(exp.getTrueList(), true_case);
-//            code_buffer->bpatch(exp.getFalseList(), false_case);
-//            string next_case = code_buffer->genLabel();
-//            string new_var = yoav->getFreshVar();
-//            code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{true_jump_address, FIRST}),next_case);
-//            code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{false_jump_address, FIRST}),next_case);
-//            code_buffer->emit("%" + new_var + " = phi i32 [1, %" + true_case + "], [0, %" + false_case + "]");
-//            exp.setLLVMName(new_var);
-//        }
+        if (exp.getType() == "BOOL")
+        {
+            CodeBuffer* code_buffer = yoav->code_buffer;
+            string true_case = code_buffer->genLabel();
+            int true_jump_address = code_buffer->emit(yoav->makeGoToStatement());
+            string false_case = code_buffer->genLabel();
+            int false_jump_address = code_buffer->emit(yoav->makeGoToStatement());
+            code_buffer->bpatch(exp.getTrueList(), true_case);
+            code_buffer->bpatch(exp.getFalseList(), false_case);
+            string next_case = code_buffer->genLabel();
+            string new_var = yoav->getFreshVar();
+            code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{true_jump_address, FIRST}),next_case);
+            code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{false_jump_address, FIRST}),next_case);
+            code_buffer->emit("%" + new_var + " = phi i32 [1, %" + true_case + "], [0, %" + false_case + "]");
+            exp.setLLVMName(new_var);
+        }
     }
     if (name == "print")
     {
         Exp exp = true_exp_list->front();
         int str_len = true_exp_list->front().getLength();
-        string dimension = "[" + std::to_string(str_len + 2) + " x i8]";
+        string dimension = "[" + std::to_string(str_len + 1) + " x i8]";
         string string_var = yoav->getFreshVar();
         string get_str = "%" + string_var + " = getelementptr " + dimension + " , "+dimension + "* @." + true_exp_list->front().getLLVMName() + ", i32 0, i32 0";
         yoav->code_buffer->emit(get_str);

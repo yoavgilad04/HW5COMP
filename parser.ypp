@@ -69,6 +69,7 @@ Funcs:          epsilon                                                         
 M: epsilon                                                                          {table_stack.openNewScope();
                                                                                      table_stack.addFuncSymbol("print", "VOID", "STRING", "default", "print");
                                                                                      table_stack.addFuncSymbol("printi", "VOID", "INT", "default", "printi");
+                                                                                     table_stack.addFuncSymbol("divByZero", "VOID", "", "default", "divByZero");
                                                                                      code_buffer->emitGlobal("declare i32 @printf(i8*, ...)");
                                                                                      code_buffer->emitGlobal("declare void @exit(i32)");
                                                                                      code_buffer->emitGlobal("@.int_specifier = constant [4 x i8] c\"%d\\0A\\00\"");
@@ -148,34 +149,37 @@ Statement:      LBRACE N Statements RBRACE C                                    
                                                                                     Symbol* inserted_symbol = table_stack.searchForSymbol($2->getType());
                                                                                     if (exp->getType() == "BOOL")
                                                                                     {
-                                                                                        string comp_var = shaked->getFreshVar();
-                                                                                      shaked->code_buffer->emit(shaked->makeCompStatement(comp_var,"==",exp_llvm_name ,"1"));
-                                                                                      int goto_line = code_buffer->emit(shaked->makeGoToCondStatement(comp_var));
+                                                                                     // string comp_var = shaked->getFreshVar();
+                                                                                     // shaked->code_buffer->emit(shaked->makeCompStatement(comp_var,"==",exp_llvm_name ,"1"));
+                                                                                     // int goto_line = code_buffer->emit(shaked->makeGoToCondStatement(comp_var));
                                                                                       string true_case = code_buffer->genLabel();
                                                                                       int true_jump_address = code_buffer->emit(shaked->makeGoToStatement());
                                                                                       string false_case = code_buffer->genLabel();
                                                                                       int false_jump_address = code_buffer->emit(shaked->makeGoToStatement());
-                                                                                      vector<pair<int,BranchLabelIndex>> merged_true = code_buffer->merge(code_buffer->makelist(pair<int,BranchLabelIndex>{goto_line, FIRST}), exp->getTrueList());
-                                                                                      vector<pair<int,BranchLabelIndex>> merged_false = code_buffer->merge(code_buffer->makelist(pair<int,BranchLabelIndex>{goto_line, SECOND}), exp->getFalseList());
+                                                                                      vector<pair<int,BranchLabelIndex>> merged_true = code_buffer->merge(code_buffer->makelist(pair<int,BranchLabelIndex>{true_jump_address, FIRST}), exp->getTrueList());
+                                                                                      vector<pair<int,BranchLabelIndex>> merged_false = code_buffer->merge(code_buffer->makelist(pair<int,BranchLabelIndex>{false_jump_address, SECOND}), exp->getFalseList());
                                                                                       code_buffer->bpatch(merged_true, true_case);
                                                                                       code_buffer->bpatch(merged_false, false_case);
                                                                                       string next_case = code_buffer->genLabel();
-                                                                                      string new_var = shaked->getFreshVar();
                                                                                       code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{true_jump_address, FIRST}),next_case);
                                                                                       code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{false_jump_address, FIRST}),next_case);
                                                                                       code_buffer->emit("%" + new_var + " = phi i32 [1, %" + true_case + "], [0, %" + false_case + "]");
-                                                                                      string comp2_var = shaked->getFreshVar();
-                                                                                      inserted_symbol->setLLVMName(comp2_var);
+                                                                                      string new_var2 = shaked->getFreshVar();
+                                                                                      shaked->storeCommand(new_var2, $1->getType(), new_var, inserted_symbol->getOffset());
                                                                                     }
-                                                                                    shaked->storeCommand(new_var, $1->getType(), exp_llvm_name, inserted_symbol->getOffset());
-
+                                                                                    else
+                                                                                        shaked->storeCommand(new_var, $1->getType(), exp_llvm_name, inserted_symbol->getOffset());
                                                                                     }
                 | ID ASSIGN Exp SC                                                  {output::printProductionRule(19);
                                                                                     Exp* exp = dynamic_cast<Exp*>($3);
                                                                                     string exp_llvm_name = exp->getLLVMName();
                                                                                     table_stack.compareType($1->getType(), $3->getType());
                                                                                     Symbol* s = table_stack.searchForSymbol($1->getType());
-                                                                                    shaked->storeCommand(s->getLLVMName(), s->getType(), exp_llvm_name, s->getOffset());
+                                                                                    string new_var = shaked->getFreshVar();
+                                                                                    shaked->storeCommand(new_var, s->getType(), exp_llvm_name, s->getOffset());
+                                                                                    Exp* exp2 = dynamic_cast<Exp*>($$);
+                                                                                    s->setLLVMName(new_var);
+
                                                                                     }
                 | Call SC                                                           {output::printProductionRule(20);}
                 | RETURN SC                                                         {output::printProductionRule(21);
@@ -186,10 +190,13 @@ Statement:      LBRACE N Statements RBRACE C                                    
                                                                                      Exp* exp = dynamic_cast<Exp*>($2);
                                                                                      code_buffer->emit(shaked->retCommand(exp->getType(), exp->getLLVMName()));}
                 | IF LPAREN BOOLEXP RPAREN IFN Statement C                           {output::printProductionRule(23);
+                                                                                     int goto_line = code_buffer->emit(shaked->makeGoToStatement());
                                                                                      string false_label = code_buffer->genLabel();
+                                                                                     code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{goto_line,FIRST}), false_label);
                                                                                      Exp* boolexp = dynamic_cast<Exp*>($3);
                                                                                      code_buffer->bpatch(boolexp->getTrueList(), $5->getType());
                                                                                      code_buffer->bpatch(boolexp->getFalseList(), false_label);
+
                                                                                      }
 
                 | IF LPAREN BOOLEXP RPAREN IFN Statement C ELSE IFN2 Statement C     {output::printProductionRule(24);
@@ -237,7 +244,10 @@ IFN: epsilon                                                                    
                                                                                        $$ = new Node(shaked->code_buffer->genLabel());}
 ;
 
-MBPW:   epsilon                                                                    {string goto_label = shaked->code_buffer->genLabel();
+MBPW:   epsilon                                                                    {
+                                                                                    int goto_line = code_buffer->emit(shaked->makeGoToStatement());
+                                                                                    string goto_label = shaked->code_buffer->genLabel();
+                                                                                    code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{goto_line,FIRST}),goto_label);
                                                                                     $$=new Node(goto_label);
                                                                                     While* w = new While(goto_label);
                                                                                     whiles.push_back(w);

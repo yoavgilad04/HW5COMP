@@ -184,8 +184,10 @@ public:
         this->code_buffer->emit(this->makeCompStatement(new_var, "==", var, "0"));
         int line = this->code_buffer->emit(this->makeGoToCondStatement(new_var));
         string true_label = this->code_buffer->genLabel();
-        code_buffer->emit("call i32 @divByZero()");
+        code_buffer->emit("call void @divByZero()");
+        int i_hate_compi = code_buffer->emit(this->makeGoToStatement());
         string false_label = this->code_buffer->genLabel();
+        code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{i_hate_compi,FIRST}), false_label);
         code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{line,FIRST}), true_label);
         code_buffer->bpatch(code_buffer->makelist(pair<int,BranchLabelIndex>{line ,SECOND}), false_label);
     }
@@ -280,8 +282,8 @@ public:
 
     void addStringStatement(string target, string input_string)
     {
-        string output_string = "@." + target + " = constant [" + std::to_string(int(input_string.size()) + 2) + " x i8] c\"";
-        output_string += input_string + "\\0A\\00\"";
+        string output_string = "@." + target + " = constant [" + std::to_string(int(input_string.size()) + 1) + " x i8] c\"";
+        output_string += input_string + "\\00\"";
         this->code_buffer->emitGlobal(output_string);
     }
 

@@ -19,26 +19,6 @@
     <option name="openedFilesInfos">
       <list>
         <OpenedFileInfo>
-          <option name="caretOffset" value="7593" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/singleton.hpp" />
-        </OpenedFileInfo>
-        <OpenedFileInfo>
-          <option name="caretOffset" value="5246" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/staff/hw3_output.cpp" />
-        </OpenedFileInfo>
-        <OpenedFileInfo>
-          <option name="caretOffset" value="5518" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/table_stack.cpp" />
-        </OpenedFileInfo>
-        <OpenedFileInfo>
-          <option name="caretOffset" value="1899" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/source.cpp" />
-        </OpenedFileInfo>
-        <OpenedFileInfo>
-          <option name="caretOffset" value="2619" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/llvm_execute/llvm_code.llvm" />
-        </OpenedFileInfo>
-        <OpenedFileInfo>
           <option name="caretOffset" value="1662" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/source.hpp" />
         </OpenedFileInfo>
@@ -47,12 +27,28 @@
           <option name="fileUrl" value="file://$PROJECT_DIR$/staff/bp.hpp" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="146" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/test.in" />
+          <option name="caretOffset" value="13083" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/source.cpp" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="20558" />
+          <option name="caretOffset" value="2132" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/parser.ypp" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="1183" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/llvm_execute/llvm_code.llvm" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="632" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/symbols/symbol.hpp" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="0" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/tests/t02.out" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="5858" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/singleton.hpp" />
         </OpenedFileInfo>
       </list>
     </option>
