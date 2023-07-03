@@ -1,0 +1,14 @@
+// bytes
+
+void main()
+{
+    print("You thought we were done with byte calculations?? HA! don't make me laugh");
+    print("Expecting 254 255 254");
+    byte x = 254b;
+    printi(x);
+    x = x + 1b;
+    printi(x);
+    x = x * 2b; // Overflows
+    printi(x);
+    print("OK bye");
+}

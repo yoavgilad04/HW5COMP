@@ -1,0 +1,67 @@
+declare i32 @printf(i8*, ...)
+declare void @exit(i32)
+@.int_specifier = constant [4 x i8] c"%d\0A\00"
+@.str_specifier = constant [4 x i8] c"%s\0A\00"
+@.divide_by_zero_error = constant [23 x i8] c"Error division by zero\00"
+@.var0 = constant [46 x i8] c"just checking order of computation real quick\00"
+@.var15 = constant [41 x i8] c"Did you get 8? because that's the answer\00"
+@.var17 = constant [13 x i8] c"No! you got:\00"
+@.var21 = constant [11 x i8] c"OK bye now\00"
+
+define void @printi(i32) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.int_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i32 %0)
+    ret void
+}
+
+define void @print(i8*) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.str_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i8* %0)
+    ret void
+}
+
+
+define void @divByZero() {
+    %spec_ptr = getelementptr [23 x i8], [23 x i8]* @.divide_by_zero_error, i32 0, i32 0
+    call void (i8*) @print(i8* %spec_ptr)
+    %exitCode = add i32 0, 0
+    call void @exit(i32 %exitCode)
+    ret void
+}
+
+define void @main()
+{
+    %myArr_0 = alloca [50 x i32]
+    %var1 = getelementptr [46 x i8] , [46 x i8]* @.var0, i32 0, i32 0
+    call void (i8*) @print(i8* %var1)
+    %var2 = add i32 1, 0
+    %var3 = add i32 2, 0
+    %var4 = add i32 3, 0
+    %var5 = mul i32 %var3, %var4
+    %var6 = add i32 2, 0
+    %var8 = icmp eq i32 %var6, 0
+    br i1 %var8, label %label_34, label %label_37
+    label_34:
+        call void @divByZero()
+        br label %label_37
+    label_37:
+        %var7 = sdiv i32 %var5, %var6
+        %var9 = add i32 %var2, %var7
+        %var10 = add i32 5, 0
+        %var11 = add i32 %var9, %var10
+        %var12 = add i32 1, 0
+        %var13 = sub i32 %var11, %var12
+        %var14 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 0
+        store i32 %var13, i32* %var14
+        %var16 = getelementptr [41 x i8] , [41 x i8]* @.var15, i32 0, i32 0
+        call void (i8*) @print(i8* %var16)
+        %var18 = getelementptr [13 x i8] , [13 x i8]* @.var17, i32 0, i32 0
+        call void (i8*) @print(i8* %var18)
+        %var19 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 0
+        %var20 = load i32, i32* %var19
+        call void @printi(i32 %var20)
+        %var22 = getelementptr [11 x i8] , [11 x i8]* @.var21, i32 0, i32 0
+        call void (i8*) @print(i8* %var22)
+        ret void
+}
+

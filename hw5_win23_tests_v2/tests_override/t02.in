@@ -1,0 +1,20 @@
+int foo(int x)
+{
+ print("this should not be printed");
+}
+
+override int foo1 (int x)
+{
+print("this should be printed");
+}
+
+override int foo1 (int z, int x)
+{
+print("this should be printed also");
+return 69;
+}
+
+void main(){
+printi(foo1(5));
+printi(foo1(1,4));
+}

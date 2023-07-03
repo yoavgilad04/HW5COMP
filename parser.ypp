@@ -141,6 +141,10 @@ Statement:      LBRACE N Statements RBRACE C                                    
                                                                                     string new_var = shaked->getFreshVar();
                                                                                     table_stack.addSymbolToLastTable($2->getType(), $1->getType(), false, new_var);
                                                                                     Symbol* inserted_symbol = table_stack.searchForSymbol($2->getType());
+                                                                                    if(inserted_symbol->isFunc())
+                                                                                    {
+                                                                                        output::errorDef(yylineno, $2->getType());
+                                                                                    }
                                                                                     //code_buffer->emit(shaked->allocCommand(new_var, $1->getType()));
                                                                                     shaked->storeCommand(new_var, $1->getType(), "0", inserted_symbol->getOffset());}
                 | Type ID ASSIGN Exp SC                                             {output::printProductionRule(18);
@@ -149,6 +153,10 @@ Statement:      LBRACE N Statements RBRACE C                                    
                                                                                     string exp_llvm_name = exp->getLLVMName();
                                                                                     table_stack.addSymbolToLastTable($2->getType(), $1->getType(), $4->getType(), new_var);
                                                                                     Symbol* inserted_symbol = table_stack.searchForSymbol($2->getType());
+                                                                                    if(inserted_symbol->isFunc())
+                                                                                    {
+                                                                                        output::errorDef(yylineno, $2->getType());
+                                                                                    }
                                                                                     if (exp->getType() == "BOOL")
                                                                                     {
                                                                                         shaked->addPhiStatements(*exp,new_var);
@@ -163,6 +171,10 @@ Statement:      LBRACE N Statements RBRACE C                                    
                                                                                     string exp_llvm_name = exp->getLLVMName();
                                                                                     table_stack.compareType($1->getType(), $3->getType());
                                                                                     Symbol* s = table_stack.searchForSymbol($1->getType());
+                                                                                    if(s->isFunc())
+                                                                                    {
+                                                                                        output::errorUndef(yylineno, $1->getType());
+                                                                                    }
                                                                                     //
                                                                                     string new_var = shaked->getFreshVar();
                                                                                     if (exp->getType() == "BOOL")
@@ -296,9 +308,12 @@ ExpList:        Exp                                                             
 ExpPHI:          Exp                                                                {Exp* exp = dynamic_cast<Exp*>($1);
                                                                                      //string goto_label = shaked->code_buffer->genLabel();
                                                                                      //shaked->code_buffer->emit("br label %" + goto_label);
-                                                                                     string new_var = shaked->getFreshVar();
-                                                                                     shaked->addPhiStatements(*exp,new_var);
-                                                                                     exp->setLLVMName(new_var);
+                                                                                     if(exp->getType() == "BOOL")
+                                                                                     {
+                                                                                        string new_var = shaked->getFreshVar();
+                                                                                        shaked->addPhiStatements(*exp,new_var);
+                                                                                        exp->setLLVMName(new_var);
+                                                                                     }
                                                                                      $$=$1;}
 ;
 Type:           INT                                                                 {output::printProductionRule(32);

@@ -1,0 +1,11 @@
+void main()
+{
+    print("More boolean testing! YAY");
+    print("expecting false");
+    bool y = not (true and true and true and true and true and true);
+    if (not y) {
+        print("indeed false");
+    }
+    
+    print("Fin");
+}

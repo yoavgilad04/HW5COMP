@@ -226,7 +226,10 @@ public:
         if(op == "DIV")
         {
             this->checkIfZero(var2, isByte);
-            output_string += "udiv ";
+            if(isByte)
+                output_string += "udiv ";
+            else
+                output_string += "sdiv ";
         }
         if (this->startsWith(var1, "var"))
             var1 = "%" + var1;
@@ -242,14 +245,17 @@ public:
     string makeCompStatement(string target, string comp_op, string var1, string var2, bool isByte=false)
     {
         string output_string = "%" + target + " = icmp ";
+        string singnedOrNotPrefix = "s";
+        if (isByte)
+            singnedOrNotPrefix += "u";
         if (comp_op == "<")
-            output_string += "ult ";
+            output_string += singnedOrNotPrefix + "lt ";
         if (comp_op == ">")
-            output_string += "ugt ";
+            output_string += singnedOrNotPrefix + "gt ";
         if (comp_op == "<=")
-            output_string += "ule ";
+            output_string += singnedOrNotPrefix + "le ";
         if (comp_op == ">=")
-            output_string += "uge ";
+            output_string += singnedOrNotPrefix + "ge ";
         if (comp_op == "==")
             output_string += "eq ";
         if (comp_op == "!=")

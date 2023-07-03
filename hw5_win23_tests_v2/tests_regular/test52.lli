@@ -1,0 +1,100 @@
+declare i32 @printf(i8*, ...)
+declare void @exit(i32)
+@.int_specifier = constant [4 x i8] c"%d\0A\00"
+@.str_specifier = constant [4 x i8] c"%s\0A\00"
+@.divide_by_zero_error = constant [23 x i8] c"Error division by zero\00"
+@.var29 = constant [9 x i8] c"x is odd\00"
+
+define void @printi(i32) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.int_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i32 %0)
+    ret void
+}
+
+define void @print(i8*) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.str_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i8* %0)
+    ret void
+}
+
+
+define void @divByZero() {
+    %spec_ptr = getelementptr [23 x i8], [23 x i8]* @.divide_by_zero_error, i32 0, i32 0
+    call void (i8*) @print(i8* %spec_ptr)
+    %exitCode = add i32 0, 0
+    call void @exit(i32 %exitCode)
+    ret void
+}
+
+define void @var0maxTestsTestContinue()
+{
+    %myArr_0 = alloca [50 x i32]
+    %var1 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 0
+    store i32 0, i32* %var1
+    br label %label_28
+    label_28:
+        %var2 = add i32 1, 0
+        %var3 = icmp eq i32 %var2, 1
+        br i1 %var3, label %label_32, label %label_83
+    label_32:
+        %var4 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 0
+        %var5 = load i32, i32* %var4
+        %var6 = add i32 10, 0
+        %var7 = icmp eq i32 %var5, %var6
+        br i1 %var7, label %label_38, label %label_41
+    label_38:
+        br label %label_83
+        br label %label_41
+    label_41:
+        %var8 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 0
+        %var9 = load i32, i32* %var8
+        %var10 = add i32 1, 0
+        %var11 = add i32 %var9, %var10
+        %var12 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 0
+        store i32 %var11, i32* %var12
+        %var13 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 0
+        %var14 = load i32, i32* %var13
+        %var15 = add i32 2, 0
+        %var17 = icmp eq i32 %var15, 0
+        br i1 %var17, label %label_53, label %label_56
+    label_53:
+        call void @divByZero()
+        br label %label_56
+    label_56:
+        %var16 = sdiv i32 %var14, %var15
+        %var18 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 0
+        %var19 = load i32, i32* %var18
+        %var20 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 0
+        %var21 = load i32, i32* %var20
+        %var22 = add i32 2, 0
+        %var24 = icmp eq i32 %var22, 0
+        br i1 %var24, label %label_65, label %label_68
+    label_65:
+        call void @divByZero()
+        br label %label_68
+    label_68:
+        %var23 = sdiv i32 %var21, %var22
+        %var25 = sub i32 %var19, %var23
+        %var26 = icmp eq i32 %var16, %var25
+        br i1 %var26, label %label_73, label %label_76
+    label_73:
+        br label %label_28
+        br label %label_76
+    label_76:
+        %var27 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 0
+        %var28 = load i32, i32* %var27
+        call void @printi(i32 %var28)
+        %var30 = getelementptr [9 x i8] , [9 x i8]* @.var29, i32 0, i32 0
+        call void (i8*) @print(i8* %var30)
+        br label %label_28
+    label_83:
+        ret void
+}
+
+define void @main()
+{
+    %myArr_1 = alloca [50 x i32]
+        call void @var0maxTestsTestContinue()
+        ret void
+}
+

@@ -1,0 +1,15 @@
+void main()
+{
+    print("bool thinges.... because why not? don't you like pain?");
+    print("Expecting true");
+    bool y = true and true and true and true and true and true;
+    if(y) {
+        print("true");
+    }
+    else {
+        print("false");
+    }
+    print("So far so good");
+    print("JK.... Kill me pls");
+    print("JK again, you good, I'm not though :(");
+}

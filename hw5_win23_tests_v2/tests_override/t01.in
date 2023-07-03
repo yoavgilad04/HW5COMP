@@ -1,0 +1,17 @@
+override int nezo1(int x)
+{
+	print("im in 1 param");
+}
+
+override int nezo1(int x, int y)
+{
+	print("im in 2 param");
+}
+
+void main()
+{
+int x =0;
+int y =0;
+nezo1(x);
+nezo1(x,y);
+}

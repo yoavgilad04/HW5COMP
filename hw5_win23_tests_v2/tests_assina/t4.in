@@ -1,0 +1,17 @@
+// sub
+// print
+
+void main()
+{
+    int x = 4 - 3;
+    print("X should be 1, but you got:");
+    printi(x);
+
+    int y = x - 5;
+    print("Y should be -4 (x-5), but you got:");
+    printi(y);
+    if (y != (0-4))
+        print("fucking loser...");
+    else
+        print("I'M DONE");
+}

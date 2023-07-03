@@ -1,0 +1,10 @@
+void main() {
+    print("this is the very first test!");
+    print("Here we test basic calculation and storing");
+    print("Calculating 1+2...");
+    int x = 1 + 2;
+    print("the result is: ");
+    printi(x);
+    print("Bye!");
+    return;
+}

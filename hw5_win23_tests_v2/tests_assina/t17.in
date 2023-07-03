@@ -1,0 +1,12 @@
+void main()
+{
+    print("IDK anymore what is this..");
+    if (1 < 2) {
+        int x = 1;
+        print("You are good");
+    }
+    if (not (1 < 2)) { print("You are bad"); }
+    int y;
+
+    print("Ari v. Cherchyiil");
+}

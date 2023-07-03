@@ -1,0 +1,12 @@
+void main()
+{
+    print("Expecting true");
+    bool x = true;
+    bool y = false;
+    bool res = x or y;
+    if (res) {
+        print("res == true");
+    }
+    print("Fin");
+}
+

@@ -1,0 +1,132 @@
+declare i32 @printf(i8*, ...)
+declare void @exit(i32)
+@.int_specifier = constant [4 x i8] c"%d\0A\00"
+@.str_specifier = constant [4 x i8] c"%s\0A\00"
+@.divide_by_zero_error = constant [23 x i8] c"Error division by zero\00"
+
+define void @printi(i32) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.int_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i32 %0)
+    ret void
+}
+
+define void @print(i8*) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.str_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i8* %0)
+    ret void
+}
+
+
+define void @divByZero() {
+    %spec_ptr = getelementptr [23 x i8], [23 x i8]* @.divide_by_zero_error, i32 0, i32 0
+    call void (i8*) @print(i8* %spec_ptr)
+    %exitCode = add i32 0, 0
+    call void @exit(i32 %exitCode)
+    ret void
+}
+
+define void @main()
+{
+    %myArr_0 = alloca [50 x i32]
+    %var0 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 0
+    store i32 0, i32* %var0
+    %var1 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 1
+    store i32 0, i32* %var1
+    %var2 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 0
+    %var3 = load i32, i32* %var2
+    %var4 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 1
+    %var5 = load i32, i32* %var4
+    %var6 = add i32 %var3, %var5
+    call void @printi(i32 %var6)
+    %var7 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 0
+    %var8 = load i32, i32* %var7
+    %var9 = add i32 2, 0
+    %var10 = mul i32 %var8, %var9
+    call void @printi(i32 %var10)
+    %var11 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 1
+    %var12 = load i32, i32* %var11
+    %var13 = add i32 2, 0
+    %var14 = mul i32 %var12, %var13
+    call void @printi(i32 %var14)
+    %var15 = add i32 255, 0
+    %var16 = add i32 2, 0
+    %var17 = mul i32 %var15, %var16
+    call void @printi(i32 %var17)
+    %var18 = add i32 255, 0
+    %var19 = add i32 2, 0
+    %var20 = mul i32 %var18, %var19
+    call void @printi(i32 %var20)
+    %var21 = add i32 255, 0
+    %var22 = add i32 255, 0
+    %var23 = add i32 %var21, %var22
+    call void @printi(i32 %var23)
+    %var24 = add i32 255, 0
+    %var25 = add i32 255, 0
+    %var26 = add i32 %var24, %var25
+    call void @printi(i32 %var26)
+    %var27 = add i32 255, 0
+    %var28 = add i32 255, 0
+    %var29 = sub i32 %var27, %var28
+    call void @printi(i32 %var29)
+    %var30 = add i32 255, 0
+    %var31 = add i32 255, 0
+    %var32 = sub i32 %var30, %var31
+    call void @printi(i32 %var32)
+    %var33 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 0
+    %var34 = load i32, i32* %var33
+    %var35 = add i32 1, 0
+    %var37 = icmp eq i32 %var35, 0
+    br i1 %var37, label %label_74, label %label_77
+    label_74:
+        call void @divByZero()
+        br label %label_77
+    label_77:
+        %var36 = sdiv i32 %var34, %var35
+        call void @printi(i32 %var36)
+        %var38 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 1
+        %var39 = load i32, i32* %var38
+        %var40 = add i32 1, 0
+        %var42 = icmp eq i32 %var40, 0
+        br i1 %var42, label %label_85, label %label_88
+    label_85:
+        call void @divByZero()
+        br label %label_88
+    label_88:
+        %var41 = sdiv i32 %var39, %var40
+        call void @printi(i32 %var41)
+        %var43 = add i32 8, 0
+        %var44 = add i32 2, 0
+        %var46 = icmp eq i32 %var44, 0
+        br i1 %var46, label %label_95, label %label_98
+    label_95:
+        call void @divByZero()
+        br label %label_98
+    label_98:
+        %var45 = sdiv i32 %var43, %var44
+        call void @printi(i32 %var45)
+        %var47 = add i32 10, 0
+        %var48 = add i32 4, 0
+        %var50 = icmp eq i32 %var48, 0
+        br i1 %var50, label %label_105, label %label_108
+    label_105:
+        call void @divByZero()
+        br label %label_108
+    label_108:
+        %var49 = sdiv i32 %var47, %var48
+        call void @printi(i32 %var49)
+        %var51 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 0
+        %var52 = load i32, i32* %var51
+        %var53 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 0
+        %var54 = load i32, i32* %var53
+        %var56 = icmp eq i32 %var54, 0
+        br i1 %var56, label %label_117, label %label_120
+    label_117:
+        call void @divByZero()
+        br label %label_120
+    label_120:
+        %var55 = sdiv i32 %var52, %var54
+        call void @printi(i32 %var55)
+        ret void
+        ret void
+}
+

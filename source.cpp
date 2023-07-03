@@ -185,11 +185,14 @@ Exp::Exp(Node &exp, const string &conversion_type)
     {
         if (exp.getType() == "INT" || exp.getType() == "BYTE")
         {
+            Exp* e = dynamic_cast<Exp*>(&exp);
             if (conversion_type == "INT")
-                this->getType() = "INT";
+            {
+                this->type = "INT";
+                this->llvm_var = e->getLLVMName();
+            }
             else // conversion type == "BYTE"
             {
-                Exp* e = dynamic_cast<Exp*>(&exp);
                 Singleton* shaked = Singleton::getInstance();
                 string new_var = shaked->getFreshVar();
                 shaked->code_buffer->emit("%" + new_var + " = trunc i32 %" + e->getLLVMName() + " to i8");
@@ -217,7 +220,7 @@ Exp::Exp(Node &exp, const string &conversion_type)
     if(conversion_type == "id")
     {
         Symbol* t = table_stack.searchForSymbol(exp.getType()); // in this case type will be the name of the i
-        if (t == nullptr)
+        if (t == nullptr || t->isFunc())
         {
             output::errorUndef(yylineno, exp.getType());
         }
@@ -244,8 +247,6 @@ Exp::Exp(Node &exp, const string &conversion_type)
             this->trueList = code_buffer->makelist(pair<int,BranchLabelIndex>{goto_line, FIRST});
             this->falseList = code_buffer->makelist(pair<int,BranchLabelIndex>{goto_line, SECOND});
             this->type = "BOOL";
-//            this->llvm_var = cmp_var;
-//            return;
         }
         this->type = t->getType();
         this->llvm_var = new_var;
@@ -294,8 +295,6 @@ ExpList::ExpList(Node &exp)
     Singleton* yoav = Singleton::getInstance();
     if(e->getType() == "BOOL")
     {
-//        string goto_label = yoav->code_buffer->genLabel();
-//        yoav->code_buffer->emit("br label %" + goto_label);
         string new_var = yoav->getFreshVar();
         yoav->addPhiStatements(*e,new_var);
         e->setLLVMName(new_var);
@@ -313,14 +312,6 @@ ExpList::ExpList(Node &exp, Node *exp_list)
     Exp* e = dynamic_cast<Exp*>(&exp);
 
     Singleton* yoav = Singleton::getInstance();
-    if(e->getType() == "BOOL")
-    {
-//        yoav->code_buffer->emit("br label %" + goto_label);
-//        string new_var = yoav->getFreshVar();
-//        yoav->addPhiStatements(*e,new_var);
-//        e->setLLVMName(new_var);
-    }
-
     this->insert(*e);
 }
 

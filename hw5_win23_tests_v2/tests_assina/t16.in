@@ -1,0 +1,13 @@
+void main()
+{
+    print("You thought boolean stuff is over? think again");
+    bool x = true;
+    bool y = false;
+    bool res = (((x or y) and (y and x)) or (y and y)) or x;
+    if (res) {
+        print("I'm not even sure if you were supposed to be here");
+        print("JK you're good");
+    }
+    print("Sayonara mothafxxker");
+
+}

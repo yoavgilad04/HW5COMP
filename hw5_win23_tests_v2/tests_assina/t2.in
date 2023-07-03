@@ -1,0 +1,11 @@
+void main() {
+    print("This is the third test!");
+    print("Here we will test division by 0");
+    print("now calculating 1 + 2:");
+    int x = 1 + 2;
+    print("The result is:");
+    printi(x);
+    print("now calculating prev_res/0 ");
+    int y = x / 0;
+    print("You shouldn't be here!");
+}

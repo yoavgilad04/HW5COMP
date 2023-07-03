@@ -1,0 +1,9 @@
+// bytes
+
+void main()
+{   
+    print("100 / (256b) is div by zero");
+    byte x = 100b;
+    x = x / (x + 156b);
+    print("You failed this basic test! (lmao)");
+}

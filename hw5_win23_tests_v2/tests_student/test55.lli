@@ -1,0 +1,92 @@
+declare i32 @printf(i8*, ...)
+declare void @exit(i32)
+@.int_specifier = constant [4 x i8] c"%d\0A\00"
+@.str_specifier = constant [4 x i8] c"%s\0A\00"
+@.divide_by_zero_error = constant [23 x i8] c"Error division by zero\00"
+@.var13 = constant [175 x i8] c"I learned that courage was not the absence of fear, but the triumph over it. The brave man is not he who does not feel afraid, but he who conquers that fear. - Nelson Mandela\00"
+@.var17 = constant [86 x i8] c"Too many of us are not living our dreams because we are living our fears. - Les Brown\00"
+
+define void @printi(i32) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.int_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i32 %0)
+    ret void
+}
+
+define void @print(i8*) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.str_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i8* %0)
+    ret void
+}
+
+
+define void @divByZero() {
+    %spec_ptr = getelementptr [23 x i8], [23 x i8]* @.divide_by_zero_error, i32 0, i32 0
+    call void (i8*) @print(i8* %spec_ptr)
+    %exitCode = add i32 0, 0
+    call void @exit(i32 %exitCode)
+    ret void
+}
+
+define i32 @var0Func()
+{
+    %myArr_0 = alloca [50 x i32]
+    %var1 = add i32 1, 0
+    %var2 = add i32 2, 0
+    %var3 = icmp slt i32 %var1, %var2
+    br i1 %var3, label %label_29, label %label_31
+    label_29:
+        br label %label_33
+    label_31:
+        br label %label_33
+    label_33:
+        %var4 = phi i32 [1, %label_29], [0, %label_31]
+        ret i32 %var4
+        ret i32 0
+}
+
+define i32 @var5Func2()
+{
+    %myArr_1 = alloca [50 x i32]
+        %var6 = add i32 2, 0
+        %var7 = add i32 1, 0
+        %var8 = icmp slt i32 %var6, %var7
+        br i1 %var8, label %label_46, label %label_48
+    label_46:
+        br label %label_50
+    label_48:
+        br label %label_50
+    label_50:
+        %var9 = phi i32 [1, %label_46], [0, %label_48]
+        ret i32 %var9
+        ret i32 0
+}
+
+define void @var10maxTestsTestReturnBooleanRelop()
+{
+    %myArr_2 = alloca [50 x i32]
+        %var11 = call i32 @var0Func()
+        %var12 = icmp eq i32 %var11, 1
+        br i1 %var12, label %label_62, label %label_66
+    label_62:
+        %var14 = getelementptr [175 x i8] , [175 x i8]* @.var13, i32 0, i32 0
+        call void (i8*) @print(i8* %var14)
+        br label %label_66
+    label_66:
+        %var15 = call i32 @var5Func2()
+        %var16 = icmp eq i32 %var15, 1
+        br i1 %var16, label %label_74, label %label_70
+    label_70:
+        %var18 = getelementptr [86 x i8] , [86 x i8]* @.var17, i32 0, i32 0
+        call void (i8*) @print(i8* %var18)
+        br label %label_74
+    label_74:
+        ret void
+}
+
+define void @main()
+{
+    %myArr_3 = alloca [50 x i32]
+        call void @var10maxTestsTestReturnBooleanRelop()
+        ret void
+}
+

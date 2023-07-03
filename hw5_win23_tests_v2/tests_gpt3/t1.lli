@@ -1,0 +1,166 @@
+declare i32 @printf(i8*, ...)
+declare void @exit(i32)
+@.int_specifier = constant [4 x i8] c"%d\0A\00"
+@.str_specifier = constant [4 x i8] c"%s\0A\00"
+@.divide_by_zero_error = constant [23 x i8] c"Error division by zero\00"
+@.var12 = constant [14 x i8] c"in first loop\00"
+@.var20 = constant [15 x i8] c"in second loop\00"
+@.var28 = constant [25 x i8] c"second loop didn't break\00"
+@.var40 = constant [18 x i8] c"break second loop\00"
+@.var44 = constant [34 x i8] c"finished iteration in second loop\00"
+@.var53 = constant [24 x i8] c"first loop didn't break\00"
+@.var57 = constant [17 x i8] c"break first loop\00"
+@.var74 = constant [33 x i8] c"finished iteration in first loop\00"
+@.var76 = constant [8 x i8] c"bye bye\00"
+
+define void @printi(i32) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.int_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i32 %0)
+    ret void
+}
+
+define void @print(i8*) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.str_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i8* %0)
+    ret void
+}
+
+
+define void @divByZero() {
+    %spec_ptr = getelementptr [23 x i8], [23 x i8]* @.divide_by_zero_error, i32 0, i32 0
+    call void (i8*) @print(i8* %spec_ptr)
+    %exitCode = add i32 0, 0
+    call void @exit(i32 %exitCode)
+    ret void
+}
+
+define void @main()
+{
+    %myArr_0 = alloca [50 x i32]
+    %var0 = add i32 5, 0
+    %var1 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 0
+    store i32 %var0, i32* %var1
+    %var2 = add i32 4, 0
+    %var3 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 1
+    store i32 %var2, i32* %var3
+    %var4 = add i32 1, 0
+    %var5 = icmp eq i32 %var4, 1
+    br i1 %var5, label %label_34, label %label_36
+    label_34:
+        br label %label_38
+    label_36:
+        br label %label_38
+    label_38:
+        %var6 = phi i32 [1, %label_34], [0, %label_36]
+        %var7 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 2
+        store i32 %var6, i32* %var7
+        br label %label_43
+    label_43:
+        %var8 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 0
+        %var9 = load i32, i32* %var8
+        %var10 = add i32 10, 0
+        %var11 = icmp slt i32 %var9, %var10
+        br i1 %var11, label %label_49, label %label_146
+    label_49:
+        %var13 = getelementptr [14 x i8] , [14 x i8]* @.var12, i32 0, i32 0
+        call void (i8*) @print(i8* %var13)
+        %var14 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 0
+        %var15 = load i32, i32* %var14
+        call void @printi(i32 %var15)
+        br label %label_56
+    label_56:
+        %var16 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 1
+        %var17 = load i32, i32* %var16
+        %var18 = add i32 6, 0
+        %var19 = icmp slt i32 %var17, %var18
+        br i1 %var19, label %label_62, label %label_101
+    label_62:
+        %var21 = getelementptr [15 x i8] , [15 x i8]* @.var20, i32 0, i32 0
+        call void (i8*) @print(i8* %var21)
+        %var22 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 1
+        %var23 = load i32, i32* %var22
+        call void @printi(i32 %var23)
+        %var24 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 1
+        %var25 = load i32, i32* %var24
+        %var26 = add i32 4, 0
+        %var27 = icmp eq i32 %var25, %var26
+        br i1 %var27, label %label_73, label %label_89
+    label_73:
+        %var29 = getelementptr [25 x i8] , [25 x i8]* @.var28, i32 0, i32 0
+        call void (i8*) @print(i8* %var29)
+        %var30 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 1
+        %var31 = load i32, i32* %var30
+        call void @printi(i32 %var31)
+        %var32 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 1
+        %var33 = load i32, i32* %var32
+        %var34 = add i32 1, 0
+        %var35 = trunc i32 %var33 to i8
+        %var36 = trunc i32 %var34 to i8
+        %var37 = add i8 %var35, %var36
+        %var38 = zext i8 %var37 to i32
+        %var39 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 1
+        store i32 %var38, i32* %var39
+        br label %label_97
+    label_89:
+        %var41 = getelementptr [18 x i8] , [18 x i8]* @.var40, i32 0, i32 0
+        call void (i8*) @print(i8* %var41)
+        %var42 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 1
+        %var43 = load i32, i32* %var42
+        call void @printi(i32 %var43)
+        br label %label_101
+        br label %label_97
+    label_97:
+        %var45 = getelementptr [34 x i8] , [34 x i8]* @.var44, i32 0, i32 0
+        call void (i8*) @print(i8* %var45)
+        br label %label_56
+    label_101:
+        %var46 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 2
+        %var47 = load i32, i32* %var46
+        %var48 = icmp eq i32 %var47, 1
+        br i1 %var48, label %label_106, label %label_112
+    label_106:
+        %var49 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 0
+        %var50 = load i32, i32* %var49
+        %var51 = add i32 7, 0
+        %var52 = icmp sle i32 %var50, %var51
+        br i1 %var52, label %label_112, label %label_119
+    label_112:
+        %var54 = getelementptr [24 x i8] , [24 x i8]* @.var53, i32 0, i32 0
+        call void (i8*) @print(i8* %var54)
+        %var55 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 0
+        %var56 = load i32, i32* %var55
+        call void @printi(i32 %var56)
+        br label %label_127
+    label_119:
+        %var58 = getelementptr [17 x i8] , [17 x i8]* @.var57, i32 0, i32 0
+        call void (i8*) @print(i8* %var58)
+        %var59 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 0
+        %var60 = load i32, i32* %var59
+        call void @printi(i32 %var60)
+        br label %label_146
+        br label %label_127
+    label_127:
+        %var61 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 0
+        %var62 = load i32, i32* %var61
+        %var63 = add i32 1, 0
+        %var64 = add i32 %var62, %var63
+        %var65 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 0
+        store i32 %var64, i32* %var65
+        %var66 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 1
+        %var67 = load i32, i32* %var66
+        %var68 = add i32 1, 0
+        %var69 = trunc i32 %var67 to i8
+        %var70 = trunc i32 %var68 to i8
+        %var71 = sub i8 %var69, %var70
+        %var72 = zext i8 %var71 to i32
+        %var73 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 1
+        store i32 %var72, i32* %var73
+        %var75 = getelementptr [33 x i8] , [33 x i8]* @.var74, i32 0, i32 0
+        call void (i8*) @print(i8* %var75)
+        br label %label_43
+    label_146:
+        %var77 = getelementptr [8 x i8] , [8 x i8]* @.var76, i32 0, i32 0
+        call void (i8*) @print(i8* %var77)
+        ret void
+}
+

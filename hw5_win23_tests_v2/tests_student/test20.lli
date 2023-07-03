@@ -1,0 +1,142 @@
+declare i32 @printf(i8*, ...)
+declare void @exit(i32)
+@.int_specifier = constant [4 x i8] c"%d\0A\00"
+@.str_specifier = constant [4 x i8] c"%s\0A\00"
+@.divide_by_zero_error = constant [23 x i8] c"Error division by zero\00"
+
+define void @printi(i32) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.int_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i32 %0)
+    ret void
+}
+
+define void @print(i8*) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.str_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i8* %0)
+    ret void
+}
+
+
+define void @divByZero() {
+    %spec_ptr = getelementptr [23 x i8], [23 x i8]* @.divide_by_zero_error, i32 0, i32 0
+    call void (i8*) @print(i8* %spec_ptr)
+    %exitCode = add i32 0, 0
+    call void @exit(i32 %exitCode)
+    ret void
+}
+
+define void @var0maxTestsStressArithmeticOperations()
+{
+    %myArr_0 = alloca [50 x i32]
+    %var1 = add i32 10, 0
+    %var2 = add i32 1, 0
+    %var4 = icmp eq i32 %var2, 0
+    br i1 %var4, label %label_29, label %label_32
+    label_29:
+        call void @divByZero()
+        br label %label_32
+    label_32:
+        %var3 = sdiv i32 %var1, %var2
+        %var5 = add i32 1, 0
+        %var7 = icmp eq i32 %var5, 0
+        br i1 %var7, label %label_37, label %label_40
+    label_37:
+        call void @divByZero()
+        br label %label_40
+    label_40:
+        %var6 = sdiv i32 %var3, %var5
+        %var8 = add i32 1, 0
+        %var10 = icmp eq i32 %var8, 0
+        br i1 %var10, label %label_45, label %label_48
+    label_45:
+        call void @divByZero()
+        br label %label_48
+    label_48:
+        %var9 = sdiv i32 %var6, %var8
+        %var11 = add i32 1, 0
+        %var13 = icmp eq i32 %var11, 0
+        br i1 %var13, label %label_53, label %label_56
+    label_53:
+        call void @divByZero()
+        br label %label_56
+    label_56:
+        %var12 = sdiv i32 %var9, %var11
+        %var14 = add i32 1, 0
+        %var16 = icmp eq i32 %var14, 0
+        br i1 %var16, label %label_61, label %label_64
+    label_61:
+        call void @divByZero()
+        br label %label_64
+    label_64:
+        %var15 = sdiv i32 %var12, %var14
+        %var17 = add i32 1, 0
+        %var19 = icmp eq i32 %var17, 0
+        br i1 %var19, label %label_69, label %label_72
+    label_69:
+        call void @divByZero()
+        br label %label_72
+    label_72:
+        %var18 = sdiv i32 %var15, %var17
+        %var20 = add i32 1, 0
+        %var21 = mul i32 %var18, %var20
+        %var22 = add i32 1, 0
+        %var23 = mul i32 %var21, %var22
+        %var24 = add i32 1, 0
+        %var25 = mul i32 %var23, %var24
+        %var26 = add i32 1, 0
+        %var27 = mul i32 %var25, %var26
+        %var28 = add i32 1, 0
+        %var29 = mul i32 %var27, %var28
+        %var30 = add i32 1, 0
+        %var32 = icmp eq i32 %var30, 0
+        br i1 %var32, label %label_87, label %label_90
+    label_87:
+        call void @divByZero()
+        br label %label_90
+    label_90:
+        %var31 = sdiv i32 %var29, %var30
+        %var33 = add i32 1, 0
+        %var34 = mul i32 %var31, %var33
+        %var35 = add i32 1, 0
+        %var37 = icmp eq i32 %var35, 0
+        br i1 %var37, label %label_97, label %label_100
+    label_97:
+        call void @divByZero()
+        br label %label_100
+    label_100:
+        %var36 = sdiv i32 %var34, %var35
+        %var38 = add i32 1, 0
+        %var39 = add i32 1, 0
+        %var41 = icmp eq i32 %var39, 0
+        br i1 %var41, label %label_106, label %label_109
+    label_106:
+        call void @divByZero()
+        br label %label_109
+    label_109:
+        %var40 = sdiv i32 %var38, %var39
+        %var42 = add i32 1, 0
+        %var43 = mul i32 %var40, %var42
+        %var44 = add i32 1, 0
+        %var46 = icmp eq i32 %var44, 0
+        br i1 %var46, label %label_116, label %label_119
+    label_116:
+        call void @divByZero()
+        br label %label_119
+    label_119:
+        %var45 = sdiv i32 %var43, %var44
+        %var47 = add i32 %var36, %var45
+        %var48 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 0
+        store i32 %var47, i32* %var48
+        %var49 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 0
+        %var50 = load i32, i32* %var49
+        call void @printi(i32 %var50)
+        ret void
+}
+
+define void @main()
+{
+    %myArr_1 = alloca [50 x i32]
+        call void @var0maxTestsStressArithmeticOperations()
+        ret void
+}
+

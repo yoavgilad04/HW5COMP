@@ -1,0 +1,90 @@
+declare i32 @printf(i8*, ...)
+declare void @exit(i32)
+@.int_specifier = constant [4 x i8] c"%d\0A\00"
+@.str_specifier = constant [4 x i8] c"%s\0A\00"
+@.divide_by_zero_error = constant [23 x i8] c"Error division by zero\00"
+
+define void @printi(i32) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.int_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i32 %0)
+    ret void
+}
+
+define void @print(i8*) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.str_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i8* %0)
+    ret void
+}
+
+
+define void @divByZero() {
+    %spec_ptr = getelementptr [23 x i8], [23 x i8]* @.divide_by_zero_error, i32 0, i32 0
+    call void (i8*) @print(i8* %spec_ptr)
+    %exitCode = add i32 0, 0
+    call void @exit(i32 %exitCode)
+    ret void
+}
+
+define void @var0maxTestscheckBasicArithmetics()
+{
+    %myArr_0 = alloca [50 x i32]
+    %var1 = add i32 30, 0
+    %var2 = add i32 2, 0
+    %var4 = icmp eq i32 %var2, 0
+    br i1 %var4, label %label_29, label %label_32
+    label_29:
+        call void @divByZero()
+        br label %label_32
+    label_32:
+        %var3 = sdiv i32 %var1, %var2
+        %var5 = add i32 3, 0
+        %var6 = mul i32 %var3, %var5
+        %var7 = add i32 3, 0
+        %var8 = add i32 5, 0
+        %var9 = mul i32 %var7, %var8
+        %var10 = add i32 %var6, %var9
+        %var11 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 0
+        store i32 %var10, i32* %var11
+        %var12 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 0
+        %var13 = load i32, i32* %var12
+        call void @printi(i32 %var13)
+        %var14 = add i32 30, 0
+        %var15 = add i32 2, 0
+        %var17 = icmp eq i32 %var15, 0
+        br i1 %var17, label %label_49, label %label_52
+    label_49:
+        call void @divByZero()
+        br label %label_52
+    label_52:
+        %var16 = sdiv i32 %var14, %var15
+        %var18 = add i32 3, 0
+        %var20 = icmp eq i32 %var18, 0
+        br i1 %var20, label %label_57, label %label_60
+    label_57:
+        call void @divByZero()
+        br label %label_60
+    label_60:
+        %var19 = sdiv i32 %var16, %var18
+        %var21 = add i32 2, 0
+        %var22 = mul i32 %var19, %var21
+        %var23 = add i32 100, 0
+        %var24 = add i32 0, 0
+        %var25 = mul i32 %var23, %var24
+        %var26 = add i32 %var22, %var25
+        %var27 = add i32 1, 0
+        %var28 = add i32 %var26, %var27
+        %var29 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 0
+        store i32 %var28, i32* %var29
+        %var30 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 0
+        %var31 = load i32, i32* %var30
+        call void @printi(i32 %var31)
+        ret void
+}
+
+define void @main()
+{
+    %myArr_1 = alloca [50 x i32]
+        call void @var0maxTestscheckBasicArithmetics()
+        ret void
+}
+

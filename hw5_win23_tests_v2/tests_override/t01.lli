@@ -1,0 +1,65 @@
+declare i32 @printf(i8*, ...)
+declare void @exit(i32)
+@.int_specifier = constant [4 x i8] c"%d\0A\00"
+@.str_specifier = constant [4 x i8] c"%s\0A\00"
+@.divide_by_zero_error = constant [23 x i8] c"Error division by zero\00"
+@.var1 = constant [14 x i8] c"im in 1 param\00"
+@.var4 = constant [14 x i8] c"im in 2 param\00"
+
+define void @printi(i32) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.int_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i32 %0)
+    ret void
+}
+
+define void @print(i8*) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.str_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i8* %0)
+    ret void
+}
+
+
+define void @divByZero() {
+    %spec_ptr = getelementptr [23 x i8], [23 x i8]* @.divide_by_zero_error, i32 0, i32 0
+    call void (i8*) @print(i8* %spec_ptr)
+    %exitCode = add i32 0, 0
+    call void @exit(i32 %exitCode)
+    ret void
+}
+
+define i32 @var0nezo1(i32)
+{
+    %myArr_0 = alloca [50 x i32]
+    %var2 = getelementptr [14 x i8] , [14 x i8]* @.var1, i32 0, i32 0
+    call void (i8*) @print(i8* %var2)
+    ret i32 0
+}
+
+define i32 @var3nezo1(i32, i32)
+{
+    %myArr_1 = alloca [50 x i32]
+    %var5 = getelementptr [14 x i8] , [14 x i8]* @.var4, i32 0, i32 0
+    call void (i8*) @print(i8* %var5)
+    ret i32 0
+}
+
+define void @main()
+{
+    %myArr_2 = alloca [50 x i32]
+    %var6 = add i32 0, 0
+    %var7 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    store i32 %var6, i32* %var7
+    %var8 = add i32 0, 0
+    %var9 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 1
+    store i32 %var8, i32* %var9
+    %var10 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    %var11 = load i32, i32* %var10
+    %var12 = call i32 @var0nezo1(i32 %var11)
+    %var13 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    %var14 = load i32, i32* %var13
+    %var15 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 1
+    %var16 = load i32, i32* %var15
+    %var17 = call i32 @var3nezo1(i32 %var14, i32 %var16)
+    ret void
+}
+

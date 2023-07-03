@@ -1,0 +1,120 @@
+declare i32 @printf(i8*, ...)
+declare void @exit(i32)
+@.int_specifier = constant [4 x i8] c"%d\0A\00"
+@.str_specifier = constant [4 x i8] c"%s\0A\00"
+@.divide_by_zero_error = constant [23 x i8] c"Error division by zero\00"
+@.var31 = constant [24 x i8] c"factorial number 5,7,9:\00"
+@.var39 = constant [19 x i8] c"fibo number 5,6,9:\00"
+
+define void @printi(i32) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.int_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i32 %0)
+    ret void
+}
+
+define void @print(i8*) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.str_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i8* %0)
+    ret void
+}
+
+
+define void @divByZero() {
+    %spec_ptr = getelementptr [23 x i8], [23 x i8]* @.divide_by_zero_error, i32 0, i32 0
+    call void (i8*) @print(i8* %spec_ptr)
+    %exitCode = add i32 0, 0
+    call void @exit(i32 %exitCode)
+    ret void
+}
+
+define i32 @var0factorial(i32)
+{
+    %myArr_0 = alloca [50 x i32]
+    %var1 = add i32 %0, 0
+    %var2 = add i32 1, 0
+    %var3 = icmp eq i32 %var1, %var2
+    br i1 %var3, label %label_34, label %label_29
+    label_29:
+        %var4 = add i32 %0, 0
+        %var5 = add i32 0, 0
+        %var6 = icmp eq i32 %var4, %var5
+        br i1 %var6, label %label_34, label %label_38
+    label_34:
+        %var7 = add i32 1, 0
+        ret i32 %var7
+        br label %label_38
+    label_38:
+        %var8 = add i32 %0, 0
+        %var9 = add i32 1, 0
+        %var10 = sub i32 %var8, %var9
+        %var11 = call i32 @var0factorial(i32 %var10)
+        %var12 = add i32 %0, 0
+        %var13 = mul i32 %var11, %var12
+        ret i32 %var13
+        ret i32 0
+}
+
+define i32 @var14fibo(i32)
+{
+    %myArr_1 = alloca [50 x i32]
+        %var15 = add i32 %0, 0
+        %var16 = add i32 1, 0
+        %var17 = icmp eq i32 %var15, %var16
+        br i1 %var17, label %label_61, label %label_56
+    label_56:
+        %var18 = add i32 %0, 0
+        %var19 = add i32 0, 0
+        %var20 = icmp eq i32 %var18, %var19
+        br i1 %var20, label %label_61, label %label_65
+    label_61:
+        %var21 = add i32 1, 0
+        ret i32 %var21
+        br label %label_65
+    label_65:
+        %var22 = add i32 %0, 0
+        %var23 = add i32 1, 0
+        %var24 = sub i32 %var22, %var23
+        %var25 = call i32 @var14fibo(i32 %var24)
+        %var26 = add i32 %0, 0
+        %var27 = add i32 2, 0
+        %var28 = sub i32 %var26, %var27
+        %var29 = call i32 @var14fibo(i32 %var28)
+        %var30 = add i32 %var25, %var29
+        ret i32 %var30
+        ret i32 0
+}
+
+define void @main()
+{
+    %myArr_2 = alloca [50 x i32]
+        %var32 = getelementptr [24 x i8] , [24 x i8]* @.var31, i32 0, i32 0
+        call void (i8*) @print(i8* %var32)
+        %var33 = add i32 5, 0
+        %var34 = call i32 @var0factorial(i32 %var33)
+        call void @printi(i32 %var34)
+        %var35 = add i32 7, 0
+        %var36 = call i32 @var0factorial(i32 %var35)
+        call void @printi(i32 %var36)
+        %var37 = add i32 9, 0
+        %var38 = call i32 @var0factorial(i32 %var37)
+        call void @printi(i32 %var38)
+        %var40 = getelementptr [19 x i8] , [19 x i8]* @.var39, i32 0, i32 0
+        call void (i8*) @print(i8* %var40)
+        %var41 = add i32 4, 0
+        %var42 = add i32 1, 0
+        %var43 = add i32 %var41, %var42
+        %var44 = call i32 @var14fibo(i32 %var43)
+        call void @printi(i32 %var44)
+        %var45 = add i32 2, 0
+        %var46 = add i32 4, 0
+        %var47 = mul i32 %var45, %var46
+        %var48 = add i32 2, 0
+        %var49 = sub i32 %var47, %var48
+        %var50 = call i32 @var14fibo(i32 %var49)
+        call void @printi(i32 %var50)
+        %var51 = add i32 9, 0
+        %var52 = call i32 @var14fibo(i32 %var51)
+        call void @printi(i32 %var52)
+        ret void
+}
+

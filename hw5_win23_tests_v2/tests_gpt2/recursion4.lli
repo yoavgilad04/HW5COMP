@@ -1,0 +1,95 @@
+declare i32 @printf(i8*, ...)
+declare void @exit(i32)
+@.int_specifier = constant [4 x i8] c"%d\0A\00"
+@.str_specifier = constant [4 x i8] c"%s\0A\00"
+@.divide_by_zero_error = constant [23 x i8] c"Error division by zero\00"
+
+define void @printi(i32) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.int_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i32 %0)
+    ret void
+}
+
+define void @print(i8*) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.str_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i8* %0)
+    ret void
+}
+
+
+define void @divByZero() {
+    %spec_ptr = getelementptr [23 x i8], [23 x i8]* @.divide_by_zero_error, i32 0, i32 0
+    call void (i8*) @print(i8* %spec_ptr)
+    %exitCode = add i32 0, 0
+    call void @exit(i32 %exitCode)
+    ret void
+}
+
+define i32 @var0ex(i32, i32, i32)
+{
+    %myArr_0 = alloca [50 x i32]
+    %var1 = add i32 %1, 0
+    %var2 = add i32 %0, 0
+    %var3 = icmp slt i32 %var1, %var2
+    br i1 %var3, label %label_29, label %label_51
+    label_29:
+        %var4 = add i32 %0, 0
+        %var5 = add i32 1, 0
+        %var6 = sub i32 %var4, %var5
+        %var7 = add i32 %1, 0
+        %var8 = add i32 %2, 0
+        %var9 = call i32 @var0ex(i32 %var6, i32 %var7, i32 %var8)
+        %var10 = add i32 %1, 0
+        %var11 = add i32 1, 0
+        %var12 = sub i32 %var10, %var11
+        %var13 = add i32 %2, 0
+        %var14 = add i32 %0, 0
+        %var15 = call i32 @var0ex(i32 %var12, i32 %var13, i32 %var14)
+        %var16 = add i32 %2, 0
+        %var17 = add i32 1, 0
+        %var18 = sub i32 %var16, %var17
+        %var19 = add i32 %0, 0
+        %var20 = add i32 %1, 0
+        %var21 = call i32 @var0ex(i32 %var18, i32 %var19, i32 %var20)
+        %var22 = call i32 @var0ex(i32 %var9, i32 %var15, i32 %var21)
+        ret i32 %var22
+        br label %label_55
+    label_51:
+        %var23 = add i32 %2, 0
+        ret i32 %var23
+        br label %label_55
+    label_55:
+        ret i32 0
+}
+
+define i32 @var24f(i32)
+{
+    %myArr_1 = alloca [50 x i32]
+        %var25 = add i32 %0, 0
+        %var26 = add i32 2, 0
+        %var27 = mul i32 %var25, %var26
+        ret i32 %var27
+        ret i32 0
+}
+
+define void @main()
+{
+    %myArr_2 = alloca [50 x i32]
+        %var28 = add i32 14, 0
+        %var29 = add i32 13, 0
+        %var30 = add i32 12, 0
+        %var31 = call i32 @var0ex(i32 %var28, i32 %var29, i32 %var30)
+        call void @printi(i32 %var31)
+        %var32 = add i32 18, 0
+        %var33 = add i32 12, 0
+        %var34 = add i32 6, 0
+        %var35 = call i32 @var0ex(i32 %var32, i32 %var33, i32 %var34)
+        call void @printi(i32 %var35)
+        %var36 = add i32 19, 0
+        %var37 = add i32 15, 0
+        %var38 = add i32 10, 0
+        %var39 = call i32 @var0ex(i32 %var36, i32 %var37, i32 %var38)
+        call void @printi(i32 %var39)
+        ret void
+}
+

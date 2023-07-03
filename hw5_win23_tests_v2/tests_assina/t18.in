@@ -1,0 +1,17 @@
+void main() // A7X
+{
+    print("Hey, I got one more IDK test for you <3");
+    print("Should fin immidieijiajietly");
+    int x = 2;
+    if( x < 7) {
+        print("Fin");
+        return;
+    }
+    else {
+        x = 0;
+    }
+    print("Fin again");
+    return;
+    print("Fin again again");
+
+}

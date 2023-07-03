@@ -1,0 +1,2668 @@
+declare i32 @printf(i8*, ...)
+declare void @exit(i32)
+@.int_specifier = constant [4 x i8] c"%d\0A\00"
+@.str_specifier = constant [4 x i8] c"%s\0A\00"
+@.divide_by_zero_error = constant [23 x i8] c"Error division by zero\00"
+
+define void @printi(i32) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.int_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i32 %0)
+    ret void
+}
+
+define void @print(i8*) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.str_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i8* %0)
+    ret void
+}
+
+
+define void @divByZero() {
+    %spec_ptr = getelementptr [23 x i8], [23 x i8]* @.divide_by_zero_error, i32 0, i32 0
+    call void (i8*) @print(i8* %spec_ptr)
+    %exitCode = add i32 0, 0
+    call void @exit(i32 %exitCode)
+    ret void
+}
+
+define i32 @var0Int()
+{
+    %myArr_0 = alloca [50 x i32]
+    %var1 = add i32 500, 0
+    ret i32 %var1
+    ret i32 0
+}
+
+define i32 @var2Byte()
+{
+    %myArr_1 = alloca [50 x i32]
+    %var3 = add i32 3, 0
+    ret i32 %var3
+    ret i32 0
+}
+
+define void @main()
+{
+    %myArr_2 = alloca [50 x i32]
+    %var4 = add i32 400, 0
+    %var5 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    store i32 %var4, i32* %var5
+    %var6 = add i32 2, 0
+    %var7 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 1
+    store i32 %var6, i32* %var7
+    %var8 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 0, i32* %var8
+    %var9 = add i32 300, 0
+    %var10 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var9, i32* %var10
+    %var11 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var12 = load i32, i32* %var11
+    call void @printi(i32 %var12)
+    %var13 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    %var14 = load i32, i32* %var13
+    %var15 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var14, i32* %var15
+    %var16 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var17 = load i32, i32* %var16
+    call void @printi(i32 %var17)
+    %var18 = call i32 @var0Int()
+    %var19 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var18, i32* %var19
+    %var20 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var21 = load i32, i32* %var20
+    call void @printi(i32 %var21)
+    %var22 = add i32 200, 0
+    %var23 = add i32 400, 0
+    %var24 = add i32 %var22, %var23
+    %var25 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var24, i32* %var25
+    %var26 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var27 = load i32, i32* %var26
+    call void @printi(i32 %var27)
+    %var28 = add i32 350, 0
+    %var29 = add i32 2, 0
+    %var30 = mul i32 %var28, %var29
+    %var31 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var30, i32* %var31
+    %var32 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var33 = load i32, i32* %var32
+    call void @printi(i32 %var33)
+    %var34 = add i32 300, 0
+    %var35 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var34, i32* %var35
+    %var36 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var37 = load i32, i32* %var36
+    call void @printi(i32 %var37)
+    %var38 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    %var39 = load i32, i32* %var38
+    %var40 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var39, i32* %var40
+    %var41 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var42 = load i32, i32* %var41
+    call void @printi(i32 %var42)
+    %var43 = call i32 @var0Int()
+    %var44 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var43, i32* %var44
+    %var45 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var46 = load i32, i32* %var45
+    call void @printi(i32 %var46)
+    %var47 = add i32 200, 0
+    %var48 = add i32 400, 0
+    %var49 = add i32 %var47, %var48
+    %var50 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var49, i32* %var50
+    %var51 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var52 = load i32, i32* %var51
+    call void @printi(i32 %var52)
+    %var53 = add i32 350, 0
+    %var54 = add i32 2, 0
+    %var55 = mul i32 %var53, %var54
+    %var56 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var55, i32* %var56
+    %var57 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var58 = load i32, i32* %var57
+    call void @printi(i32 %var58)
+    %var59 = add i32 300, 0
+    %var60 = add i32 300, 0
+    %var61 = add i32 %var59, %var60
+    %var62 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var61, i32* %var62
+    %var63 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var64 = load i32, i32* %var63
+    call void @printi(i32 %var64)
+    %var65 = add i32 300, 0
+    %var66 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    %var67 = load i32, i32* %var66
+    %var68 = add i32 %var65, %var67
+    %var69 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var68, i32* %var69
+    %var70 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var71 = load i32, i32* %var70
+    call void @printi(i32 %var71)
+    %var72 = add i32 300, 0
+    %var73 = call i32 @var0Int()
+    %var74 = add i32 %var72, %var73
+    %var75 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var74, i32* %var75
+    %var76 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var77 = load i32, i32* %var76
+    call void @printi(i32 %var77)
+    %var78 = add i32 300, 0
+    %var79 = add i32 200, 0
+    %var80 = add i32 400, 0
+    %var81 = add i32 %var79, %var80
+    %var82 = add i32 %var78, %var81
+    %var83 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var82, i32* %var83
+    %var84 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var85 = load i32, i32* %var84
+    call void @printi(i32 %var85)
+    %var86 = add i32 300, 0
+    %var87 = add i32 350, 0
+    %var88 = add i32 2, 0
+    %var89 = mul i32 %var87, %var88
+    %var90 = add i32 %var86, %var89
+    %var91 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var90, i32* %var91
+    %var92 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var93 = load i32, i32* %var92
+    call void @printi(i32 %var93)
+    %var94 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    %var95 = load i32, i32* %var94
+    %var96 = add i32 300, 0
+    %var97 = add i32 %var95, %var96
+    %var98 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var97, i32* %var98
+    %var99 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var100 = load i32, i32* %var99
+    call void @printi(i32 %var100)
+    %var101 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    %var102 = load i32, i32* %var101
+    %var103 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    %var104 = load i32, i32* %var103
+    %var105 = add i32 %var102, %var104
+    %var106 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var105, i32* %var106
+    %var107 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var108 = load i32, i32* %var107
+    call void @printi(i32 %var108)
+    %var109 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    %var110 = load i32, i32* %var109
+    %var111 = call i32 @var0Int()
+    %var112 = add i32 %var110, %var111
+    %var113 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var112, i32* %var113
+    %var114 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var115 = load i32, i32* %var114
+    call void @printi(i32 %var115)
+    %var116 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    %var117 = load i32, i32* %var116
+    %var118 = add i32 200, 0
+    %var119 = add i32 400, 0
+    %var120 = add i32 %var118, %var119
+    %var121 = add i32 %var117, %var120
+    %var122 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var121, i32* %var122
+    %var123 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var124 = load i32, i32* %var123
+    call void @printi(i32 %var124)
+    %var125 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    %var126 = load i32, i32* %var125
+    %var127 = add i32 350, 0
+    %var128 = add i32 2, 0
+    %var129 = mul i32 %var127, %var128
+    %var130 = add i32 %var126, %var129
+    %var131 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var130, i32* %var131
+    %var132 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var133 = load i32, i32* %var132
+    call void @printi(i32 %var133)
+    %var134 = call i32 @var0Int()
+    %var135 = add i32 300, 0
+    %var136 = add i32 %var134, %var135
+    %var137 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var136, i32* %var137
+    %var138 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var139 = load i32, i32* %var138
+    call void @printi(i32 %var139)
+    %var140 = call i32 @var0Int()
+    %var141 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    %var142 = load i32, i32* %var141
+    %var143 = add i32 %var140, %var142
+    %var144 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var143, i32* %var144
+    %var145 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var146 = load i32, i32* %var145
+    call void @printi(i32 %var146)
+    %var147 = call i32 @var0Int()
+    %var148 = call i32 @var0Int()
+    %var149 = add i32 %var147, %var148
+    %var150 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var149, i32* %var150
+    %var151 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var152 = load i32, i32* %var151
+    call void @printi(i32 %var152)
+    %var153 = call i32 @var0Int()
+    %var154 = add i32 200, 0
+    %var155 = add i32 400, 0
+    %var156 = add i32 %var154, %var155
+    %var157 = add i32 %var153, %var156
+    %var158 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var157, i32* %var158
+    %var159 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var160 = load i32, i32* %var159
+    call void @printi(i32 %var160)
+    %var161 = call i32 @var0Int()
+    %var162 = add i32 350, 0
+    %var163 = add i32 2, 0
+    %var164 = mul i32 %var162, %var163
+    %var165 = add i32 %var161, %var164
+    %var166 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var165, i32* %var166
+    %var167 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var168 = load i32, i32* %var167
+    call void @printi(i32 %var168)
+    %var169 = add i32 200, 0
+    %var170 = add i32 400, 0
+    %var171 = add i32 %var169, %var170
+    %var172 = add i32 300, 0
+    %var173 = add i32 %var171, %var172
+    %var174 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var173, i32* %var174
+    %var175 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var176 = load i32, i32* %var175
+    call void @printi(i32 %var176)
+    %var177 = add i32 200, 0
+    %var178 = add i32 400, 0
+    %var179 = add i32 %var177, %var178
+    %var180 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    %var181 = load i32, i32* %var180
+    %var182 = add i32 %var179, %var181
+    %var183 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var182, i32* %var183
+    %var184 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var185 = load i32, i32* %var184
+    call void @printi(i32 %var185)
+    %var186 = add i32 200, 0
+    %var187 = add i32 400, 0
+    %var188 = add i32 %var186, %var187
+    %var189 = call i32 @var0Int()
+    %var190 = add i32 %var188, %var189
+    %var191 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var190, i32* %var191
+    %var192 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var193 = load i32, i32* %var192
+    call void @printi(i32 %var193)
+    %var194 = add i32 200, 0
+    %var195 = add i32 400, 0
+    %var196 = add i32 %var194, %var195
+    %var197 = add i32 200, 0
+    %var198 = add i32 400, 0
+    %var199 = add i32 %var197, %var198
+    %var200 = add i32 %var196, %var199
+    %var201 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var200, i32* %var201
+    %var202 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var203 = load i32, i32* %var202
+    call void @printi(i32 %var203)
+    %var204 = add i32 200, 0
+    %var205 = add i32 400, 0
+    %var206 = add i32 %var204, %var205
+    %var207 = add i32 350, 0
+    %var208 = add i32 2, 0
+    %var209 = mul i32 %var207, %var208
+    %var210 = add i32 %var206, %var209
+    %var211 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var210, i32* %var211
+    %var212 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var213 = load i32, i32* %var212
+    call void @printi(i32 %var213)
+    %var214 = add i32 350, 0
+    %var215 = add i32 2, 0
+    %var216 = mul i32 %var214, %var215
+    %var217 = add i32 300, 0
+    %var218 = add i32 %var216, %var217
+    %var219 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var218, i32* %var219
+    %var220 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var221 = load i32, i32* %var220
+    call void @printi(i32 %var221)
+    %var222 = add i32 350, 0
+    %var223 = add i32 2, 0
+    %var224 = mul i32 %var222, %var223
+    %var225 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    %var226 = load i32, i32* %var225
+    %var227 = add i32 %var224, %var226
+    %var228 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var227, i32* %var228
+    %var229 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var230 = load i32, i32* %var229
+    call void @printi(i32 %var230)
+    %var231 = add i32 350, 0
+    %var232 = add i32 2, 0
+    %var233 = mul i32 %var231, %var232
+    %var234 = call i32 @var0Int()
+    %var235 = add i32 %var233, %var234
+    %var236 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var235, i32* %var236
+    %var237 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var238 = load i32, i32* %var237
+    call void @printi(i32 %var238)
+    %var239 = add i32 350, 0
+    %var240 = add i32 2, 0
+    %var241 = mul i32 %var239, %var240
+    %var242 = add i32 200, 0
+    %var243 = add i32 400, 0
+    %var244 = add i32 %var242, %var243
+    %var245 = add i32 %var241, %var244
+    %var246 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var245, i32* %var246
+    %var247 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var248 = load i32, i32* %var247
+    call void @printi(i32 %var248)
+    %var249 = add i32 350, 0
+    %var250 = add i32 2, 0
+    %var251 = mul i32 %var249, %var250
+    %var252 = add i32 350, 0
+    %var253 = add i32 2, 0
+    %var254 = mul i32 %var252, %var253
+    %var255 = add i32 %var251, %var254
+    %var256 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var255, i32* %var256
+    %var257 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var258 = load i32, i32* %var257
+    call void @printi(i32 %var258)
+    %var259 = add i32 300, 0
+    %var260 = add i32 300, 0
+    %var261 = mul i32 %var259, %var260
+    %var262 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var261, i32* %var262
+    %var263 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var264 = load i32, i32* %var263
+    call void @printi(i32 %var264)
+    %var265 = add i32 300, 0
+    %var266 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    %var267 = load i32, i32* %var266
+    %var268 = mul i32 %var265, %var267
+    %var269 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var268, i32* %var269
+    %var270 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var271 = load i32, i32* %var270
+    call void @printi(i32 %var271)
+    %var272 = add i32 300, 0
+    %var273 = call i32 @var0Int()
+    %var274 = mul i32 %var272, %var273
+    %var275 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var274, i32* %var275
+    %var276 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var277 = load i32, i32* %var276
+    call void @printi(i32 %var277)
+    %var278 = add i32 300, 0
+    %var279 = add i32 200, 0
+    %var280 = add i32 400, 0
+    %var281 = add i32 %var279, %var280
+    %var282 = mul i32 %var278, %var281
+    %var283 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var282, i32* %var283
+    %var284 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var285 = load i32, i32* %var284
+    call void @printi(i32 %var285)
+    %var286 = add i32 300, 0
+    %var287 = add i32 350, 0
+    %var288 = mul i32 %var286, %var287
+    %var289 = add i32 2, 0
+    %var290 = mul i32 %var288, %var289
+    %var291 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var290, i32* %var291
+    %var292 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var293 = load i32, i32* %var292
+    call void @printi(i32 %var293)
+    %var294 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    %var295 = load i32, i32* %var294
+    %var296 = add i32 300, 0
+    %var297 = mul i32 %var295, %var296
+    %var298 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var297, i32* %var298
+    %var299 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var300 = load i32, i32* %var299
+    call void @printi(i32 %var300)
+    %var301 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    %var302 = load i32, i32* %var301
+    %var303 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    %var304 = load i32, i32* %var303
+    %var305 = mul i32 %var302, %var304
+    %var306 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var305, i32* %var306
+    %var307 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var308 = load i32, i32* %var307
+    call void @printi(i32 %var308)
+    %var309 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    %var310 = load i32, i32* %var309
+    %var311 = call i32 @var0Int()
+    %var312 = mul i32 %var310, %var311
+    %var313 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var312, i32* %var313
+    %var314 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var315 = load i32, i32* %var314
+    call void @printi(i32 %var315)
+    %var316 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    %var317 = load i32, i32* %var316
+    %var318 = add i32 200, 0
+    %var319 = add i32 400, 0
+    %var320 = add i32 %var318, %var319
+    %var321 = mul i32 %var317, %var320
+    %var322 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var321, i32* %var322
+    %var323 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var324 = load i32, i32* %var323
+    call void @printi(i32 %var324)
+    %var325 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    %var326 = load i32, i32* %var325
+    %var327 = add i32 350, 0
+    %var328 = mul i32 %var326, %var327
+    %var329 = add i32 2, 0
+    %var330 = mul i32 %var328, %var329
+    %var331 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var330, i32* %var331
+    %var332 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var333 = load i32, i32* %var332
+    call void @printi(i32 %var333)
+    %var334 = call i32 @var0Int()
+    %var335 = add i32 300, 0
+    %var336 = mul i32 %var334, %var335
+    %var337 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var336, i32* %var337
+    %var338 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var339 = load i32, i32* %var338
+    call void @printi(i32 %var339)
+    %var340 = call i32 @var0Int()
+    %var341 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    %var342 = load i32, i32* %var341
+    %var343 = mul i32 %var340, %var342
+    %var344 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var343, i32* %var344
+    %var345 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var346 = load i32, i32* %var345
+    call void @printi(i32 %var346)
+    %var347 = call i32 @var0Int()
+    %var348 = call i32 @var0Int()
+    %var349 = mul i32 %var347, %var348
+    %var350 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var349, i32* %var350
+    %var351 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var352 = load i32, i32* %var351
+    call void @printi(i32 %var352)
+    %var353 = call i32 @var0Int()
+    %var354 = add i32 200, 0
+    %var355 = add i32 400, 0
+    %var356 = add i32 %var354, %var355
+    %var357 = mul i32 %var353, %var356
+    %var358 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var357, i32* %var358
+    %var359 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var360 = load i32, i32* %var359
+    call void @printi(i32 %var360)
+    %var361 = call i32 @var0Int()
+    %var362 = add i32 350, 0
+    %var363 = mul i32 %var361, %var362
+    %var364 = add i32 2, 0
+    %var365 = mul i32 %var363, %var364
+    %var366 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var365, i32* %var366
+    %var367 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var368 = load i32, i32* %var367
+    call void @printi(i32 %var368)
+    %var369 = add i32 200, 0
+    %var370 = add i32 400, 0
+    %var371 = add i32 %var369, %var370
+    %var372 = add i32 300, 0
+    %var373 = mul i32 %var371, %var372
+    %var374 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var373, i32* %var374
+    %var375 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var376 = load i32, i32* %var375
+    call void @printi(i32 %var376)
+    %var377 = add i32 200, 0
+    %var378 = add i32 400, 0
+    %var379 = add i32 %var377, %var378
+    %var380 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    %var381 = load i32, i32* %var380
+    %var382 = mul i32 %var379, %var381
+    %var383 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var382, i32* %var383
+    %var384 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var385 = load i32, i32* %var384
+    call void @printi(i32 %var385)
+    %var386 = add i32 200, 0
+    %var387 = add i32 400, 0
+    %var388 = add i32 %var386, %var387
+    %var389 = call i32 @var0Int()
+    %var390 = mul i32 %var388, %var389
+    %var391 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var390, i32* %var391
+    %var392 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var393 = load i32, i32* %var392
+    call void @printi(i32 %var393)
+    %var394 = add i32 200, 0
+    %var395 = add i32 400, 0
+    %var396 = add i32 %var394, %var395
+    %var397 = add i32 200, 0
+    %var398 = add i32 400, 0
+    %var399 = add i32 %var397, %var398
+    %var400 = mul i32 %var396, %var399
+    %var401 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var400, i32* %var401
+    %var402 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var403 = load i32, i32* %var402
+    call void @printi(i32 %var403)
+    %var404 = add i32 200, 0
+    %var405 = add i32 400, 0
+    %var406 = add i32 %var404, %var405
+    %var407 = add i32 350, 0
+    %var408 = mul i32 %var406, %var407
+    %var409 = add i32 2, 0
+    %var410 = mul i32 %var408, %var409
+    %var411 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var410, i32* %var411
+    %var412 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var413 = load i32, i32* %var412
+    call void @printi(i32 %var413)
+    %var414 = add i32 350, 0
+    %var415 = add i32 2, 0
+    %var416 = mul i32 %var414, %var415
+    %var417 = add i32 300, 0
+    %var418 = mul i32 %var416, %var417
+    %var419 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var418, i32* %var419
+    %var420 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var421 = load i32, i32* %var420
+    call void @printi(i32 %var421)
+    %var422 = add i32 350, 0
+    %var423 = add i32 2, 0
+    %var424 = mul i32 %var422, %var423
+    %var425 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    %var426 = load i32, i32* %var425
+    %var427 = mul i32 %var424, %var426
+    %var428 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var427, i32* %var428
+    %var429 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var430 = load i32, i32* %var429
+    call void @printi(i32 %var430)
+    %var431 = add i32 350, 0
+    %var432 = add i32 2, 0
+    %var433 = mul i32 %var431, %var432
+    %var434 = call i32 @var0Int()
+    %var435 = mul i32 %var433, %var434
+    %var436 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var435, i32* %var436
+    %var437 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var438 = load i32, i32* %var437
+    call void @printi(i32 %var438)
+    %var439 = add i32 350, 0
+    %var440 = add i32 2, 0
+    %var441 = mul i32 %var439, %var440
+    %var442 = add i32 200, 0
+    %var443 = add i32 400, 0
+    %var444 = add i32 %var442, %var443
+    %var445 = mul i32 %var441, %var444
+    %var446 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var445, i32* %var446
+    %var447 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var448 = load i32, i32* %var447
+    call void @printi(i32 %var448)
+    %var449 = add i32 350, 0
+    %var450 = add i32 2, 0
+    %var451 = mul i32 %var449, %var450
+    %var452 = add i32 350, 0
+    %var453 = mul i32 %var451, %var452
+    %var454 = add i32 2, 0
+    %var455 = mul i32 %var453, %var454
+    %var456 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var455, i32* %var456
+    %var457 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var458 = load i32, i32* %var457
+    call void @printi(i32 %var458)
+    %var459 = add i32 1, 0
+    %var460 = add i32 300, 0
+    %var461 = add i32 %var459, %var460
+    %var462 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var461, i32* %var462
+    %var463 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var464 = load i32, i32* %var463
+    call void @printi(i32 %var464)
+    %var465 = add i32 1, 0
+    %var466 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    %var467 = load i32, i32* %var466
+    %var468 = add i32 %var465, %var467
+    %var469 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var468, i32* %var469
+    %var470 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var471 = load i32, i32* %var470
+    call void @printi(i32 %var471)
+    %var472 = add i32 1, 0
+    %var473 = call i32 @var0Int()
+    %var474 = add i32 %var472, %var473
+    %var475 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var474, i32* %var475
+    %var476 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var477 = load i32, i32* %var476
+    call void @printi(i32 %var477)
+    %var478 = add i32 1, 0
+    %var479 = add i32 200, 0
+    %var480 = add i32 400, 0
+    %var481 = add i32 %var479, %var480
+    %var482 = add i32 %var478, %var481
+    %var483 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var482, i32* %var483
+    %var484 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var485 = load i32, i32* %var484
+    call void @printi(i32 %var485)
+    %var486 = add i32 1, 0
+    %var487 = add i32 350, 0
+    %var488 = add i32 2, 0
+    %var489 = mul i32 %var487, %var488
+    %var490 = add i32 %var486, %var489
+    %var491 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var490, i32* %var491
+    %var492 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var493 = load i32, i32* %var492
+    call void @printi(i32 %var493)
+    %var494 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 1
+    %var495 = load i32, i32* %var494
+    %var496 = add i32 300, 0
+    %var497 = add i32 %var495, %var496
+    %var498 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var497, i32* %var498
+    %var499 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var500 = load i32, i32* %var499
+    call void @printi(i32 %var500)
+    %var501 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 1
+    %var502 = load i32, i32* %var501
+    %var503 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    %var504 = load i32, i32* %var503
+    %var505 = add i32 %var502, %var504
+    %var506 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var505, i32* %var506
+    %var507 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var508 = load i32, i32* %var507
+    call void @printi(i32 %var508)
+    %var509 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 1
+    %var510 = load i32, i32* %var509
+    %var511 = call i32 @var0Int()
+    %var512 = add i32 %var510, %var511
+    %var513 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var512, i32* %var513
+    %var514 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var515 = load i32, i32* %var514
+    call void @printi(i32 %var515)
+    %var516 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 1
+    %var517 = load i32, i32* %var516
+    %var518 = add i32 200, 0
+    %var519 = add i32 400, 0
+    %var520 = add i32 %var518, %var519
+    %var521 = add i32 %var517, %var520
+    %var522 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var521, i32* %var522
+    %var523 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var524 = load i32, i32* %var523
+    call void @printi(i32 %var524)
+    %var525 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 1
+    %var526 = load i32, i32* %var525
+    %var527 = add i32 350, 0
+    %var528 = add i32 2, 0
+    %var529 = mul i32 %var527, %var528
+    %var530 = add i32 %var526, %var529
+    %var531 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var530, i32* %var531
+    %var532 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var533 = load i32, i32* %var532
+    call void @printi(i32 %var533)
+    %var534 = call i32 @var2Byte()
+    %var535 = add i32 300, 0
+    %var536 = add i32 %var534, %var535
+    %var537 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var536, i32* %var537
+    %var538 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var539 = load i32, i32* %var538
+    call void @printi(i32 %var539)
+    %var540 = call i32 @var2Byte()
+    %var541 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    %var542 = load i32, i32* %var541
+    %var543 = add i32 %var540, %var542
+    %var544 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var543, i32* %var544
+    %var545 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var546 = load i32, i32* %var545
+    call void @printi(i32 %var546)
+    %var547 = call i32 @var2Byte()
+    %var548 = call i32 @var0Int()
+    %var549 = add i32 %var547, %var548
+    %var550 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var549, i32* %var550
+    %var551 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var552 = load i32, i32* %var551
+    call void @printi(i32 %var552)
+    %var553 = call i32 @var2Byte()
+    %var554 = add i32 200, 0
+    %var555 = add i32 400, 0
+    %var556 = add i32 %var554, %var555
+    %var557 = add i32 %var553, %var556
+    %var558 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var557, i32* %var558
+    %var559 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var560 = load i32, i32* %var559
+    call void @printi(i32 %var560)
+    %var561 = call i32 @var2Byte()
+    %var562 = add i32 350, 0
+    %var563 = add i32 2, 0
+    %var564 = mul i32 %var562, %var563
+    %var565 = add i32 %var561, %var564
+    %var566 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var565, i32* %var566
+    %var567 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var568 = load i32, i32* %var567
+    call void @printi(i32 %var568)
+    %var569 = add i32 1, 0
+    %var570 = add i32 3, 0
+    %var571 = trunc i32 %var569 to i8
+    %var572 = trunc i32 %var570 to i8
+    %var573 = add i8 %var571, %var572
+    %var574 = zext i8 %var573 to i32
+    %var575 = add i32 300, 0
+    %var576 = add i32 %var574, %var575
+    %var577 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var576, i32* %var577
+    %var578 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var579 = load i32, i32* %var578
+    call void @printi(i32 %var579)
+    %var580 = add i32 1, 0
+    %var581 = add i32 3, 0
+    %var582 = trunc i32 %var580 to i8
+    %var583 = trunc i32 %var581 to i8
+    %var584 = add i8 %var582, %var583
+    %var585 = zext i8 %var584 to i32
+    %var586 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    %var587 = load i32, i32* %var586
+    %var588 = add i32 %var585, %var587
+    %var589 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var588, i32* %var589
+    %var590 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var591 = load i32, i32* %var590
+    call void @printi(i32 %var591)
+    %var592 = add i32 1, 0
+    %var593 = add i32 3, 0
+    %var594 = trunc i32 %var592 to i8
+    %var595 = trunc i32 %var593 to i8
+    %var596 = add i8 %var594, %var595
+    %var597 = zext i8 %var596 to i32
+    %var598 = call i32 @var0Int()
+    %var599 = add i32 %var597, %var598
+    %var600 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var599, i32* %var600
+    %var601 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var602 = load i32, i32* %var601
+    call void @printi(i32 %var602)
+    %var603 = add i32 1, 0
+    %var604 = add i32 3, 0
+    %var605 = trunc i32 %var603 to i8
+    %var606 = trunc i32 %var604 to i8
+    %var607 = add i8 %var605, %var606
+    %var608 = zext i8 %var607 to i32
+    %var609 = add i32 200, 0
+    %var610 = add i32 400, 0
+    %var611 = add i32 %var609, %var610
+    %var612 = add i32 %var608, %var611
+    %var613 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var612, i32* %var613
+    %var614 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var615 = load i32, i32* %var614
+    call void @printi(i32 %var615)
+    %var616 = add i32 1, 0
+    %var617 = add i32 3, 0
+    %var618 = trunc i32 %var616 to i8
+    %var619 = trunc i32 %var617 to i8
+    %var620 = add i8 %var618, %var619
+    %var621 = zext i8 %var620 to i32
+    %var622 = add i32 350, 0
+    %var623 = add i32 2, 0
+    %var624 = mul i32 %var622, %var623
+    %var625 = add i32 %var621, %var624
+    %var626 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var625, i32* %var626
+    %var627 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var628 = load i32, i32* %var627
+    call void @printi(i32 %var628)
+    %var629 = add i32 2, 0
+    %var630 = add i32 4, 0
+    %var631 = trunc i32 %var629 to i8
+    %var632 = trunc i32 %var630 to i8
+    %var633 = mul i8 %var631, %var632
+    %var634 = zext i8 %var633 to i32
+    %var635 = add i32 300, 0
+    %var636 = add i32 %var634, %var635
+    %var637 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var636, i32* %var637
+    %var638 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var639 = load i32, i32* %var638
+    call void @printi(i32 %var639)
+    %var640 = add i32 2, 0
+    %var641 = add i32 4, 0
+    %var642 = trunc i32 %var640 to i8
+    %var643 = trunc i32 %var641 to i8
+    %var644 = mul i8 %var642, %var643
+    %var645 = zext i8 %var644 to i32
+    %var646 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    %var647 = load i32, i32* %var646
+    %var648 = add i32 %var645, %var647
+    %var649 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var648, i32* %var649
+    %var650 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var651 = load i32, i32* %var650
+    call void @printi(i32 %var651)
+    %var652 = add i32 2, 0
+    %var653 = add i32 4, 0
+    %var654 = trunc i32 %var652 to i8
+    %var655 = trunc i32 %var653 to i8
+    %var656 = mul i8 %var654, %var655
+    %var657 = zext i8 %var656 to i32
+    %var658 = call i32 @var0Int()
+    %var659 = add i32 %var657, %var658
+    %var660 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var659, i32* %var660
+    %var661 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var662 = load i32, i32* %var661
+    call void @printi(i32 %var662)
+    %var663 = add i32 2, 0
+    %var664 = add i32 4, 0
+    %var665 = trunc i32 %var663 to i8
+    %var666 = trunc i32 %var664 to i8
+    %var667 = mul i8 %var665, %var666
+    %var668 = zext i8 %var667 to i32
+    %var669 = add i32 200, 0
+    %var670 = add i32 400, 0
+    %var671 = add i32 %var669, %var670
+    %var672 = add i32 %var668, %var671
+    %var673 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var672, i32* %var673
+    %var674 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var675 = load i32, i32* %var674
+    call void @printi(i32 %var675)
+    %var676 = add i32 2, 0
+    %var677 = add i32 4, 0
+    %var678 = trunc i32 %var676 to i8
+    %var679 = trunc i32 %var677 to i8
+    %var680 = mul i8 %var678, %var679
+    %var681 = zext i8 %var680 to i32
+    %var682 = add i32 350, 0
+    %var683 = add i32 2, 0
+    %var684 = mul i32 %var682, %var683
+    %var685 = add i32 %var681, %var684
+    %var686 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var685, i32* %var686
+    %var687 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var688 = load i32, i32* %var687
+    call void @printi(i32 %var688)
+    %var689 = add i32 300, 0
+    %var690 = add i32 1, 0
+    %var691 = add i32 %var689, %var690
+    %var692 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var691, i32* %var692
+    %var693 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var694 = load i32, i32* %var693
+    call void @printi(i32 %var694)
+    %var695 = add i32 300, 0
+    %var696 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 1
+    %var697 = load i32, i32* %var696
+    %var698 = add i32 %var695, %var697
+    %var699 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var698, i32* %var699
+    %var700 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var701 = load i32, i32* %var700
+    call void @printi(i32 %var701)
+    %var702 = add i32 300, 0
+    %var703 = call i32 @var2Byte()
+    %var704 = add i32 %var702, %var703
+    %var705 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var704, i32* %var705
+    %var706 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var707 = load i32, i32* %var706
+    call void @printi(i32 %var707)
+    %var708 = add i32 300, 0
+    %var709 = add i32 1, 0
+    %var710 = add i32 3, 0
+    %var711 = trunc i32 %var709 to i8
+    %var712 = trunc i32 %var710 to i8
+    %var713 = add i8 %var711, %var712
+    %var714 = zext i8 %var713 to i32
+    %var715 = add i32 %var708, %var714
+    %var716 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var715, i32* %var716
+    %var717 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var718 = load i32, i32* %var717
+    call void @printi(i32 %var718)
+    %var719 = add i32 300, 0
+    %var720 = add i32 2, 0
+    %var721 = add i32 4, 0
+    %var722 = trunc i32 %var720 to i8
+    %var723 = trunc i32 %var721 to i8
+    %var724 = mul i8 %var722, %var723
+    %var725 = zext i8 %var724 to i32
+    %var726 = add i32 %var719, %var725
+    %var727 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var726, i32* %var727
+    %var728 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var729 = load i32, i32* %var728
+    call void @printi(i32 %var729)
+    %var730 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    %var731 = load i32, i32* %var730
+    %var732 = add i32 1, 0
+    %var733 = add i32 %var731, %var732
+    %var734 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var733, i32* %var734
+    %var735 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var736 = load i32, i32* %var735
+    call void @printi(i32 %var736)
+    %var737 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    %var738 = load i32, i32* %var737
+    %var739 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 1
+    %var740 = load i32, i32* %var739
+    %var741 = add i32 %var738, %var740
+    %var742 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var741, i32* %var742
+    %var743 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var744 = load i32, i32* %var743
+    call void @printi(i32 %var744)
+    %var745 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    %var746 = load i32, i32* %var745
+    %var747 = call i32 @var2Byte()
+    %var748 = add i32 %var746, %var747
+    %var749 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var748, i32* %var749
+    %var750 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var751 = load i32, i32* %var750
+    call void @printi(i32 %var751)
+    %var752 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    %var753 = load i32, i32* %var752
+    %var754 = add i32 1, 0
+    %var755 = add i32 3, 0
+    %var756 = trunc i32 %var754 to i8
+    %var757 = trunc i32 %var755 to i8
+    %var758 = add i8 %var756, %var757
+    %var759 = zext i8 %var758 to i32
+    %var760 = add i32 %var753, %var759
+    %var761 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var760, i32* %var761
+    %var762 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var763 = load i32, i32* %var762
+    call void @printi(i32 %var763)
+    %var764 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    %var765 = load i32, i32* %var764
+    %var766 = add i32 2, 0
+    %var767 = add i32 4, 0
+    %var768 = trunc i32 %var766 to i8
+    %var769 = trunc i32 %var767 to i8
+    %var770 = mul i8 %var768, %var769
+    %var771 = zext i8 %var770 to i32
+    %var772 = add i32 %var765, %var771
+    %var773 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var772, i32* %var773
+    %var774 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var775 = load i32, i32* %var774
+    call void @printi(i32 %var775)
+    %var776 = call i32 @var0Int()
+    %var777 = add i32 1, 0
+    %var778 = add i32 %var776, %var777
+    %var779 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var778, i32* %var779
+    %var780 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var781 = load i32, i32* %var780
+    call void @printi(i32 %var781)
+    %var782 = call i32 @var0Int()
+    %var783 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 1
+    %var784 = load i32, i32* %var783
+    %var785 = add i32 %var782, %var784
+    %var786 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var785, i32* %var786
+    %var787 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var788 = load i32, i32* %var787
+    call void @printi(i32 %var788)
+    %var789 = call i32 @var0Int()
+    %var790 = call i32 @var2Byte()
+    %var791 = add i32 %var789, %var790
+    %var792 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var791, i32* %var792
+    %var793 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var794 = load i32, i32* %var793
+    call void @printi(i32 %var794)
+    %var795 = call i32 @var0Int()
+    %var796 = add i32 1, 0
+    %var797 = add i32 3, 0
+    %var798 = trunc i32 %var796 to i8
+    %var799 = trunc i32 %var797 to i8
+    %var800 = add i8 %var798, %var799
+    %var801 = zext i8 %var800 to i32
+    %var802 = add i32 %var795, %var801
+    %var803 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var802, i32* %var803
+    %var804 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var805 = load i32, i32* %var804
+    call void @printi(i32 %var805)
+    %var806 = call i32 @var0Int()
+    %var807 = add i32 2, 0
+    %var808 = add i32 4, 0
+    %var809 = trunc i32 %var807 to i8
+    %var810 = trunc i32 %var808 to i8
+    %var811 = mul i8 %var809, %var810
+    %var812 = zext i8 %var811 to i32
+    %var813 = add i32 %var806, %var812
+    %var814 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var813, i32* %var814
+    %var815 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var816 = load i32, i32* %var815
+    call void @printi(i32 %var816)
+    %var817 = add i32 200, 0
+    %var818 = add i32 400, 0
+    %var819 = add i32 %var817, %var818
+    %var820 = add i32 1, 0
+    %var821 = add i32 %var819, %var820
+    %var822 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var821, i32* %var822
+    %var823 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var824 = load i32, i32* %var823
+    call void @printi(i32 %var824)
+    %var825 = add i32 200, 0
+    %var826 = add i32 400, 0
+    %var827 = add i32 %var825, %var826
+    %var828 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 1
+    %var829 = load i32, i32* %var828
+    %var830 = add i32 %var827, %var829
+    %var831 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var830, i32* %var831
+    %var832 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var833 = load i32, i32* %var832
+    call void @printi(i32 %var833)
+    %var834 = add i32 200, 0
+    %var835 = add i32 400, 0
+    %var836 = add i32 %var834, %var835
+    %var837 = call i32 @var2Byte()
+    %var838 = add i32 %var836, %var837
+    %var839 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var838, i32* %var839
+    %var840 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var841 = load i32, i32* %var840
+    call void @printi(i32 %var841)
+    %var842 = add i32 200, 0
+    %var843 = add i32 400, 0
+    %var844 = add i32 %var842, %var843
+    %var845 = add i32 1, 0
+    %var846 = add i32 3, 0
+    %var847 = trunc i32 %var845 to i8
+    %var848 = trunc i32 %var846 to i8
+    %var849 = add i8 %var847, %var848
+    %var850 = zext i8 %var849 to i32
+    %var851 = add i32 %var844, %var850
+    %var852 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var851, i32* %var852
+    %var853 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var854 = load i32, i32* %var853
+    call void @printi(i32 %var854)
+    %var855 = add i32 200, 0
+    %var856 = add i32 400, 0
+    %var857 = add i32 %var855, %var856
+    %var858 = add i32 2, 0
+    %var859 = add i32 4, 0
+    %var860 = trunc i32 %var858 to i8
+    %var861 = trunc i32 %var859 to i8
+    %var862 = mul i8 %var860, %var861
+    %var863 = zext i8 %var862 to i32
+    %var864 = add i32 %var857, %var863
+    %var865 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var864, i32* %var865
+    %var866 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var867 = load i32, i32* %var866
+    call void @printi(i32 %var867)
+    %var868 = add i32 350, 0
+    %var869 = add i32 2, 0
+    %var870 = mul i32 %var868, %var869
+    %var871 = add i32 1, 0
+    %var872 = add i32 %var870, %var871
+    %var873 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var872, i32* %var873
+    %var874 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var875 = load i32, i32* %var874
+    call void @printi(i32 %var875)
+    %var876 = add i32 350, 0
+    %var877 = add i32 2, 0
+    %var878 = mul i32 %var876, %var877
+    %var879 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 1
+    %var880 = load i32, i32* %var879
+    %var881 = add i32 %var878, %var880
+    %var882 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var881, i32* %var882
+    %var883 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var884 = load i32, i32* %var883
+    call void @printi(i32 %var884)
+    %var885 = add i32 350, 0
+    %var886 = add i32 2, 0
+    %var887 = mul i32 %var885, %var886
+    %var888 = call i32 @var2Byte()
+    %var889 = add i32 %var887, %var888
+    %var890 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var889, i32* %var890
+    %var891 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var892 = load i32, i32* %var891
+    call void @printi(i32 %var892)
+    %var893 = add i32 350, 0
+    %var894 = add i32 2, 0
+    %var895 = mul i32 %var893, %var894
+    %var896 = add i32 1, 0
+    %var897 = add i32 3, 0
+    %var898 = trunc i32 %var896 to i8
+    %var899 = trunc i32 %var897 to i8
+    %var900 = add i8 %var898, %var899
+    %var901 = zext i8 %var900 to i32
+    %var902 = add i32 %var895, %var901
+    %var903 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var902, i32* %var903
+    %var904 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var905 = load i32, i32* %var904
+    call void @printi(i32 %var905)
+    %var906 = add i32 350, 0
+    %var907 = add i32 2, 0
+    %var908 = mul i32 %var906, %var907
+    %var909 = add i32 2, 0
+    %var910 = add i32 4, 0
+    %var911 = trunc i32 %var909 to i8
+    %var912 = trunc i32 %var910 to i8
+    %var913 = mul i8 %var911, %var912
+    %var914 = zext i8 %var913 to i32
+    %var915 = add i32 %var908, %var914
+    %var916 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var915, i32* %var916
+    %var917 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var918 = load i32, i32* %var917
+    call void @printi(i32 %var918)
+    %var919 = add i32 1, 0
+    %var920 = add i32 300, 0
+    %var921 = mul i32 %var919, %var920
+    %var922 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var921, i32* %var922
+    %var923 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var924 = load i32, i32* %var923
+    call void @printi(i32 %var924)
+    %var925 = add i32 1, 0
+    %var926 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    %var927 = load i32, i32* %var926
+    %var928 = mul i32 %var925, %var927
+    %var929 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var928, i32* %var929
+    %var930 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var931 = load i32, i32* %var930
+    call void @printi(i32 %var931)
+    %var932 = add i32 1, 0
+    %var933 = call i32 @var0Int()
+    %var934 = mul i32 %var932, %var933
+    %var935 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var934, i32* %var935
+    %var936 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var937 = load i32, i32* %var936
+    call void @printi(i32 %var937)
+    %var938 = add i32 1, 0
+    %var939 = add i32 200, 0
+    %var940 = add i32 400, 0
+    %var941 = add i32 %var939, %var940
+    %var942 = mul i32 %var938, %var941
+    %var943 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var942, i32* %var943
+    %var944 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var945 = load i32, i32* %var944
+    call void @printi(i32 %var945)
+    %var946 = add i32 1, 0
+    %var947 = add i32 350, 0
+    %var948 = mul i32 %var946, %var947
+    %var949 = add i32 2, 0
+    %var950 = mul i32 %var948, %var949
+    %var951 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var950, i32* %var951
+    %var952 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var953 = load i32, i32* %var952
+    call void @printi(i32 %var953)
+    %var954 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 1
+    %var955 = load i32, i32* %var954
+    %var956 = add i32 300, 0
+    %var957 = mul i32 %var955, %var956
+    %var958 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var957, i32* %var958
+    %var959 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var960 = load i32, i32* %var959
+    call void @printi(i32 %var960)
+    %var961 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 1
+    %var962 = load i32, i32* %var961
+    %var963 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    %var964 = load i32, i32* %var963
+    %var965 = mul i32 %var962, %var964
+    %var966 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var965, i32* %var966
+    %var967 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var968 = load i32, i32* %var967
+    call void @printi(i32 %var968)
+    %var969 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 1
+    %var970 = load i32, i32* %var969
+    %var971 = call i32 @var0Int()
+    %var972 = mul i32 %var970, %var971
+    %var973 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var972, i32* %var973
+    %var974 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var975 = load i32, i32* %var974
+    call void @printi(i32 %var975)
+    %var976 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 1
+    %var977 = load i32, i32* %var976
+    %var978 = add i32 200, 0
+    %var979 = add i32 400, 0
+    %var980 = add i32 %var978, %var979
+    %var981 = mul i32 %var977, %var980
+    %var982 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var981, i32* %var982
+    %var983 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var984 = load i32, i32* %var983
+    call void @printi(i32 %var984)
+    %var985 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 1
+    %var986 = load i32, i32* %var985
+    %var987 = add i32 350, 0
+    %var988 = mul i32 %var986, %var987
+    %var989 = add i32 2, 0
+    %var990 = mul i32 %var988, %var989
+    %var991 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var990, i32* %var991
+    %var992 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var993 = load i32, i32* %var992
+    call void @printi(i32 %var993)
+    %var994 = call i32 @var2Byte()
+    %var995 = add i32 300, 0
+    %var996 = mul i32 %var994, %var995
+    %var997 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var996, i32* %var997
+    %var998 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var999 = load i32, i32* %var998
+    call void @printi(i32 %var999)
+    %var1000 = call i32 @var2Byte()
+    %var1001 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    %var1002 = load i32, i32* %var1001
+    %var1003 = mul i32 %var1000, %var1002
+    %var1004 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1003, i32* %var1004
+    %var1005 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1006 = load i32, i32* %var1005
+    call void @printi(i32 %var1006)
+    %var1007 = call i32 @var2Byte()
+    %var1008 = call i32 @var0Int()
+    %var1009 = mul i32 %var1007, %var1008
+    %var1010 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1009, i32* %var1010
+    %var1011 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1012 = load i32, i32* %var1011
+    call void @printi(i32 %var1012)
+    %var1013 = call i32 @var2Byte()
+    %var1014 = add i32 200, 0
+    %var1015 = add i32 400, 0
+    %var1016 = add i32 %var1014, %var1015
+    %var1017 = mul i32 %var1013, %var1016
+    %var1018 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1017, i32* %var1018
+    %var1019 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1020 = load i32, i32* %var1019
+    call void @printi(i32 %var1020)
+    %var1021 = call i32 @var2Byte()
+    %var1022 = add i32 350, 0
+    %var1023 = mul i32 %var1021, %var1022
+    %var1024 = add i32 2, 0
+    %var1025 = mul i32 %var1023, %var1024
+    %var1026 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1025, i32* %var1026
+    %var1027 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1028 = load i32, i32* %var1027
+    call void @printi(i32 %var1028)
+    %var1029 = add i32 1, 0
+    %var1030 = add i32 3, 0
+    %var1031 = trunc i32 %var1029 to i8
+    %var1032 = trunc i32 %var1030 to i8
+    %var1033 = add i8 %var1031, %var1032
+    %var1034 = zext i8 %var1033 to i32
+    %var1035 = add i32 300, 0
+    %var1036 = mul i32 %var1034, %var1035
+    %var1037 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1036, i32* %var1037
+    %var1038 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1039 = load i32, i32* %var1038
+    call void @printi(i32 %var1039)
+    %var1040 = add i32 1, 0
+    %var1041 = add i32 3, 0
+    %var1042 = trunc i32 %var1040 to i8
+    %var1043 = trunc i32 %var1041 to i8
+    %var1044 = add i8 %var1042, %var1043
+    %var1045 = zext i8 %var1044 to i32
+    %var1046 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    %var1047 = load i32, i32* %var1046
+    %var1048 = mul i32 %var1045, %var1047
+    %var1049 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1048, i32* %var1049
+    %var1050 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1051 = load i32, i32* %var1050
+    call void @printi(i32 %var1051)
+    %var1052 = add i32 1, 0
+    %var1053 = add i32 3, 0
+    %var1054 = trunc i32 %var1052 to i8
+    %var1055 = trunc i32 %var1053 to i8
+    %var1056 = add i8 %var1054, %var1055
+    %var1057 = zext i8 %var1056 to i32
+    %var1058 = call i32 @var0Int()
+    %var1059 = mul i32 %var1057, %var1058
+    %var1060 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1059, i32* %var1060
+    %var1061 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1062 = load i32, i32* %var1061
+    call void @printi(i32 %var1062)
+    %var1063 = add i32 1, 0
+    %var1064 = add i32 3, 0
+    %var1065 = trunc i32 %var1063 to i8
+    %var1066 = trunc i32 %var1064 to i8
+    %var1067 = add i8 %var1065, %var1066
+    %var1068 = zext i8 %var1067 to i32
+    %var1069 = add i32 200, 0
+    %var1070 = add i32 400, 0
+    %var1071 = add i32 %var1069, %var1070
+    %var1072 = mul i32 %var1068, %var1071
+    %var1073 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1072, i32* %var1073
+    %var1074 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1075 = load i32, i32* %var1074
+    call void @printi(i32 %var1075)
+    %var1076 = add i32 1, 0
+    %var1077 = add i32 3, 0
+    %var1078 = trunc i32 %var1076 to i8
+    %var1079 = trunc i32 %var1077 to i8
+    %var1080 = add i8 %var1078, %var1079
+    %var1081 = zext i8 %var1080 to i32
+    %var1082 = add i32 350, 0
+    %var1083 = mul i32 %var1081, %var1082
+    %var1084 = add i32 2, 0
+    %var1085 = mul i32 %var1083, %var1084
+    %var1086 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1085, i32* %var1086
+    %var1087 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1088 = load i32, i32* %var1087
+    call void @printi(i32 %var1088)
+    %var1089 = add i32 2, 0
+    %var1090 = add i32 4, 0
+    %var1091 = trunc i32 %var1089 to i8
+    %var1092 = trunc i32 %var1090 to i8
+    %var1093 = mul i8 %var1091, %var1092
+    %var1094 = zext i8 %var1093 to i32
+    %var1095 = add i32 300, 0
+    %var1096 = mul i32 %var1094, %var1095
+    %var1097 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1096, i32* %var1097
+    %var1098 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1099 = load i32, i32* %var1098
+    call void @printi(i32 %var1099)
+    %var1100 = add i32 2, 0
+    %var1101 = add i32 4, 0
+    %var1102 = trunc i32 %var1100 to i8
+    %var1103 = trunc i32 %var1101 to i8
+    %var1104 = mul i8 %var1102, %var1103
+    %var1105 = zext i8 %var1104 to i32
+    %var1106 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    %var1107 = load i32, i32* %var1106
+    %var1108 = mul i32 %var1105, %var1107
+    %var1109 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1108, i32* %var1109
+    %var1110 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1111 = load i32, i32* %var1110
+    call void @printi(i32 %var1111)
+    %var1112 = add i32 2, 0
+    %var1113 = add i32 4, 0
+    %var1114 = trunc i32 %var1112 to i8
+    %var1115 = trunc i32 %var1113 to i8
+    %var1116 = mul i8 %var1114, %var1115
+    %var1117 = zext i8 %var1116 to i32
+    %var1118 = call i32 @var0Int()
+    %var1119 = mul i32 %var1117, %var1118
+    %var1120 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1119, i32* %var1120
+    %var1121 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1122 = load i32, i32* %var1121
+    call void @printi(i32 %var1122)
+    %var1123 = add i32 2, 0
+    %var1124 = add i32 4, 0
+    %var1125 = trunc i32 %var1123 to i8
+    %var1126 = trunc i32 %var1124 to i8
+    %var1127 = mul i8 %var1125, %var1126
+    %var1128 = zext i8 %var1127 to i32
+    %var1129 = add i32 200, 0
+    %var1130 = add i32 400, 0
+    %var1131 = add i32 %var1129, %var1130
+    %var1132 = mul i32 %var1128, %var1131
+    %var1133 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1132, i32* %var1133
+    %var1134 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1135 = load i32, i32* %var1134
+    call void @printi(i32 %var1135)
+    %var1136 = add i32 2, 0
+    %var1137 = add i32 4, 0
+    %var1138 = trunc i32 %var1136 to i8
+    %var1139 = trunc i32 %var1137 to i8
+    %var1140 = mul i8 %var1138, %var1139
+    %var1141 = zext i8 %var1140 to i32
+    %var1142 = add i32 350, 0
+    %var1143 = mul i32 %var1141, %var1142
+    %var1144 = add i32 2, 0
+    %var1145 = mul i32 %var1143, %var1144
+    %var1146 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1145, i32* %var1146
+    %var1147 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1148 = load i32, i32* %var1147
+    call void @printi(i32 %var1148)
+    %var1149 = add i32 300, 0
+    %var1150 = add i32 1, 0
+    %var1151 = mul i32 %var1149, %var1150
+    %var1152 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1151, i32* %var1152
+    %var1153 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1154 = load i32, i32* %var1153
+    call void @printi(i32 %var1154)
+    %var1155 = add i32 300, 0
+    %var1156 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 1
+    %var1157 = load i32, i32* %var1156
+    %var1158 = mul i32 %var1155, %var1157
+    %var1159 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1158, i32* %var1159
+    %var1160 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1161 = load i32, i32* %var1160
+    call void @printi(i32 %var1161)
+    %var1162 = add i32 300, 0
+    %var1163 = call i32 @var2Byte()
+    %var1164 = mul i32 %var1162, %var1163
+    %var1165 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1164, i32* %var1165
+    %var1166 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1167 = load i32, i32* %var1166
+    call void @printi(i32 %var1167)
+    %var1168 = add i32 300, 0
+    %var1169 = add i32 1, 0
+    %var1170 = add i32 3, 0
+    %var1171 = trunc i32 %var1169 to i8
+    %var1172 = trunc i32 %var1170 to i8
+    %var1173 = add i8 %var1171, %var1172
+    %var1174 = zext i8 %var1173 to i32
+    %var1175 = mul i32 %var1168, %var1174
+    %var1176 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1175, i32* %var1176
+    %var1177 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1178 = load i32, i32* %var1177
+    call void @printi(i32 %var1178)
+    %var1179 = add i32 300, 0
+    %var1180 = add i32 2, 0
+    %var1181 = mul i32 %var1179, %var1180
+    %var1182 = add i32 4, 0
+    %var1183 = mul i32 %var1181, %var1182
+    %var1184 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1183, i32* %var1184
+    %var1185 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1186 = load i32, i32* %var1185
+    call void @printi(i32 %var1186)
+    %var1187 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    %var1188 = load i32, i32* %var1187
+    %var1189 = add i32 1, 0
+    %var1190 = mul i32 %var1188, %var1189
+    %var1191 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1190, i32* %var1191
+    %var1192 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1193 = load i32, i32* %var1192
+    call void @printi(i32 %var1193)
+    %var1194 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    %var1195 = load i32, i32* %var1194
+    %var1196 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 1
+    %var1197 = load i32, i32* %var1196
+    %var1198 = mul i32 %var1195, %var1197
+    %var1199 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1198, i32* %var1199
+    %var1200 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1201 = load i32, i32* %var1200
+    call void @printi(i32 %var1201)
+    %var1202 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    %var1203 = load i32, i32* %var1202
+    %var1204 = call i32 @var2Byte()
+    %var1205 = mul i32 %var1203, %var1204
+    %var1206 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1205, i32* %var1206
+    %var1207 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1208 = load i32, i32* %var1207
+    call void @printi(i32 %var1208)
+    %var1209 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    %var1210 = load i32, i32* %var1209
+    %var1211 = add i32 1, 0
+    %var1212 = add i32 3, 0
+    %var1213 = trunc i32 %var1211 to i8
+    %var1214 = trunc i32 %var1212 to i8
+    %var1215 = add i8 %var1213, %var1214
+    %var1216 = zext i8 %var1215 to i32
+    %var1217 = mul i32 %var1210, %var1216
+    %var1218 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1217, i32* %var1218
+    %var1219 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1220 = load i32, i32* %var1219
+    call void @printi(i32 %var1220)
+    %var1221 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    %var1222 = load i32, i32* %var1221
+    %var1223 = add i32 2, 0
+    %var1224 = mul i32 %var1222, %var1223
+    %var1225 = add i32 4, 0
+    %var1226 = mul i32 %var1224, %var1225
+    %var1227 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1226, i32* %var1227
+    %var1228 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1229 = load i32, i32* %var1228
+    call void @printi(i32 %var1229)
+    %var1230 = call i32 @var0Int()
+    %var1231 = add i32 1, 0
+    %var1232 = mul i32 %var1230, %var1231
+    %var1233 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1232, i32* %var1233
+    %var1234 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1235 = load i32, i32* %var1234
+    call void @printi(i32 %var1235)
+    %var1236 = call i32 @var0Int()
+    %var1237 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 1
+    %var1238 = load i32, i32* %var1237
+    %var1239 = mul i32 %var1236, %var1238
+    %var1240 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1239, i32* %var1240
+    %var1241 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1242 = load i32, i32* %var1241
+    call void @printi(i32 %var1242)
+    %var1243 = call i32 @var0Int()
+    %var1244 = call i32 @var2Byte()
+    %var1245 = mul i32 %var1243, %var1244
+    %var1246 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1245, i32* %var1246
+    %var1247 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1248 = load i32, i32* %var1247
+    call void @printi(i32 %var1248)
+    %var1249 = call i32 @var0Int()
+    %var1250 = add i32 1, 0
+    %var1251 = add i32 3, 0
+    %var1252 = trunc i32 %var1250 to i8
+    %var1253 = trunc i32 %var1251 to i8
+    %var1254 = add i8 %var1252, %var1253
+    %var1255 = zext i8 %var1254 to i32
+    %var1256 = mul i32 %var1249, %var1255
+    %var1257 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1256, i32* %var1257
+    %var1258 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1259 = load i32, i32* %var1258
+    call void @printi(i32 %var1259)
+    %var1260 = call i32 @var0Int()
+    %var1261 = add i32 2, 0
+    %var1262 = mul i32 %var1260, %var1261
+    %var1263 = add i32 4, 0
+    %var1264 = mul i32 %var1262, %var1263
+    %var1265 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1264, i32* %var1265
+    %var1266 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1267 = load i32, i32* %var1266
+    call void @printi(i32 %var1267)
+    %var1268 = add i32 200, 0
+    %var1269 = add i32 400, 0
+    %var1270 = add i32 %var1268, %var1269
+    %var1271 = add i32 1, 0
+    %var1272 = mul i32 %var1270, %var1271
+    %var1273 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1272, i32* %var1273
+    %var1274 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1275 = load i32, i32* %var1274
+    call void @printi(i32 %var1275)
+    %var1276 = add i32 200, 0
+    %var1277 = add i32 400, 0
+    %var1278 = add i32 %var1276, %var1277
+    %var1279 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 1
+    %var1280 = load i32, i32* %var1279
+    %var1281 = mul i32 %var1278, %var1280
+    %var1282 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1281, i32* %var1282
+    %var1283 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1284 = load i32, i32* %var1283
+    call void @printi(i32 %var1284)
+    %var1285 = add i32 200, 0
+    %var1286 = add i32 400, 0
+    %var1287 = add i32 %var1285, %var1286
+    %var1288 = call i32 @var2Byte()
+    %var1289 = mul i32 %var1287, %var1288
+    %var1290 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1289, i32* %var1290
+    %var1291 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1292 = load i32, i32* %var1291
+    call void @printi(i32 %var1292)
+    %var1293 = add i32 200, 0
+    %var1294 = add i32 400, 0
+    %var1295 = add i32 %var1293, %var1294
+    %var1296 = add i32 1, 0
+    %var1297 = add i32 3, 0
+    %var1298 = trunc i32 %var1296 to i8
+    %var1299 = trunc i32 %var1297 to i8
+    %var1300 = add i8 %var1298, %var1299
+    %var1301 = zext i8 %var1300 to i32
+    %var1302 = mul i32 %var1295, %var1301
+    %var1303 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1302, i32* %var1303
+    %var1304 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1305 = load i32, i32* %var1304
+    call void @printi(i32 %var1305)
+    %var1306 = add i32 200, 0
+    %var1307 = add i32 400, 0
+    %var1308 = add i32 %var1306, %var1307
+    %var1309 = add i32 2, 0
+    %var1310 = mul i32 %var1308, %var1309
+    %var1311 = add i32 4, 0
+    %var1312 = mul i32 %var1310, %var1311
+    %var1313 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1312, i32* %var1313
+    %var1314 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1315 = load i32, i32* %var1314
+    call void @printi(i32 %var1315)
+    %var1316 = add i32 350, 0
+    %var1317 = add i32 2, 0
+    %var1318 = mul i32 %var1316, %var1317
+    %var1319 = add i32 1, 0
+    %var1320 = mul i32 %var1318, %var1319
+    %var1321 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1320, i32* %var1321
+    %var1322 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1323 = load i32, i32* %var1322
+    call void @printi(i32 %var1323)
+    %var1324 = add i32 350, 0
+    %var1325 = add i32 2, 0
+    %var1326 = mul i32 %var1324, %var1325
+    %var1327 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 1
+    %var1328 = load i32, i32* %var1327
+    %var1329 = mul i32 %var1326, %var1328
+    %var1330 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1329, i32* %var1330
+    %var1331 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1332 = load i32, i32* %var1331
+    call void @printi(i32 %var1332)
+    %var1333 = add i32 350, 0
+    %var1334 = add i32 2, 0
+    %var1335 = mul i32 %var1333, %var1334
+    %var1336 = call i32 @var2Byte()
+    %var1337 = mul i32 %var1335, %var1336
+    %var1338 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1337, i32* %var1338
+    %var1339 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1340 = load i32, i32* %var1339
+    call void @printi(i32 %var1340)
+    %var1341 = add i32 350, 0
+    %var1342 = add i32 2, 0
+    %var1343 = mul i32 %var1341, %var1342
+    %var1344 = add i32 1, 0
+    %var1345 = add i32 3, 0
+    %var1346 = trunc i32 %var1344 to i8
+    %var1347 = trunc i32 %var1345 to i8
+    %var1348 = add i8 %var1346, %var1347
+    %var1349 = zext i8 %var1348 to i32
+    %var1350 = mul i32 %var1343, %var1349
+    %var1351 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1350, i32* %var1351
+    %var1352 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1353 = load i32, i32* %var1352
+    call void @printi(i32 %var1353)
+    %var1354 = add i32 350, 0
+    %var1355 = add i32 2, 0
+    %var1356 = mul i32 %var1354, %var1355
+    %var1357 = add i32 2, 0
+    %var1358 = mul i32 %var1356, %var1357
+    %var1359 = add i32 4, 0
+    %var1360 = mul i32 %var1358, %var1359
+    %var1361 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1360, i32* %var1361
+    %var1362 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1363 = load i32, i32* %var1362
+    call void @printi(i32 %var1363)
+    %var1364 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    store i32 0, i32* %var1364
+    %var1365 = add i32 1, 0
+    %var1366 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    store i32 %var1365, i32* %var1366
+    %var1367 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    %var1368 = load i32, i32* %var1367
+    call void @printi(i32 %var1368)
+    %var1369 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 1
+    %var1370 = load i32, i32* %var1369
+    %var1371 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    store i32 %var1370, i32* %var1371
+    %var1372 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    %var1373 = load i32, i32* %var1372
+    call void @printi(i32 %var1373)
+    %var1374 = call i32 @var2Byte()
+    %var1375 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    store i32 %var1374, i32* %var1375
+    %var1376 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    %var1377 = load i32, i32* %var1376
+    call void @printi(i32 %var1377)
+    %var1378 = add i32 1, 0
+    %var1379 = add i32 3, 0
+    %var1380 = trunc i32 %var1378 to i8
+    %var1381 = trunc i32 %var1379 to i8
+    %var1382 = add i8 %var1380, %var1381
+    %var1383 = zext i8 %var1382 to i32
+    %var1384 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    store i32 %var1383, i32* %var1384
+    %var1385 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    %var1386 = load i32, i32* %var1385
+    call void @printi(i32 %var1386)
+    %var1387 = add i32 2, 0
+    %var1388 = add i32 4, 0
+    %var1389 = trunc i32 %var1387 to i8
+    %var1390 = trunc i32 %var1388 to i8
+    %var1391 = mul i8 %var1389, %var1390
+    %var1392 = zext i8 %var1391 to i32
+    %var1393 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    store i32 %var1392, i32* %var1393
+    %var1394 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    %var1395 = load i32, i32* %var1394
+    call void @printi(i32 %var1395)
+    %var1396 = add i32 1, 0
+    %var1397 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    store i32 %var1396, i32* %var1397
+    %var1398 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    %var1399 = load i32, i32* %var1398
+    call void @printi(i32 %var1399)
+    %var1400 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 1
+    %var1401 = load i32, i32* %var1400
+    %var1402 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    store i32 %var1401, i32* %var1402
+    %var1403 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    %var1404 = load i32, i32* %var1403
+    call void @printi(i32 %var1404)
+    %var1405 = call i32 @var2Byte()
+    %var1406 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    store i32 %var1405, i32* %var1406
+    %var1407 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    %var1408 = load i32, i32* %var1407
+    call void @printi(i32 %var1408)
+    %var1409 = add i32 1, 0
+    %var1410 = add i32 3, 0
+    %var1411 = trunc i32 %var1409 to i8
+    %var1412 = trunc i32 %var1410 to i8
+    %var1413 = add i8 %var1411, %var1412
+    %var1414 = zext i8 %var1413 to i32
+    %var1415 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    store i32 %var1414, i32* %var1415
+    %var1416 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    %var1417 = load i32, i32* %var1416
+    call void @printi(i32 %var1417)
+    %var1418 = add i32 2, 0
+    %var1419 = add i32 4, 0
+    %var1420 = trunc i32 %var1418 to i8
+    %var1421 = trunc i32 %var1419 to i8
+    %var1422 = mul i8 %var1420, %var1421
+    %var1423 = zext i8 %var1422 to i32
+    %var1424 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    store i32 %var1423, i32* %var1424
+    %var1425 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    %var1426 = load i32, i32* %var1425
+    call void @printi(i32 %var1426)
+    %var1427 = add i32 1, 0
+    %var1428 = add i32 1, 0
+    %var1429 = trunc i32 %var1427 to i8
+    %var1430 = trunc i32 %var1428 to i8
+    %var1431 = mul i8 %var1429, %var1430
+    %var1432 = zext i8 %var1431 to i32
+    %var1433 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    store i32 %var1432, i32* %var1433
+    %var1434 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    %var1435 = load i32, i32* %var1434
+    call void @printi(i32 %var1435)
+    %var1436 = add i32 1, 0
+    %var1437 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 1
+    %var1438 = load i32, i32* %var1437
+    %var1439 = trunc i32 %var1436 to i8
+    %var1440 = trunc i32 %var1438 to i8
+    %var1441 = mul i8 %var1439, %var1440
+    %var1442 = zext i8 %var1441 to i32
+    %var1443 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    store i32 %var1442, i32* %var1443
+    %var1444 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    %var1445 = load i32, i32* %var1444
+    call void @printi(i32 %var1445)
+    %var1446 = add i32 1, 0
+    %var1447 = call i32 @var2Byte()
+    %var1448 = trunc i32 %var1446 to i8
+    %var1449 = trunc i32 %var1447 to i8
+    %var1450 = mul i8 %var1448, %var1449
+    %var1451 = zext i8 %var1450 to i32
+    %var1452 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    store i32 %var1451, i32* %var1452
+    %var1453 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    %var1454 = load i32, i32* %var1453
+    call void @printi(i32 %var1454)
+    %var1455 = add i32 1, 0
+    %var1456 = add i32 1, 0
+    %var1457 = add i32 3, 0
+    %var1458 = trunc i32 %var1456 to i8
+    %var1459 = trunc i32 %var1457 to i8
+    %var1460 = add i8 %var1458, %var1459
+    %var1461 = zext i8 %var1460 to i32
+    %var1462 = trunc i32 %var1455 to i8
+    %var1463 = trunc i32 %var1461 to i8
+    %var1464 = mul i8 %var1462, %var1463
+    %var1465 = zext i8 %var1464 to i32
+    %var1466 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    store i32 %var1465, i32* %var1466
+    %var1467 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    %var1468 = load i32, i32* %var1467
+    call void @printi(i32 %var1468)
+    %var1469 = add i32 1, 0
+    %var1470 = add i32 2, 0
+    %var1471 = trunc i32 %var1469 to i8
+    %var1472 = trunc i32 %var1470 to i8
+    %var1473 = mul i8 %var1471, %var1472
+    %var1474 = zext i8 %var1473 to i32
+    %var1475 = add i32 4, 0
+    %var1476 = trunc i32 %var1474 to i8
+    %var1477 = trunc i32 %var1475 to i8
+    %var1478 = mul i8 %var1476, %var1477
+    %var1479 = zext i8 %var1478 to i32
+    %var1480 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    store i32 %var1479, i32* %var1480
+    %var1481 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    %var1482 = load i32, i32* %var1481
+    call void @printi(i32 %var1482)
+    %var1483 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 1
+    %var1484 = load i32, i32* %var1483
+    %var1485 = add i32 1, 0
+    %var1486 = trunc i32 %var1484 to i8
+    %var1487 = trunc i32 %var1485 to i8
+    %var1488 = mul i8 %var1486, %var1487
+    %var1489 = zext i8 %var1488 to i32
+    %var1490 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    store i32 %var1489, i32* %var1490
+    %var1491 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    %var1492 = load i32, i32* %var1491
+    call void @printi(i32 %var1492)
+    %var1493 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 1
+    %var1494 = load i32, i32* %var1493
+    %var1495 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 1
+    %var1496 = load i32, i32* %var1495
+    %var1497 = trunc i32 %var1494 to i8
+    %var1498 = trunc i32 %var1496 to i8
+    %var1499 = mul i8 %var1497, %var1498
+    %var1500 = zext i8 %var1499 to i32
+    %var1501 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    store i32 %var1500, i32* %var1501
+    %var1502 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    %var1503 = load i32, i32* %var1502
+    call void @printi(i32 %var1503)
+    %var1504 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 1
+    %var1505 = load i32, i32* %var1504
+    %var1506 = call i32 @var2Byte()
+    %var1507 = trunc i32 %var1505 to i8
+    %var1508 = trunc i32 %var1506 to i8
+    %var1509 = mul i8 %var1507, %var1508
+    %var1510 = zext i8 %var1509 to i32
+    %var1511 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    store i32 %var1510, i32* %var1511
+    %var1512 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    %var1513 = load i32, i32* %var1512
+    call void @printi(i32 %var1513)
+    %var1514 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 1
+    %var1515 = load i32, i32* %var1514
+    %var1516 = add i32 1, 0
+    %var1517 = add i32 3, 0
+    %var1518 = trunc i32 %var1516 to i8
+    %var1519 = trunc i32 %var1517 to i8
+    %var1520 = add i8 %var1518, %var1519
+    %var1521 = zext i8 %var1520 to i32
+    %var1522 = trunc i32 %var1515 to i8
+    %var1523 = trunc i32 %var1521 to i8
+    %var1524 = mul i8 %var1522, %var1523
+    %var1525 = zext i8 %var1524 to i32
+    %var1526 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    store i32 %var1525, i32* %var1526
+    %var1527 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    %var1528 = load i32, i32* %var1527
+    call void @printi(i32 %var1528)
+    %var1529 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 1
+    %var1530 = load i32, i32* %var1529
+    %var1531 = add i32 2, 0
+    %var1532 = trunc i32 %var1530 to i8
+    %var1533 = trunc i32 %var1531 to i8
+    %var1534 = mul i8 %var1532, %var1533
+    %var1535 = zext i8 %var1534 to i32
+    %var1536 = add i32 4, 0
+    %var1537 = trunc i32 %var1535 to i8
+    %var1538 = trunc i32 %var1536 to i8
+    %var1539 = mul i8 %var1537, %var1538
+    %var1540 = zext i8 %var1539 to i32
+    %var1541 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    store i32 %var1540, i32* %var1541
+    %var1542 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    %var1543 = load i32, i32* %var1542
+    call void @printi(i32 %var1543)
+    %var1544 = call i32 @var2Byte()
+    %var1545 = add i32 1, 0
+    %var1546 = trunc i32 %var1544 to i8
+    %var1547 = trunc i32 %var1545 to i8
+    %var1548 = mul i8 %var1546, %var1547
+    %var1549 = zext i8 %var1548 to i32
+    %var1550 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    store i32 %var1549, i32* %var1550
+    %var1551 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    %var1552 = load i32, i32* %var1551
+    call void @printi(i32 %var1552)
+    %var1553 = call i32 @var2Byte()
+    %var1554 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 1
+    %var1555 = load i32, i32* %var1554
+    %var1556 = trunc i32 %var1553 to i8
+    %var1557 = trunc i32 %var1555 to i8
+    %var1558 = mul i8 %var1556, %var1557
+    %var1559 = zext i8 %var1558 to i32
+    %var1560 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    store i32 %var1559, i32* %var1560
+    %var1561 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    %var1562 = load i32, i32* %var1561
+    call void @printi(i32 %var1562)
+    %var1563 = call i32 @var2Byte()
+    %var1564 = call i32 @var2Byte()
+    %var1565 = trunc i32 %var1563 to i8
+    %var1566 = trunc i32 %var1564 to i8
+    %var1567 = mul i8 %var1565, %var1566
+    %var1568 = zext i8 %var1567 to i32
+    %var1569 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    store i32 %var1568, i32* %var1569
+    %var1570 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    %var1571 = load i32, i32* %var1570
+    call void @printi(i32 %var1571)
+    %var1572 = call i32 @var2Byte()
+    %var1573 = add i32 1, 0
+    %var1574 = add i32 3, 0
+    %var1575 = trunc i32 %var1573 to i8
+    %var1576 = trunc i32 %var1574 to i8
+    %var1577 = add i8 %var1575, %var1576
+    %var1578 = zext i8 %var1577 to i32
+    %var1579 = trunc i32 %var1572 to i8
+    %var1580 = trunc i32 %var1578 to i8
+    %var1581 = mul i8 %var1579, %var1580
+    %var1582 = zext i8 %var1581 to i32
+    %var1583 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    store i32 %var1582, i32* %var1583
+    %var1584 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    %var1585 = load i32, i32* %var1584
+    call void @printi(i32 %var1585)
+    %var1586 = call i32 @var2Byte()
+    %var1587 = add i32 2, 0
+    %var1588 = trunc i32 %var1586 to i8
+    %var1589 = trunc i32 %var1587 to i8
+    %var1590 = mul i8 %var1588, %var1589
+    %var1591 = zext i8 %var1590 to i32
+    %var1592 = add i32 4, 0
+    %var1593 = trunc i32 %var1591 to i8
+    %var1594 = trunc i32 %var1592 to i8
+    %var1595 = mul i8 %var1593, %var1594
+    %var1596 = zext i8 %var1595 to i32
+    %var1597 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    store i32 %var1596, i32* %var1597
+    %var1598 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    %var1599 = load i32, i32* %var1598
+    call void @printi(i32 %var1599)
+    %var1600 = add i32 1, 0
+    %var1601 = add i32 3, 0
+    %var1602 = trunc i32 %var1600 to i8
+    %var1603 = trunc i32 %var1601 to i8
+    %var1604 = add i8 %var1602, %var1603
+    %var1605 = zext i8 %var1604 to i32
+    %var1606 = add i32 1, 0
+    %var1607 = trunc i32 %var1605 to i8
+    %var1608 = trunc i32 %var1606 to i8
+    %var1609 = mul i8 %var1607, %var1608
+    %var1610 = zext i8 %var1609 to i32
+    %var1611 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    store i32 %var1610, i32* %var1611
+    %var1612 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    %var1613 = load i32, i32* %var1612
+    call void @printi(i32 %var1613)
+    %var1614 = add i32 1, 0
+    %var1615 = add i32 3, 0
+    %var1616 = trunc i32 %var1614 to i8
+    %var1617 = trunc i32 %var1615 to i8
+    %var1618 = add i8 %var1616, %var1617
+    %var1619 = zext i8 %var1618 to i32
+    %var1620 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 1
+    %var1621 = load i32, i32* %var1620
+    %var1622 = trunc i32 %var1619 to i8
+    %var1623 = trunc i32 %var1621 to i8
+    %var1624 = mul i8 %var1622, %var1623
+    %var1625 = zext i8 %var1624 to i32
+    %var1626 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    store i32 %var1625, i32* %var1626
+    %var1627 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    %var1628 = load i32, i32* %var1627
+    call void @printi(i32 %var1628)
+    %var1629 = add i32 1, 0
+    %var1630 = add i32 3, 0
+    %var1631 = trunc i32 %var1629 to i8
+    %var1632 = trunc i32 %var1630 to i8
+    %var1633 = add i8 %var1631, %var1632
+    %var1634 = zext i8 %var1633 to i32
+    %var1635 = call i32 @var2Byte()
+    %var1636 = trunc i32 %var1634 to i8
+    %var1637 = trunc i32 %var1635 to i8
+    %var1638 = mul i8 %var1636, %var1637
+    %var1639 = zext i8 %var1638 to i32
+    %var1640 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    store i32 %var1639, i32* %var1640
+    %var1641 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    %var1642 = load i32, i32* %var1641
+    call void @printi(i32 %var1642)
+    %var1643 = add i32 1, 0
+    %var1644 = add i32 3, 0
+    %var1645 = trunc i32 %var1643 to i8
+    %var1646 = trunc i32 %var1644 to i8
+    %var1647 = add i8 %var1645, %var1646
+    %var1648 = zext i8 %var1647 to i32
+    %var1649 = add i32 1, 0
+    %var1650 = add i32 3, 0
+    %var1651 = trunc i32 %var1649 to i8
+    %var1652 = trunc i32 %var1650 to i8
+    %var1653 = add i8 %var1651, %var1652
+    %var1654 = zext i8 %var1653 to i32
+    %var1655 = trunc i32 %var1648 to i8
+    %var1656 = trunc i32 %var1654 to i8
+    %var1657 = mul i8 %var1655, %var1656
+    %var1658 = zext i8 %var1657 to i32
+    %var1659 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    store i32 %var1658, i32* %var1659
+    %var1660 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    %var1661 = load i32, i32* %var1660
+    call void @printi(i32 %var1661)
+    %var1662 = add i32 1, 0
+    %var1663 = add i32 3, 0
+    %var1664 = trunc i32 %var1662 to i8
+    %var1665 = trunc i32 %var1663 to i8
+    %var1666 = add i8 %var1664, %var1665
+    %var1667 = zext i8 %var1666 to i32
+    %var1668 = add i32 2, 0
+    %var1669 = trunc i32 %var1667 to i8
+    %var1670 = trunc i32 %var1668 to i8
+    %var1671 = mul i8 %var1669, %var1670
+    %var1672 = zext i8 %var1671 to i32
+    %var1673 = add i32 4, 0
+    %var1674 = trunc i32 %var1672 to i8
+    %var1675 = trunc i32 %var1673 to i8
+    %var1676 = mul i8 %var1674, %var1675
+    %var1677 = zext i8 %var1676 to i32
+    %var1678 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    store i32 %var1677, i32* %var1678
+    %var1679 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    %var1680 = load i32, i32* %var1679
+    call void @printi(i32 %var1680)
+    %var1681 = add i32 2, 0
+    %var1682 = add i32 4, 0
+    %var1683 = trunc i32 %var1681 to i8
+    %var1684 = trunc i32 %var1682 to i8
+    %var1685 = mul i8 %var1683, %var1684
+    %var1686 = zext i8 %var1685 to i32
+    %var1687 = add i32 1, 0
+    %var1688 = trunc i32 %var1686 to i8
+    %var1689 = trunc i32 %var1687 to i8
+    %var1690 = mul i8 %var1688, %var1689
+    %var1691 = zext i8 %var1690 to i32
+    %var1692 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    store i32 %var1691, i32* %var1692
+    %var1693 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    %var1694 = load i32, i32* %var1693
+    call void @printi(i32 %var1694)
+    %var1695 = add i32 2, 0
+    %var1696 = add i32 4, 0
+    %var1697 = trunc i32 %var1695 to i8
+    %var1698 = trunc i32 %var1696 to i8
+    %var1699 = mul i8 %var1697, %var1698
+    %var1700 = zext i8 %var1699 to i32
+    %var1701 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 1
+    %var1702 = load i32, i32* %var1701
+    %var1703 = trunc i32 %var1700 to i8
+    %var1704 = trunc i32 %var1702 to i8
+    %var1705 = mul i8 %var1703, %var1704
+    %var1706 = zext i8 %var1705 to i32
+    %var1707 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    store i32 %var1706, i32* %var1707
+    %var1708 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    %var1709 = load i32, i32* %var1708
+    call void @printi(i32 %var1709)
+    %var1710 = add i32 2, 0
+    %var1711 = add i32 4, 0
+    %var1712 = trunc i32 %var1710 to i8
+    %var1713 = trunc i32 %var1711 to i8
+    %var1714 = mul i8 %var1712, %var1713
+    %var1715 = zext i8 %var1714 to i32
+    %var1716 = call i32 @var2Byte()
+    %var1717 = trunc i32 %var1715 to i8
+    %var1718 = trunc i32 %var1716 to i8
+    %var1719 = mul i8 %var1717, %var1718
+    %var1720 = zext i8 %var1719 to i32
+    %var1721 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    store i32 %var1720, i32* %var1721
+    %var1722 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    %var1723 = load i32, i32* %var1722
+    call void @printi(i32 %var1723)
+    %var1724 = add i32 2, 0
+    %var1725 = add i32 4, 0
+    %var1726 = trunc i32 %var1724 to i8
+    %var1727 = trunc i32 %var1725 to i8
+    %var1728 = mul i8 %var1726, %var1727
+    %var1729 = zext i8 %var1728 to i32
+    %var1730 = add i32 1, 0
+    %var1731 = add i32 3, 0
+    %var1732 = trunc i32 %var1730 to i8
+    %var1733 = trunc i32 %var1731 to i8
+    %var1734 = add i8 %var1732, %var1733
+    %var1735 = zext i8 %var1734 to i32
+    %var1736 = trunc i32 %var1729 to i8
+    %var1737 = trunc i32 %var1735 to i8
+    %var1738 = mul i8 %var1736, %var1737
+    %var1739 = zext i8 %var1738 to i32
+    %var1740 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    store i32 %var1739, i32* %var1740
+    %var1741 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    %var1742 = load i32, i32* %var1741
+    call void @printi(i32 %var1742)
+    %var1743 = add i32 2, 0
+    %var1744 = add i32 4, 0
+    %var1745 = trunc i32 %var1743 to i8
+    %var1746 = trunc i32 %var1744 to i8
+    %var1747 = mul i8 %var1745, %var1746
+    %var1748 = zext i8 %var1747 to i32
+    %var1749 = add i32 2, 0
+    %var1750 = trunc i32 %var1748 to i8
+    %var1751 = trunc i32 %var1749 to i8
+    %var1752 = mul i8 %var1750, %var1751
+    %var1753 = zext i8 %var1752 to i32
+    %var1754 = add i32 4, 0
+    %var1755 = trunc i32 %var1753 to i8
+    %var1756 = trunc i32 %var1754 to i8
+    %var1757 = mul i8 %var1755, %var1756
+    %var1758 = zext i8 %var1757 to i32
+    %var1759 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    store i32 %var1758, i32* %var1759
+    %var1760 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 3
+    %var1761 = load i32, i32* %var1760
+    call void @printi(i32 %var1761)
+    %var1762 = add i32 1, 0
+    %var1763 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1762, i32* %var1763
+    %var1764 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1765 = load i32, i32* %var1764
+    call void @printi(i32 %var1765)
+    %var1766 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 1
+    %var1767 = load i32, i32* %var1766
+    %var1768 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1767, i32* %var1768
+    %var1769 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1770 = load i32, i32* %var1769
+    call void @printi(i32 %var1770)
+    %var1771 = call i32 @var2Byte()
+    %var1772 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1771, i32* %var1772
+    %var1773 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1774 = load i32, i32* %var1773
+    call void @printi(i32 %var1774)
+    %var1775 = add i32 1, 0
+    %var1776 = add i32 3, 0
+    %var1777 = trunc i32 %var1775 to i8
+    %var1778 = trunc i32 %var1776 to i8
+    %var1779 = add i8 %var1777, %var1778
+    %var1780 = zext i8 %var1779 to i32
+    %var1781 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1780, i32* %var1781
+    %var1782 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1783 = load i32, i32* %var1782
+    call void @printi(i32 %var1783)
+    %var1784 = add i32 2, 0
+    %var1785 = add i32 4, 0
+    %var1786 = trunc i32 %var1784 to i8
+    %var1787 = trunc i32 %var1785 to i8
+    %var1788 = mul i8 %var1786, %var1787
+    %var1789 = zext i8 %var1788 to i32
+    %var1790 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1789, i32* %var1790
+    %var1791 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1792 = load i32, i32* %var1791
+    call void @printi(i32 %var1792)
+    %var1793 = add i32 1, 0
+    %var1794 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1793, i32* %var1794
+    %var1795 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1796 = load i32, i32* %var1795
+    call void @printi(i32 %var1796)
+    %var1797 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 1
+    %var1798 = load i32, i32* %var1797
+    %var1799 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1798, i32* %var1799
+    %var1800 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1801 = load i32, i32* %var1800
+    call void @printi(i32 %var1801)
+    %var1802 = call i32 @var2Byte()
+    %var1803 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1802, i32* %var1803
+    %var1804 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1805 = load i32, i32* %var1804
+    call void @printi(i32 %var1805)
+    %var1806 = add i32 1, 0
+    %var1807 = add i32 3, 0
+    %var1808 = trunc i32 %var1806 to i8
+    %var1809 = trunc i32 %var1807 to i8
+    %var1810 = add i8 %var1808, %var1809
+    %var1811 = zext i8 %var1810 to i32
+    %var1812 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1811, i32* %var1812
+    %var1813 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1814 = load i32, i32* %var1813
+    call void @printi(i32 %var1814)
+    %var1815 = add i32 2, 0
+    %var1816 = add i32 4, 0
+    %var1817 = trunc i32 %var1815 to i8
+    %var1818 = trunc i32 %var1816 to i8
+    %var1819 = mul i8 %var1817, %var1818
+    %var1820 = zext i8 %var1819 to i32
+    %var1821 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1820, i32* %var1821
+    %var1822 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1823 = load i32, i32* %var1822
+    call void @printi(i32 %var1823)
+    %var1824 = add i32 1, 0
+    %var1825 = add i32 1, 0
+    %var1826 = trunc i32 %var1824 to i8
+    %var1827 = trunc i32 %var1825 to i8
+    %var1828 = mul i8 %var1826, %var1827
+    %var1829 = zext i8 %var1828 to i32
+    %var1830 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1829, i32* %var1830
+    %var1831 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1832 = load i32, i32* %var1831
+    call void @printi(i32 %var1832)
+    %var1833 = add i32 1, 0
+    %var1834 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 1
+    %var1835 = load i32, i32* %var1834
+    %var1836 = trunc i32 %var1833 to i8
+    %var1837 = trunc i32 %var1835 to i8
+    %var1838 = mul i8 %var1836, %var1837
+    %var1839 = zext i8 %var1838 to i32
+    %var1840 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1839, i32* %var1840
+    %var1841 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1842 = load i32, i32* %var1841
+    call void @printi(i32 %var1842)
+    %var1843 = add i32 1, 0
+    %var1844 = call i32 @var2Byte()
+    %var1845 = trunc i32 %var1843 to i8
+    %var1846 = trunc i32 %var1844 to i8
+    %var1847 = mul i8 %var1845, %var1846
+    %var1848 = zext i8 %var1847 to i32
+    %var1849 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1848, i32* %var1849
+    %var1850 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1851 = load i32, i32* %var1850
+    call void @printi(i32 %var1851)
+    %var1852 = add i32 1, 0
+    %var1853 = add i32 1, 0
+    %var1854 = add i32 3, 0
+    %var1855 = trunc i32 %var1853 to i8
+    %var1856 = trunc i32 %var1854 to i8
+    %var1857 = add i8 %var1855, %var1856
+    %var1858 = zext i8 %var1857 to i32
+    %var1859 = trunc i32 %var1852 to i8
+    %var1860 = trunc i32 %var1858 to i8
+    %var1861 = mul i8 %var1859, %var1860
+    %var1862 = zext i8 %var1861 to i32
+    %var1863 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1862, i32* %var1863
+    %var1864 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1865 = load i32, i32* %var1864
+    call void @printi(i32 %var1865)
+    %var1866 = add i32 1, 0
+    %var1867 = add i32 2, 0
+    %var1868 = trunc i32 %var1866 to i8
+    %var1869 = trunc i32 %var1867 to i8
+    %var1870 = mul i8 %var1868, %var1869
+    %var1871 = zext i8 %var1870 to i32
+    %var1872 = add i32 4, 0
+    %var1873 = trunc i32 %var1871 to i8
+    %var1874 = trunc i32 %var1872 to i8
+    %var1875 = mul i8 %var1873, %var1874
+    %var1876 = zext i8 %var1875 to i32
+    %var1877 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1876, i32* %var1877
+    %var1878 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1879 = load i32, i32* %var1878
+    call void @printi(i32 %var1879)
+    %var1880 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 1
+    %var1881 = load i32, i32* %var1880
+    %var1882 = add i32 1, 0
+    %var1883 = trunc i32 %var1881 to i8
+    %var1884 = trunc i32 %var1882 to i8
+    %var1885 = mul i8 %var1883, %var1884
+    %var1886 = zext i8 %var1885 to i32
+    %var1887 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1886, i32* %var1887
+    %var1888 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1889 = load i32, i32* %var1888
+    call void @printi(i32 %var1889)
+    %var1890 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 1
+    %var1891 = load i32, i32* %var1890
+    %var1892 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 1
+    %var1893 = load i32, i32* %var1892
+    %var1894 = trunc i32 %var1891 to i8
+    %var1895 = trunc i32 %var1893 to i8
+    %var1896 = mul i8 %var1894, %var1895
+    %var1897 = zext i8 %var1896 to i32
+    %var1898 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1897, i32* %var1898
+    %var1899 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1900 = load i32, i32* %var1899
+    call void @printi(i32 %var1900)
+    %var1901 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 1
+    %var1902 = load i32, i32* %var1901
+    %var1903 = call i32 @var2Byte()
+    %var1904 = trunc i32 %var1902 to i8
+    %var1905 = trunc i32 %var1903 to i8
+    %var1906 = mul i8 %var1904, %var1905
+    %var1907 = zext i8 %var1906 to i32
+    %var1908 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1907, i32* %var1908
+    %var1909 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1910 = load i32, i32* %var1909
+    call void @printi(i32 %var1910)
+    %var1911 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 1
+    %var1912 = load i32, i32* %var1911
+    %var1913 = add i32 1, 0
+    %var1914 = add i32 3, 0
+    %var1915 = trunc i32 %var1913 to i8
+    %var1916 = trunc i32 %var1914 to i8
+    %var1917 = add i8 %var1915, %var1916
+    %var1918 = zext i8 %var1917 to i32
+    %var1919 = trunc i32 %var1912 to i8
+    %var1920 = trunc i32 %var1918 to i8
+    %var1921 = mul i8 %var1919, %var1920
+    %var1922 = zext i8 %var1921 to i32
+    %var1923 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1922, i32* %var1923
+    %var1924 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1925 = load i32, i32* %var1924
+    call void @printi(i32 %var1925)
+    %var1926 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 1
+    %var1927 = load i32, i32* %var1926
+    %var1928 = add i32 2, 0
+    %var1929 = trunc i32 %var1927 to i8
+    %var1930 = trunc i32 %var1928 to i8
+    %var1931 = mul i8 %var1929, %var1930
+    %var1932 = zext i8 %var1931 to i32
+    %var1933 = add i32 4, 0
+    %var1934 = trunc i32 %var1932 to i8
+    %var1935 = trunc i32 %var1933 to i8
+    %var1936 = mul i8 %var1934, %var1935
+    %var1937 = zext i8 %var1936 to i32
+    %var1938 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1937, i32* %var1938
+    %var1939 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1940 = load i32, i32* %var1939
+    call void @printi(i32 %var1940)
+    %var1941 = call i32 @var2Byte()
+    %var1942 = add i32 1, 0
+    %var1943 = trunc i32 %var1941 to i8
+    %var1944 = trunc i32 %var1942 to i8
+    %var1945 = mul i8 %var1943, %var1944
+    %var1946 = zext i8 %var1945 to i32
+    %var1947 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1946, i32* %var1947
+    %var1948 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1949 = load i32, i32* %var1948
+    call void @printi(i32 %var1949)
+    %var1950 = call i32 @var2Byte()
+    %var1951 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 1
+    %var1952 = load i32, i32* %var1951
+    %var1953 = trunc i32 %var1950 to i8
+    %var1954 = trunc i32 %var1952 to i8
+    %var1955 = mul i8 %var1953, %var1954
+    %var1956 = zext i8 %var1955 to i32
+    %var1957 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1956, i32* %var1957
+    %var1958 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1959 = load i32, i32* %var1958
+    call void @printi(i32 %var1959)
+    %var1960 = call i32 @var2Byte()
+    %var1961 = call i32 @var2Byte()
+    %var1962 = trunc i32 %var1960 to i8
+    %var1963 = trunc i32 %var1961 to i8
+    %var1964 = mul i8 %var1962, %var1963
+    %var1965 = zext i8 %var1964 to i32
+    %var1966 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1965, i32* %var1966
+    %var1967 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1968 = load i32, i32* %var1967
+    call void @printi(i32 %var1968)
+    %var1969 = call i32 @var2Byte()
+    %var1970 = add i32 1, 0
+    %var1971 = add i32 3, 0
+    %var1972 = trunc i32 %var1970 to i8
+    %var1973 = trunc i32 %var1971 to i8
+    %var1974 = add i8 %var1972, %var1973
+    %var1975 = zext i8 %var1974 to i32
+    %var1976 = trunc i32 %var1969 to i8
+    %var1977 = trunc i32 %var1975 to i8
+    %var1978 = mul i8 %var1976, %var1977
+    %var1979 = zext i8 %var1978 to i32
+    %var1980 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1979, i32* %var1980
+    %var1981 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1982 = load i32, i32* %var1981
+    call void @printi(i32 %var1982)
+    %var1983 = call i32 @var2Byte()
+    %var1984 = add i32 2, 0
+    %var1985 = trunc i32 %var1983 to i8
+    %var1986 = trunc i32 %var1984 to i8
+    %var1987 = mul i8 %var1985, %var1986
+    %var1988 = zext i8 %var1987 to i32
+    %var1989 = add i32 4, 0
+    %var1990 = trunc i32 %var1988 to i8
+    %var1991 = trunc i32 %var1989 to i8
+    %var1992 = mul i8 %var1990, %var1991
+    %var1993 = zext i8 %var1992 to i32
+    %var1994 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var1993, i32* %var1994
+    %var1995 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var1996 = load i32, i32* %var1995
+    call void @printi(i32 %var1996)
+    %var1997 = add i32 1, 0
+    %var1998 = add i32 3, 0
+    %var1999 = trunc i32 %var1997 to i8
+    %var2000 = trunc i32 %var1998 to i8
+    %var2001 = add i8 %var1999, %var2000
+    %var2002 = zext i8 %var2001 to i32
+    %var2003 = add i32 1, 0
+    %var2004 = trunc i32 %var2002 to i8
+    %var2005 = trunc i32 %var2003 to i8
+    %var2006 = mul i8 %var2004, %var2005
+    %var2007 = zext i8 %var2006 to i32
+    %var2008 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var2007, i32* %var2008
+    %var2009 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var2010 = load i32, i32* %var2009
+    call void @printi(i32 %var2010)
+    %var2011 = add i32 1, 0
+    %var2012 = add i32 3, 0
+    %var2013 = trunc i32 %var2011 to i8
+    %var2014 = trunc i32 %var2012 to i8
+    %var2015 = add i8 %var2013, %var2014
+    %var2016 = zext i8 %var2015 to i32
+    %var2017 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 1
+    %var2018 = load i32, i32* %var2017
+    %var2019 = trunc i32 %var2016 to i8
+    %var2020 = trunc i32 %var2018 to i8
+    %var2021 = mul i8 %var2019, %var2020
+    %var2022 = zext i8 %var2021 to i32
+    %var2023 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var2022, i32* %var2023
+    %var2024 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var2025 = load i32, i32* %var2024
+    call void @printi(i32 %var2025)
+    %var2026 = add i32 1, 0
+    %var2027 = add i32 3, 0
+    %var2028 = trunc i32 %var2026 to i8
+    %var2029 = trunc i32 %var2027 to i8
+    %var2030 = add i8 %var2028, %var2029
+    %var2031 = zext i8 %var2030 to i32
+    %var2032 = call i32 @var2Byte()
+    %var2033 = trunc i32 %var2031 to i8
+    %var2034 = trunc i32 %var2032 to i8
+    %var2035 = mul i8 %var2033, %var2034
+    %var2036 = zext i8 %var2035 to i32
+    %var2037 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var2036, i32* %var2037
+    %var2038 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var2039 = load i32, i32* %var2038
+    call void @printi(i32 %var2039)
+    %var2040 = add i32 1, 0
+    %var2041 = add i32 3, 0
+    %var2042 = trunc i32 %var2040 to i8
+    %var2043 = trunc i32 %var2041 to i8
+    %var2044 = add i8 %var2042, %var2043
+    %var2045 = zext i8 %var2044 to i32
+    %var2046 = add i32 1, 0
+    %var2047 = add i32 3, 0
+    %var2048 = trunc i32 %var2046 to i8
+    %var2049 = trunc i32 %var2047 to i8
+    %var2050 = add i8 %var2048, %var2049
+    %var2051 = zext i8 %var2050 to i32
+    %var2052 = trunc i32 %var2045 to i8
+    %var2053 = trunc i32 %var2051 to i8
+    %var2054 = mul i8 %var2052, %var2053
+    %var2055 = zext i8 %var2054 to i32
+    %var2056 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var2055, i32* %var2056
+    %var2057 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var2058 = load i32, i32* %var2057
+    call void @printi(i32 %var2058)
+    %var2059 = add i32 1, 0
+    %var2060 = add i32 3, 0
+    %var2061 = trunc i32 %var2059 to i8
+    %var2062 = trunc i32 %var2060 to i8
+    %var2063 = add i8 %var2061, %var2062
+    %var2064 = zext i8 %var2063 to i32
+    %var2065 = add i32 2, 0
+    %var2066 = trunc i32 %var2064 to i8
+    %var2067 = trunc i32 %var2065 to i8
+    %var2068 = mul i8 %var2066, %var2067
+    %var2069 = zext i8 %var2068 to i32
+    %var2070 = add i32 4, 0
+    %var2071 = trunc i32 %var2069 to i8
+    %var2072 = trunc i32 %var2070 to i8
+    %var2073 = mul i8 %var2071, %var2072
+    %var2074 = zext i8 %var2073 to i32
+    %var2075 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var2074, i32* %var2075
+    %var2076 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var2077 = load i32, i32* %var2076
+    call void @printi(i32 %var2077)
+    %var2078 = add i32 2, 0
+    %var2079 = add i32 4, 0
+    %var2080 = trunc i32 %var2078 to i8
+    %var2081 = trunc i32 %var2079 to i8
+    %var2082 = mul i8 %var2080, %var2081
+    %var2083 = zext i8 %var2082 to i32
+    %var2084 = add i32 1, 0
+    %var2085 = trunc i32 %var2083 to i8
+    %var2086 = trunc i32 %var2084 to i8
+    %var2087 = mul i8 %var2085, %var2086
+    %var2088 = zext i8 %var2087 to i32
+    %var2089 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var2088, i32* %var2089
+    %var2090 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var2091 = load i32, i32* %var2090
+    call void @printi(i32 %var2091)
+    %var2092 = add i32 2, 0
+    %var2093 = add i32 4, 0
+    %var2094 = trunc i32 %var2092 to i8
+    %var2095 = trunc i32 %var2093 to i8
+    %var2096 = mul i8 %var2094, %var2095
+    %var2097 = zext i8 %var2096 to i32
+    %var2098 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 1
+    %var2099 = load i32, i32* %var2098
+    %var2100 = trunc i32 %var2097 to i8
+    %var2101 = trunc i32 %var2099 to i8
+    %var2102 = mul i8 %var2100, %var2101
+    %var2103 = zext i8 %var2102 to i32
+    %var2104 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var2103, i32* %var2104
+    %var2105 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var2106 = load i32, i32* %var2105
+    call void @printi(i32 %var2106)
+    %var2107 = add i32 2, 0
+    %var2108 = add i32 4, 0
+    %var2109 = trunc i32 %var2107 to i8
+    %var2110 = trunc i32 %var2108 to i8
+    %var2111 = mul i8 %var2109, %var2110
+    %var2112 = zext i8 %var2111 to i32
+    %var2113 = call i32 @var2Byte()
+    %var2114 = trunc i32 %var2112 to i8
+    %var2115 = trunc i32 %var2113 to i8
+    %var2116 = mul i8 %var2114, %var2115
+    %var2117 = zext i8 %var2116 to i32
+    %var2118 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var2117, i32* %var2118
+    %var2119 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var2120 = load i32, i32* %var2119
+    call void @printi(i32 %var2120)
+    %var2121 = add i32 2, 0
+    %var2122 = add i32 4, 0
+    %var2123 = trunc i32 %var2121 to i8
+    %var2124 = trunc i32 %var2122 to i8
+    %var2125 = mul i8 %var2123, %var2124
+    %var2126 = zext i8 %var2125 to i32
+    %var2127 = add i32 1, 0
+    %var2128 = add i32 3, 0
+    %var2129 = trunc i32 %var2127 to i8
+    %var2130 = trunc i32 %var2128 to i8
+    %var2131 = add i8 %var2129, %var2130
+    %var2132 = zext i8 %var2131 to i32
+    %var2133 = trunc i32 %var2126 to i8
+    %var2134 = trunc i32 %var2132 to i8
+    %var2135 = mul i8 %var2133, %var2134
+    %var2136 = zext i8 %var2135 to i32
+    %var2137 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var2136, i32* %var2137
+    %var2138 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var2139 = load i32, i32* %var2138
+    call void @printi(i32 %var2139)
+    %var2140 = add i32 2, 0
+    %var2141 = add i32 4, 0
+    %var2142 = trunc i32 %var2140 to i8
+    %var2143 = trunc i32 %var2141 to i8
+    %var2144 = mul i8 %var2142, %var2143
+    %var2145 = zext i8 %var2144 to i32
+    %var2146 = add i32 2, 0
+    %var2147 = trunc i32 %var2145 to i8
+    %var2148 = trunc i32 %var2146 to i8
+    %var2149 = mul i8 %var2147, %var2148
+    %var2150 = zext i8 %var2149 to i32
+    %var2151 = add i32 4, 0
+    %var2152 = trunc i32 %var2150 to i8
+    %var2153 = trunc i32 %var2151 to i8
+    %var2154 = mul i8 %var2152, %var2153
+    %var2155 = zext i8 %var2154 to i32
+    %var2156 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    store i32 %var2155, i32* %var2156
+    %var2157 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 2
+    %var2158 = load i32, i32* %var2157
+    call void @printi(i32 %var2158)
+    ret void
+}
+

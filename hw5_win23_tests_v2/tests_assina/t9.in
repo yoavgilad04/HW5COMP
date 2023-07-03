@@ -1,0 +1,33 @@
+// 2 3 6
+
+void main()
+{
+    print("Bool thingies.");
+    print("Expecting 2 3 6");
+    bool relop1 = 1 > 2;
+    if (relop1) {
+        printi(1);
+    }
+    bool relop2 = 1 < 2;
+    if (relop2) {
+        printi(2);
+    }
+    bool relop3 = 1 <= 2;
+    if (relop3) {
+        printi(3);
+    }
+    bool relop4 = 1 >= 2;
+    if (relop4) {
+        printi(4);
+    }
+    bool relop5 = 1 == 2;
+    if (relop5) {
+        printi(5);
+    }
+    bool relop6 = 1 != 2;
+    if (relop6) {
+        printi(6);
+    }
+
+    print("Peace out yall");
+}

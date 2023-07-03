@@ -1,0 +1,39 @@
+// bytes
+
+void main()
+{   
+    print("Testing calculation with bytes");
+    print("Should be 1 2 1 2 4 8 4 8 16 32 64 64 128 0 0 0");
+    byte x = 1b;
+    printi(x);
+    x = x + x;
+    printi(x);
+    x = x - 1b;
+    printi(x);
+    x = x + x;
+    printi(x);
+    x = x + x;
+    printi(x);
+    x = x + x;
+    printi(x);
+    x = x / 2b;
+    printi(x);
+    x = x + x;
+    printi(x);
+    x = x + x;
+    printi(x);
+    x = x + x;
+    printi(x);
+    x = x + x;
+    printi(x);
+    x = x * 1b;
+    printi(x);
+    x = x + x;
+    printi(x);
+    x = x + x;
+    printi(x);
+    x = x + x;
+    printi(x);
+    x = x + x;
+    printi(x);
+}

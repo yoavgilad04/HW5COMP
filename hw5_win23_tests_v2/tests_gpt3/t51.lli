@@ -1,0 +1,258 @@
+declare i32 @printf(i8*, ...)
+declare void @exit(i32)
+@.int_specifier = constant [4 x i8] c"%d\0A\00"
+@.str_specifier = constant [4 x i8] c"%s\0A\00"
+@.divide_by_zero_error = constant [23 x i8] c"Error division by zero\00"
+@.var33 = constant [17 x i8] c"I heart Compi...\00"
+@.var37 = constant [5 x i8] c"NOT!\00"
+@.var40 = constant [17 x i8] c"I heart Compi...\00"
+@.var44 = constant [5 x i8] c"NOT!\00"
+@.var47 = constant [17 x i8] c"I heart Compi...\00"
+@.var51 = constant [5 x i8] c"NOT!\00"
+@.var53 = constant [13 x i8] c"I really do!\00"
+@.var55 = constant [19 x i8] c"max of 3 and 2 is \00"
+@.var60 = constant [21 x i8] c"max of 3b and 2b is \00"
+@.var65 = constant [27 x i8] c"Is 3 really bigger then 2?\00"
+@.var71 = constant [5 x i8] c"yes!\00"
+@.var73 = constant [4 x i8] c"no!\00"
+
+define void @printi(i32) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.int_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i32 %0)
+    ret void
+}
+
+define void @print(i8*) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.str_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i8* %0)
+    ret void
+}
+
+
+define void @divByZero() {
+    %spec_ptr = getelementptr [23 x i8], [23 x i8]* @.divide_by_zero_error, i32 0, i32 0
+    call void (i8*) @print(i8* %spec_ptr)
+    %exitCode = add i32 0, 0
+    call void @exit(i32 %exitCode)
+    ret void
+}
+
+define i32 @var0max(i32, i32)
+{
+    %myArr_0 = alloca [50 x i32]
+    %var1 = add i32 %0, 0
+    %var2 = add i32 %1, 0
+    %var3 = icmp sge i32 %var1, %var2
+    br i1 %var3, label %label_29, label %label_33
+    label_29:
+        %var4 = add i32 %0, 0
+        ret i32 %var4
+        br label %label_33
+    label_33:
+        %var5 = add i32 %1, 0
+        ret i32 %var5
+        %var6 = add i32 42, 0
+        %var7 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 0
+        store i32 %var6, i32* %var7
+        %var8 = add i32 42, 0
+        ret i32 %var8
+        ret i32 0
+}
+
+define i32 @var9maxb(i32, i32)
+{
+    %myArr_1 = alloca [50 x i32]
+        %var10 = add i32 %0, 0
+        %var11 = add i32 %1, 0
+        %var12 = icmp slt i32 %var10, %var11
+        br i1 %var12, label %label_51, label %label_55
+    label_51:
+        %var13 = getelementptr [50 x i32], [50 x i32]* %myArr_1, i32 0, i32 0
+        store i32 0, i32* %var13
+        br label %label_59
+    label_55:
+        %var14 = add i32 %0, 0
+        ret i32 %var14
+        br label %label_59
+    label_59:
+        %var15 = add i32 %1, 0
+        ret i32 %var15
+        ret i32 0
+}
+
+define i32 @var16isFirstBigger(i32, i32)
+{
+    %myArr_2 = alloca [50 x i32]
+        %var17 = add i32 %0, 0
+        %var18 = add i32 %1, 0
+        %var19 = icmp sge i32 %var17, %var18
+        br i1 %var19, label %label_72, label %label_103
+    label_72:
+        %var20 = add i32 %0, 0
+        %var21 = add i32 %1, 0
+        %var22 = icmp ne i32 %var20, %var21
+        br i1 %var22, label %label_77, label %label_89
+    label_77:
+        %var23 = add i32 1, 0
+        %var24 = icmp eq i32 %var23, 1
+        br i1 %var24, label %label_81, label %label_83
+    label_81:
+        br label %label_85
+    label_83:
+        br label %label_85
+    label_85:
+        %var25 = phi i32 [1, %label_81], [0, %label_83]
+        ret i32 %var25
+        br label %label_101
+    label_89:
+        %var26 = add i32 0, 0
+        %var27 = icmp eq i32 %var26, 1
+        br i1 %var27, label %label_93, label %label_95
+    label_93:
+        br label %label_97
+    label_95:
+        br label %label_97
+    label_97:
+        %var28 = phi i32 [1, %label_93], [0, %label_95]
+        ret i32 %var28
+        br label %label_101
+    label_101:
+        br label %label_115
+    label_103:
+        %var29 = add i32 0, 0
+        %var30 = icmp eq i32 %var29, 1
+        br i1 %var30, label %label_107, label %label_109
+    label_107:
+        br label %label_111
+    label_109:
+        br label %label_111
+    label_111:
+        %var31 = phi i32 [1, %label_107], [0, %label_109]
+        ret i32 %var31
+        br label %label_115
+    label_115:
+        ret i32 0
+}
+
+define void @var32printStatement(i32)
+{
+    %myArr_3 = alloca [50 x i32]
+        %var34 = getelementptr [17 x i8] , [17 x i8]* @.var33, i32 0, i32 0
+        call void (i8*) @print(i8* %var34)
+        %var35 = add i32 %0, 0
+        %var36 = icmp eq i32 %var35, 1
+        br i1 %var36, label %label_130, label %label_127
+    label_127:
+        ret void
+        br label %label_130
+    label_130:
+        %var38 = getelementptr [5 x i8] , [5 x i8]* @.var37, i32 0, i32 0
+        call void (i8*) @print(i8* %var38)
+        ret void
+}
+
+define void @var39printStatement2(i32)
+{
+    %myArr_4 = alloca [50 x i32]
+        %var41 = getelementptr [17 x i8] , [17 x i8]* @.var40, i32 0, i32 0
+        call void (i8*) @print(i8* %var41)
+        %var42 = add i32 %0, 0
+        %var43 = icmp eq i32 %var42, 1
+        br i1 %var43, label %label_144, label %label_148
+    label_144:
+        %var45 = getelementptr [5 x i8] , [5 x i8]* @.var44, i32 0, i32 0
+        call void (i8*) @print(i8* %var45)
+        br label %label_151
+    label_148:
+        ret void
+        br label %label_151
+    label_151:
+        ret void
+}
+
+define void @var46printStatement3(i32)
+{
+    %myArr_5 = alloca [50 x i32]
+        %var48 = getelementptr [17 x i8] , [17 x i8]* @.var47, i32 0, i32 0
+        call void (i8*) @print(i8* %var48)
+        %var49 = add i32 %0, 0
+        %var50 = icmp eq i32 %var49, 1
+        br i1 %var50, label %label_163, label %label_168
+    label_163:
+        %var52 = getelementptr [5 x i8] , [5 x i8]* @.var51, i32 0, i32 0
+        call void (i8*) @print(i8* %var52)
+        ret void
+        br label %label_171
+    label_168:
+        ret void
+        br label %label_171
+    label_171:
+        %var54 = getelementptr [13 x i8] , [13 x i8]* @.var53, i32 0, i32 0
+        call void (i8*) @print(i8* %var54)
+        ret void
+}
+
+define void @main()
+{
+    %myArr_6 = alloca [50 x i32]
+        %var56 = getelementptr [19 x i8] , [19 x i8]* @.var55, i32 0, i32 0
+        call void (i8*) @print(i8* %var56)
+        %var57 = add i32 3, 0
+        %var58 = add i32 2, 0
+        %var59 = call i32 @var0max(i32 %var57, i32 %var58)
+        call void @printi(i32 %var59)
+        %var61 = getelementptr [21 x i8] , [21 x i8]* @.var60, i32 0, i32 0
+        call void (i8*) @print(i8* %var61)
+        %var62 = add i32 3, 0
+        %var63 = add i32 2, 0
+        %var64 = call i32 @var9maxb(i32 %var62, i32 %var63)
+        call void @printi(i32 %var64)
+        %var66 = getelementptr [27 x i8] , [27 x i8]* @.var65, i32 0, i32 0
+        call void (i8*) @print(i8* %var66)
+        %var67 = add i32 3, 0
+        %var68 = add i32 2, 0
+        %var69 = call i32 @var16isFirstBigger(i32 %var67, i32 %var68)
+        %var70 = icmp eq i32 %var69, 1
+        br i1 %var70, label %label_199, label %label_203
+    label_199:
+        %var72 = getelementptr [5 x i8] , [5 x i8]* @.var71, i32 0, i32 0
+        call void (i8*) @print(i8* %var72)
+        br label %label_207
+    label_203:
+        %var74 = getelementptr [4 x i8] , [4 x i8]* @.var73, i32 0, i32 0
+        call void (i8*) @print(i8* %var74)
+        br label %label_207
+    label_207:
+        %var75 = add i32 0, 0
+        %var76 = icmp eq i32 %var75, 1
+        br i1 %var76, label %label_211, label %label_213
+    label_211:
+        br label %label_215
+    label_213:
+        br label %label_215
+    label_215:
+        %var77 = phi i32 [1, %label_211], [0, %label_213]
+        call void @var32printStatement(i32 %var77)
+        %var79 = add i32 0, 0
+        %var80 = icmp eq i32 %var79, 1
+        br i1 %var80, label %label_221, label %label_223
+    label_221:
+        br label %label_225
+    label_223:
+        br label %label_225
+    label_225:
+        %var81 = phi i32 [1, %label_221], [0, %label_223]
+        call void @var39printStatement2(i32 %var81)
+        %var83 = add i32 1, 0
+        %var84 = icmp eq i32 %var83, 1
+        br i1 %var84, label %label_231, label %label_233
+    label_231:
+        br label %label_235
+    label_233:
+        br label %label_235
+    label_235:
+        %var85 = phi i32 [1, %label_231], [0, %label_233]
+        call void @var46printStatement3(i32 %var85)
+        ret void
+}
+

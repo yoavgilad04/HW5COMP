@@ -1,0 +1,88 @@
+declare i32 @printf(i8*, ...)
+declare void @exit(i32)
+@.int_specifier = constant [4 x i8] c"%d\0A\00"
+@.str_specifier = constant [4 x i8] c"%s\0A\00"
+@.divide_by_zero_error = constant [23 x i8] c"Error division by zero\00"
+
+define void @printi(i32) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.int_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i32 %0)
+    ret void
+}
+
+define void @print(i8*) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.str_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i8* %0)
+    ret void
+}
+
+
+define void @divByZero() {
+    %spec_ptr = getelementptr [23 x i8], [23 x i8]* @.divide_by_zero_error, i32 0, i32 0
+    call void (i8*) @print(i8* %spec_ptr)
+    %exitCode = add i32 0, 0
+    call void @exit(i32 %exitCode)
+    ret void
+}
+
+define void @var0maxTestsStressArithmetic()
+{
+    %myArr_0 = alloca [50 x i32]
+    %var1 = add i32 3, 0
+    %var2 = add i32 3, 0
+    %var3 = add i32 %var1, %var2
+    %var4 = add i32 3, 0
+    %var5 = add i32 %var3, %var4
+    %var6 = add i32 3, 0
+    %var7 = add i32 %var5, %var6
+    %var8 = add i32 3, 0
+    %var9 = add i32 %var7, %var8
+    %var10 = add i32 3, 0
+    %var11 = add i32 %var9, %var10
+    %var12 = add i32 3, 0
+    %var13 = add i32 %var11, %var12
+    %var14 = add i32 3, 0
+    %var15 = add i32 %var13, %var14
+    %var16 = add i32 3, 0
+    %var17 = add i32 %var15, %var16
+    %var18 = add i32 3, 0
+    %var19 = add i32 %var17, %var18
+    %var20 = add i32 3, 0
+    %var21 = add i32 %var19, %var20
+    %var22 = add i32 3, 0
+    %var23 = add i32 %var21, %var22
+    %var24 = add i32 3, 0
+    %var25 = add i32 %var23, %var24
+    %var26 = add i32 3, 0
+    %var27 = add i32 %var25, %var26
+    %var28 = add i32 3, 0
+    %var29 = add i32 %var27, %var28
+    %var30 = add i32 3, 0
+    %var31 = add i32 %var29, %var30
+    %var32 = add i32 3, 0
+    %var33 = add i32 %var31, %var32
+    %var34 = add i32 3, 0
+    %var35 = add i32 %var33, %var34
+    %var36 = add i32 3, 0
+    %var37 = add i32 %var35, %var36
+    %var38 = add i32 3, 0
+    %var39 = add i32 %var37, %var38
+    %var40 = add i32 3, 0
+    %var41 = add i32 %var39, %var40
+    %var42 = add i32 3, 0
+    %var43 = add i32 %var41, %var42
+    %var44 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 0
+    store i32 %var43, i32* %var44
+    %var45 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 0
+    %var46 = load i32, i32* %var45
+    call void @printi(i32 %var46)
+    ret void
+}
+
+define void @main()
+{
+    %myArr_1 = alloca [50 x i32]
+    call void @var0maxTestsStressArithmetic()
+    ret void
+}
+

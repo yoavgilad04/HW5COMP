@@ -1,0 +1,34 @@
+//void return statements
+void foo(bool c, int x, byte y) {
+	int nx = x;
+	int ny;
+	ny = y;
+    if (not c) {
+        print("already? :(");
+        return;
+    }
+    print("ok");
+    while (nx < 10) {
+        nx = nx + 1;
+        if (c and nx == 7) {
+            printi(nx);
+            print("alright");
+            return;
+        }
+    }
+    while (ny > 12b) {
+        ny = ny - 1b;
+        printi(ny);
+        print("back!");
+        return;
+    }
+    print("here!");
+    return;
+}
+
+void main() {
+    foo(false,5,15b);
+    foo(true,5,21b);
+    foo(true,11,4b);
+    foo(true,10,13b);
+}

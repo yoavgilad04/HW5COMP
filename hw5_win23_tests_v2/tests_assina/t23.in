@@ -1,0 +1,15 @@
+void main()
+{
+    print("MORE while tests");
+    print("will be calculating x + 1 in each iteration starting from x= 0");
+    int x = 0;
+    while (x < 23 or false) {
+        print("x is: ");
+        printi(x);
+        x = x + 1;
+        continue;
+        int y = x - x;
+        y = y / y; // Be careful! division by zero
+    }
+    print("You are good");
+}

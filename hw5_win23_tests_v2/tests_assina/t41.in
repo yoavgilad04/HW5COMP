@@ -1,0 +1,26 @@
+// Basic boolean (AND)
+void main()
+{
+    print("expecting returning4");
+    if (false and false) {
+        print("returning1");
+        return;
+    }
+
+    if (true and false) {
+        print("returning2");
+        return;
+    }
+
+    if (false and true) {
+        print("returning3");
+        return;
+    }
+
+    if (true and true) {
+        print("returning4");
+        return;
+    }
+    print("Cat\n");
+
+}

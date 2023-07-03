@@ -1,0 +1,8 @@
+void basicFunc() {
+    print("Called basicFunc!");
+}
+
+void main() {
+    print("Just making sure it compiles");
+    print("Finished");
+}

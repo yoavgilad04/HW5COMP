@@ -1,0 +1,149 @@
+declare i32 @printf(i8*, ...)
+declare void @exit(i32)
+@.int_specifier = constant [4 x i8] c"%d\0A\00"
+@.str_specifier = constant [4 x i8] c"%s\0A\00"
+@.divide_by_zero_error = constant [23 x i8] c"Error division by zero\00"
+@.var52 = constant [30 x i8] c"Should be seeing 90 (I think)\00"
+@.var57 = constant [29 x i8] c"Should be seeing 8 (I think)\00"
+
+define void @printi(i32) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.int_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i32 %0)
+    ret void
+}
+
+define void @print(i8*) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.str_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i8* %0)
+    ret void
+}
+
+
+define void @divByZero() {
+    %spec_ptr = getelementptr [23 x i8], [23 x i8]* @.divide_by_zero_error, i32 0, i32 0
+    call void (i8*) @print(i8* %spec_ptr)
+    %exitCode = add i32 0, 0
+    call void @exit(i32 %exitCode)
+    ret void
+}
+
+define void @var0soGood()
+{
+    %myArr_0 = alloca [50 x i32]
+    ret void
+    ret void
+    ret void
+    ret void
+    ret void
+    ret void
+}
+
+define i32 @var1nest1(i32, i32, i32)
+{
+    %myArr_1 = alloca [50 x i32]
+    %var2 = add i32 %0, 0
+    %var3 = add i32 %1, 0
+    %var4 = add i32 %var2, %var3
+    %var5 = add i32 %2, 0
+    %var6 = add i32 %var4, %var5
+    ret i32 %var6
+    ret i32 0
+}
+
+define i32 @var7nest2(i32, i32)
+{
+    %myArr_2 = alloca [50 x i32]
+    %var8 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    store i32 0, i32* %var8
+    %var9 = add i32 %0, 0
+    %var10 = trunc i32 %var9 to i8
+    %var11 = zext i8 %var10 to i32
+    %var12 = add i32 %1, 0
+    %var13 = trunc i32 %var12 to i8
+    %var14 = zext i8 %var13 to i32
+    %var15 = trunc i32 %var11 to i8
+    %var16 = trunc i32 %var14 to i8
+    %var17 = add i8 %var15, %var16
+    %var18 = zext i8 %var17 to i32
+    %var19 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    store i32 %var18, i32* %var19
+    %var20 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    %var21 = load i32, i32* %var20
+    %var22 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    %var23 = load i32, i32* %var22
+    %var24 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+    %var25 = load i32, i32* %var24
+    %var26 = call i32 @var1nest1(i32 %var21, i32 %var23, i32 %var25)
+    %var27 = trunc i32 %var26 to i8
+    %var28 = zext i8 %var27 to i32
+    ret i32 %var28
+    ret i32 0
+}
+
+define i32 @var29nest3(i32, i32)
+{
+    %myArr_3 = alloca [50 x i32]
+    %var30 = add i32 %0, 0
+    %var31 = add i32 2, 0
+    %var33 = icmp eq i32 %var31, 0
+    br i1 %var33, label %label_82, label %label_85
+    label_82:
+        call void @divByZero()
+        br label %label_85
+    label_85:
+        %var32 = sdiv i32 %var30, %var31
+        %var34 = add i32 %1, 0
+        %var35 = add i32 3, 0
+        %var37 = icmp eq i32 %var35, 0
+        br i1 %var37, label %label_91, label %label_94
+    label_91:
+        call void @divByZero()
+        br label %label_94
+    label_94:
+        %var36 = sdiv i32 %var34, %var35
+        %var38 = call i32 @var7nest2(i32 %var32, i32 %var36)
+        %var39 = add i32 %1, 0
+        %var40 = add i32 2, 0
+        %var42 = icmp eq i32 %var40, 0
+        br i1 %var42, label %label_101, label %label_104
+    label_101:
+        call void @divByZero()
+        br label %label_104
+    label_104:
+        %var41 = sdiv i32 %var39, %var40
+        %var43 = add i32 %0, 0
+        %var44 = add i32 3, 0
+        %var46 = icmp eq i32 %var44, 0
+        br i1 %var46, label %label_110, label %label_113
+    label_110:
+        call void @divByZero()
+        br label %label_113
+    label_113:
+        %var45 = sdiv i32 %var43, %var44
+        %var47 = call i32 @var7nest2(i32 %var41, i32 %var45)
+        %var48 = trunc i32 %var38 to i8
+        %var49 = trunc i32 %var47 to i8
+        %var50 = add i8 %var48, %var49
+        %var51 = zext i8 %var50 to i32
+        ret i32 %var51
+        ret i32 0
+}
+
+define void @main()
+{
+    %myArr_4 = alloca [50 x i32]
+        %var53 = getelementptr [30 x i8] , [30 x i8]* @.var52, i32 0, i32 0
+        call void (i8*) @print(i8* %var53)
+        %var54 = add i32 6, 0
+        %var55 = add i32 30, 0
+        %var56 = call i32 @var29nest3(i32 %var54, i32 %var55)
+        call void @printi(i32 %var56)
+        %var58 = getelementptr [29 x i8] , [29 x i8]* @.var57, i32 0, i32 0
+        call void (i8*) @print(i8* %var58)
+        %var59 = add i32 71, 0
+        %var60 = add i32 37, 0
+        %var61 = call i32 @var29nest3(i32 %var59, i32 %var60)
+        call void @printi(i32 %var61)
+        ret void
+}
+

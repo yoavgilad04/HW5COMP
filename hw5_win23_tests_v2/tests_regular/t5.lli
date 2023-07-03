@@ -1,0 +1,54 @@
+declare i32 @printf(i8*, ...)
+declare void @exit(i32)
+@.int_specifier = constant [4 x i8] c"%d\0A\00"
+@.str_specifier = constant [4 x i8] c"%s\0A\00"
+@.divide_by_zero_error = constant [23 x i8] c"Error division by zero\00"
+
+define void @printi(i32) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.int_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i32 %0)
+    ret void
+}
+
+define void @print(i8*) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.str_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i8* %0)
+    ret void
+}
+
+
+define void @divByZero() {
+    %spec_ptr = getelementptr [23 x i8], [23 x i8]* @.divide_by_zero_error, i32 0, i32 0
+    call void (i8*) @print(i8* %spec_ptr)
+    %exitCode = add i32 0, 0
+    call void @exit(i32 %exitCode)
+    ret void
+}
+
+define void @var0maxTestsDefineThenAssign()
+{
+    %myArr_0 = alloca [50 x i32]
+    %var1 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 0
+    store i32 0, i32* %var1
+    %var2 = add i32 5, 0
+    %var3 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 0
+    store i32 %var2, i32* %var3
+    %var4 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 0
+    %var5 = load i32, i32* %var4
+    call void @printi(i32 %var5)
+    %var6 = add i32 7, 0
+    %var7 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 0
+    store i32 %var6, i32* %var7
+    %var8 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 0
+    %var9 = load i32, i32* %var8
+    call void @printi(i32 %var9)
+    ret void
+}
+
+define void @main()
+{
+    %myArr_1 = alloca [50 x i32]
+    call void @var0maxTestsDefineThenAssign()
+    ret void
+}
+

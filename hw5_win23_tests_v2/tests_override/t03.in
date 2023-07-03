@@ -1,0 +1,39 @@
+override int foo1 (int x)
+{
+print("foo1 a 1 param");
+return 20;
+}
+
+override int foo1(int x, int z)
+{
+print("foo1 a 2 param");
+return 30;
+}
+
+override bool foo2(int x)
+{
+print("foo2 a 1 param");
+return true;
+}
+
+override bool foo2(int x, int z)
+{
+print("foo2 a 2 param");
+}
+
+void main()
+{
+bool flag = foo2(6,7);
+if( not flag)
+{
+print("foo2(int,int) returned with false");
+}
+bool flag2 = foo2(6);
+if(flag2 )
+{
+print("foo2(int) returned with true");
+}
+printi(foo1(6,9));
+printi(foo1(7));
+
+}

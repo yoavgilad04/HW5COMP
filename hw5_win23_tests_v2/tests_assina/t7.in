@@ -1,0 +1,22 @@
+// bytes
+
+void main()
+{
+    print("More byte calculations!!! FUN");
+    print("Expecting 1 2 1 1 error");
+    byte x = 1b;
+    printi(x);
+    x = x + x; // 2
+    printi(x);
+    x = x - 1b; // 1
+    printi(x);
+    x = x / x; // 1
+    printi(x);
+    x = x / 0b; // error
+    print("Magic");
+    x = x + x;
+    printi(x);
+    x = x + x;
+    printi(x);
+    print("Thank GOD it's over...");
+}

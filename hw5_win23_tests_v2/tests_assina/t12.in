@@ -1,0 +1,16 @@
+void main()
+{
+    print("Now testing boolean shit");
+    print("Expecting true");
+    bool x = true or false or false or false or false;
+    if(x) {
+        print("true");
+        return;
+    }
+    else {
+        print("false");
+        return;
+    }
+    return;
+    print("Why are you here?? that's illeagal!");
+}

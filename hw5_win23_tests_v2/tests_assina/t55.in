@@ -1,0 +1,41 @@
+int loopLoopLoopLoopLoop(int w, int x, int y, int z, int n) {
+    int realW = w;
+    int realX = x;
+    print("original x:");
+    printi(x);
+    print("original w:");
+    printi(w);
+    print("--n-- 1st loop");
+    printi(n);
+    while (realW < n) {
+        while (realX < n) {
+            print("--x-- 2nd loop");
+            printi(realX);
+            realX = realX + 1;
+            continue;
+            realX = realX + 1;
+        }
+        realX = x;
+        print("--w-- 1st loop");
+        realW = realW + 1;
+        printi(realW);
+    }
+    return 0-1;
+}
+
+
+void main ()
+{
+    print("Loop in loop test");
+    int x = loopLoopLoopLoopLoop(1,1,1,1,3);
+    printi(x);
+    if (loopLoopLoopLoopLoop(1,1,1,1,2) != 2-3) {
+        print("ERROR");
+        return;
+    }
+
+    if (loopLoopLoopLoopLoop(2,3,4,1,10) != 2-3) {
+        print("ERROR");
+        return;
+    }
+}

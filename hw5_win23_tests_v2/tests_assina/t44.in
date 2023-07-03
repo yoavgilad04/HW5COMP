@@ -1,0 +1,16 @@
+void main()
+{
+    print("surprise while test!");
+    print("div by 0 should appear by the 256th iteration");
+    
+    byte x = 0b;
+    print("infinite loop coming:");
+    while (true) {
+        byte y = 255b;
+        x = x + 1b;
+        print("iteration: ");
+        printi(x);
+        y = y / x;
+    }
+    print("Shouldn't get here");
+}

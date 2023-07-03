@@ -1,0 +1,38 @@
+void change(int x, bool m, byte l) {
+	int nx = x;
+	bool nm = m;
+	byte nl = l;
+    printi(nx);
+    nx = 100;
+    printi(nx);
+    int y = 3;
+    nx = y;
+    printi(nx);
+    if (nm) {
+        print("y is true");
+    }
+    nm = false;
+    if (nm) {
+        print("should not print");
+    }
+    bool w = true;
+    nm = w;
+    if (nm) {
+        print("y is true");
+    }
+    printi(nl);
+    nl = 254b;
+    printi(nl);
+    byte o = 12b;
+    nl = nl + o;
+    printi(nl);
+}
+
+void main() {
+    change(5, true, 144b);
+}
+
+
+
+
+

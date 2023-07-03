@@ -1,0 +1,92 @@
+declare i32 @printf(i8*, ...)
+declare void @exit(i32)
+@.int_specifier = constant [4 x i8] c"%d\0A\00"
+@.str_specifier = constant [4 x i8] c"%s\0A\00"
+@.divide_by_zero_error = constant [23 x i8] c"Error division by zero\00"
+
+define void @printi(i32) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.int_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i32 %0)
+    ret void
+}
+
+define void @print(i8*) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.str_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i8* %0)
+    ret void
+}
+
+
+define void @divByZero() {
+    %spec_ptr = getelementptr [23 x i8], [23 x i8]* @.divide_by_zero_error, i32 0, i32 0
+    call void (i8*) @print(i8* %spec_ptr)
+    %exitCode = add i32 0, 0
+    call void @exit(i32 %exitCode)
+    ret void
+}
+
+define i32 @var0recursiveFibo(i32)
+{
+    %myArr_0 = alloca [50 x i32]
+    %var1 = add i32 %0, 0
+    %var2 = add i32 0, 0
+    %var3 = icmp eq i32 %var1, %var2
+    br i1 %var3, label %label_34, label %label_29
+    label_29:
+        %var4 = add i32 %0, 0
+        %var5 = add i32 1, 0
+        %var6 = icmp eq i32 %var4, %var5
+        br i1 %var6, label %label_34, label %label_38
+    label_34:
+        %var7 = add i32 1, 0
+        ret i32 %var7
+        br label %label_38
+    label_38:
+        %var8 = add i32 %0, 0
+        %var9 = add i32 1, 0
+        %var10 = sub i32 %var8, %var9
+        %var11 = call i32 @var0recursiveFibo(i32 %var10)
+        %var12 = add i32 %0, 0
+        %var13 = add i32 2, 0
+        %var14 = sub i32 %var12, %var13
+        %var15 = call i32 @var0recursiveFibo(i32 %var14)
+        %var16 = add i32 %var11, %var15
+        ret i32 %var16
+        ret i32 0
+}
+
+define void @var17maxTestsTestRecursiveFiboOutputs()
+{
+    %myArr_1 = alloca [50 x i32]
+        %var18 = getelementptr [50 x i32], [50 x i32]* %myArr_1, i32 0, i32 0
+        store i32 0, i32* %var18
+        br label %label_58
+    label_58:
+        %var19 = getelementptr [50 x i32], [50 x i32]* %myArr_1, i32 0, i32 0
+        %var20 = load i32, i32* %var19
+        %var21 = add i32 10, 0
+        %var22 = icmp slt i32 %var20, %var21
+        br i1 %var22, label %label_64, label %label_76
+    label_64:
+        %var23 = getelementptr [50 x i32], [50 x i32]* %myArr_1, i32 0, i32 0
+        %var24 = load i32, i32* %var23
+        %var25 = call i32 @var0recursiveFibo(i32 %var24)
+        call void @printi(i32 %var25)
+        %var26 = getelementptr [50 x i32], [50 x i32]* %myArr_1, i32 0, i32 0
+        %var27 = load i32, i32* %var26
+        %var28 = add i32 1, 0
+        %var29 = add i32 %var27, %var28
+        %var30 = getelementptr [50 x i32], [50 x i32]* %myArr_1, i32 0, i32 0
+        store i32 %var29, i32* %var30
+        br label %label_58
+    label_76:
+        ret void
+}
+
+define void @main()
+{
+    %myArr_2 = alloca [50 x i32]
+        call void @var17maxTestsTestRecursiveFiboOutputs()
+        ret void
+}
+

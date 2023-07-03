@@ -1,0 +1,19 @@
+void main()
+{
+    print("A little nested if test because I can");
+    print("should print incredibles and 0 (and fin)");
+    if (true)
+    {
+        if (5 == 5)
+        {
+            print ("INCREDIBLEs!");
+            int x;
+            printi(x);
+        }
+        else
+        {
+            int x;
+        }
+    }
+    print("fin");
+}

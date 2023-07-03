@@ -1,0 +1,18 @@
+byte advancedFunc(int x) {
+    return (byte)x;
+}
+
+bool getTrue() {
+    return true;
+}
+
+void main() {
+    print("Expecting 45");
+    if (getTrue()) {
+        byte x = advancedFunc(45);
+        printi(x);
+        print("done");
+        return;
+    }
+    print("FAILED");
+}

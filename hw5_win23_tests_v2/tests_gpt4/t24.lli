@@ -1,0 +1,83 @@
+declare i32 @printf(i8*, ...)
+declare void @exit(i32)
+@.int_specifier = constant [4 x i8] c"%d\0A\00"
+@.str_specifier = constant [4 x i8] c"%s\0A\00"
+@.divide_by_zero_error = constant [23 x i8] c"Error division by zero\00"
+
+define void @printi(i32) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.int_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i32 %0)
+    ret void
+}
+
+define void @print(i8*) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.str_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i8* %0)
+    ret void
+}
+
+
+define void @divByZero() {
+    %spec_ptr = getelementptr [23 x i8], [23 x i8]* @.divide_by_zero_error, i32 0, i32 0
+    call void (i8*) @print(i8* %spec_ptr)
+    %exitCode = add i32 0, 0
+    call void @exit(i32 %exitCode)
+    ret void
+}
+
+define void @var0maxTestsBigTruncationTest()
+{
+    %myArr_0 = alloca [50 x i32]
+    %var1 = add i32 126, 0
+    %var2 = add i32 224, 0
+    %var3 = trunc i32 %var1 to i8
+    %var4 = trunc i32 %var2 to i8
+    %var5 = add i8 %var3, %var4
+    %var6 = zext i8 %var5 to i32
+    %var7 = add i32 139, 0
+    %var8 = add i32 %var6, %var7
+    %var9 = add i32 141, 0
+    %var10 = sub i32 %var8, %var9
+    %var11 = add i32 225, 0
+    %var12 = sub i32 %var10, %var11
+    %var13 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 0
+    store i32 %var12, i32* %var13
+    %var14 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 0
+    %var15 = load i32, i32* %var14
+    call void @printi(i32 %var15)
+    %var16 = add i32 126, 0
+    %var17 = add i32 224, 0
+    %var18 = trunc i32 %var16 to i8
+    %var19 = trunc i32 %var17 to i8
+    %var20 = add i8 %var18, %var19
+    %var21 = zext i8 %var20 to i32
+    %var22 = add i32 139, 0
+    %var23 = trunc i32 %var21 to i8
+    %var24 = trunc i32 %var22 to i8
+    %var25 = add i8 %var23, %var24
+    %var26 = zext i8 %var25 to i32
+    %var27 = add i32 141, 0
+    %var28 = trunc i32 %var26 to i8
+    %var29 = trunc i32 %var27 to i8
+    %var30 = sub i8 %var28, %var29
+    %var31 = zext i8 %var30 to i32
+    %var32 = add i32 225, 0
+    %var33 = trunc i32 %var31 to i8
+    %var34 = trunc i32 %var32 to i8
+    %var35 = sub i8 %var33, %var34
+    %var36 = zext i8 %var35 to i32
+    %var37 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 1
+    store i32 %var36, i32* %var37
+    %var38 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 1
+    %var39 = load i32, i32* %var38
+    call void @printi(i32 %var39)
+    ret void
+}
+
+define void @main()
+{
+    %myArr_1 = alloca [50 x i32]
+    call void @var0maxTestsBigTruncationTest()
+    ret void
+}
+

@@ -1,0 +1,12 @@
+int basicFunc() {
+    print("Called basicFunc!");
+    return 38;
+}
+
+void main() {
+    int x = basicFunc();
+    print("Should print 38");
+    printi(x);
+    
+    print("Finished");
+}

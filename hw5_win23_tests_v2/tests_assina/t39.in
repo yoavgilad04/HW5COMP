@@ -1,0 +1,17 @@
+byte advancedFunc(int x) {
+    print("got param:");
+    printi(x);
+    return (byte)x;
+}
+
+bool getTrue() {
+    return true;
+}
+
+void main() {
+    print("Expecting 39");
+    byte x = advancedFunc(39);
+    print("actual result:");
+    printi(x);
+    print("done");
+}

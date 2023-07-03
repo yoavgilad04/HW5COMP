@@ -1,0 +1,4 @@
+void main() {
+    print("This is the end of the course.");
+    print("Thanks for joining this ride with me!");
+}

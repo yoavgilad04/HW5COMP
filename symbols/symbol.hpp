@@ -32,6 +32,7 @@ public:
     string getName() const {return this->name;}
     string getType() const {return this->type;}
     void setOffset(int offset){this->offset = offset;}
+    bool isFunc(){return this->is_func;}
     virtual ostream& printSymbol(std::ostream& os) const
     {
         os << this->getName() << " " << this->getType() <<  " " << this->getOffset() << " " << this->getLLVMName();

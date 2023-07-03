@@ -1,0 +1,9 @@
+void main()
+{
+    print("just checking order of computation real quick");
+    int x = 1 + 2 * 3 / 2 + 5 - 1;
+    print("Did you get 8? because that's the answer");
+    print("No! you got:");
+    printi(x);
+    print("OK bye now");
+}

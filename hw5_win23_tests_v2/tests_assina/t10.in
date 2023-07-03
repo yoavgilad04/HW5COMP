@@ -1,0 +1,55 @@
+void main()
+{
+    print("Bool thingies for you");
+    print("Expecting 7 8 9 10 13");
+    bool relop1 = 1 > 2;
+    bool relop2 = 1 < 2;  // true
+    bool relop3 = 1 <= 2; // true
+    bool relop4 = 1 >= 2;
+    bool relop5 = 1 == 2;
+    bool relop6 = 1 != 2; // true
+
+    // true and true
+    bool relop7  = relop6 and relop2;
+    if (relop7) {
+        printi(7); 
+    }
+
+    // false or true
+    bool relop8  = relop1 or relop2;
+    if (relop8) {
+        printi(8);
+    }
+
+    // not false and true
+    bool relop9  = not relop1 and relop6;
+    if (relop9) {
+        printi(9);
+    }
+
+    // false or true
+    bool relop10 = relop1 or relop8;
+    if (relop10) {
+        printi(10);
+    }
+
+    // not true
+    bool relop11 = not relop7;
+    if (relop11) {
+        printi(11);
+    }
+    
+    // not not not true
+    relop11 = not not not relop7;
+    if (relop11) {
+        printi(12);
+    }
+
+    // not not not not true or true
+    relop10 = not not not relop7 or true;
+    if (relop10) {
+        printi(13);
+    }
+
+    print("Fin");
+}

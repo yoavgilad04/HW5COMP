@@ -1,0 +1,22 @@
+bool getTrue()
+{
+    return true;
+}
+
+void main()
+{
+    print("expecting 1 2");
+    bool Asslina = false;
+    bool Alaf    = true;
+
+    if (Alaf or Asslina)
+    {
+        print("1");
+    }
+
+    if (Asslina or Alaf)
+    {
+        print("2");
+    }
+
+}

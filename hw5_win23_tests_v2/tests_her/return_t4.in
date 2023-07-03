@@ -1,0 +1,62 @@
+int addint(int x, int y){
+	int nx = x;
+	int ny = y;
+	while(true){
+		if(ny==0)
+			return nx;
+		nx = nx + 1;
+		ny = ny - 1;
+	}
+}
+
+byte addByte(byte x, int y){
+	byte nx = x;
+	int ny = y;
+	while(true){
+		if(ny==0)
+			return nx;
+		nx = nx + 1b;
+		ny = ny - 1;
+	}
+}
+
+bool areEqual(int y, byte a)
+{
+	int ny = y;
+	byte na = a;
+	while(true){
+		if(ny==0)
+			return na==0;
+		ny = ny -1;
+		na = na - 1b;
+	}
+}
+
+void sayHello(int x)
+{
+	int nx = x;
+	while(true)
+	{
+		if(nx==0)
+			return;
+		print("hello");
+		nx = nx -1;
+	}
+}
+
+void main()
+{
+	int x = 0;
+	x = addint(x,5);
+	printi(x);
+	
+
+	byte a = 0b;
+	a = addByte(a,5);
+	printi(a);
+	print("The numbers are ");
+	if(not areEqual(x,a))
+		print("not ");
+	print("equal");
+	sayHello(x);
+}

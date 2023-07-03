@@ -1,0 +1,44 @@
+void main()
+{
+    print("This is a long one - buckle up");
+    print("expecting true, true, 5b >=5, fin");
+    bool x = true;
+    bool y = 7 < 9;
+    if (x) { print("x is true"); }
+    if (y) { print("y is true"); }
+    if(x)
+    {
+        int a = 5;
+        byte bb = 5b;
+        bool c = (bb >= a);
+
+        if(c) {
+            print("5b >= 5");
+            print("fin");
+            return;
+        }
+        else {
+            print("5b < 5");
+            return;
+        }
+    }
+
+    else
+    {
+        print("GO AWAY");
+        bool a = 8 == 9;
+        bool bb = (6 != 2);
+
+        if(a or bb and a)
+            return;
+        else {
+            if(bb and a)
+                return;
+            else
+                return;
+        }
+        int d = 5;
+    }
+    print("YOU ARE NOTE WANTED HERE");
+    return;
+}

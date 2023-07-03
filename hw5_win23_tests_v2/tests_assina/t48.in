@@ -1,0 +1,46 @@
+int epicInt(int a, int d, int c) {
+    print("EPIC INT");
+    return a + d * c + a;
+    return a;
+}
+
+int epicBool(bool a, bool d, bool c) {
+    print("EPIC BOOL");
+    if (a) {
+        return 1;
+    }
+    if (d) {
+        return 2;
+    }
+    else {
+        if (c) {
+            return 3;
+        }
+    }
+
+    if (a or d) {
+        return 0-1;
+    }
+}
+
+void main ()
+{
+    print("You should expect the following:");
+    print("EPIC INT  |  EPIC BOOL  |  Just as expected  | EPIC INT 19 |  EPIC BOOL 1");
+    if (epicInt(6,1,7) > epicBool(true, true, 1 > 2)) {
+        print("Just as expected");
+        printi(epicInt(6,1,7));
+        printi(epicBool(true, true, 1 > 2));
+    }
+    else
+    {
+        print("Unexpected error");
+        printi(epicInt(6,1,7));
+        printi(epicBool(true, true, 1 > 2));
+    }
+}
+
+int epicByte(byte a, byte d, byte c) {
+    print("EPIC BYTE");
+    return a + d * c + a;
+}

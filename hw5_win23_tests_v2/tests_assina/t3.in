@@ -1,0 +1,21 @@
+void main() {
+    print("This is the fourth test!");
+    print("Here we test all calculations");
+    print("now testing add - x = 1 + 2");
+    int x = 1 + 2;
+    print("The result is: ");
+    printi(x);
+    print("now testing mul - y = x * 4");
+    int y = x * 4;
+    print("The result is: ");
+    printi(y);
+    print("now testing add z = x + y");
+    int z = x + y;
+    print("The result is: ");
+    printi(z);
+    print("now testing div y = x/z");
+    y = x / z;
+    print("The result is: ");
+    printi(y);
+    print("Bye!");
+}

@@ -1,0 +1,60 @@
+declare i32 @printf(i8*, ...)
+declare void @exit(i32)
+@.int_specifier = constant [4 x i8] c"%d\0A\00"
+@.str_specifier = constant [4 x i8] c"%s\0A\00"
+@.divide_by_zero_error = constant [23 x i8] c"Error division by zero\00"
+@.var7 = constant [43 x i8] c"Happiness exists for those who wish for it\00"
+
+define void @printi(i32) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.int_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i32 %0)
+    ret void
+}
+
+define void @print(i8*) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.str_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i8* %0)
+    ret void
+}
+
+
+define void @divByZero() {
+    %spec_ptr = getelementptr [23 x i8], [23 x i8]* @.divide_by_zero_error, i32 0, i32 0
+    call void (i8*) @print(i8* %spec_ptr)
+    %exitCode = add i32 0, 0
+    call void @exit(i32 %exitCode)
+    ret void
+}
+
+define void @var0maxTestsTestBooleansBasic()
+{
+    %myArr_0 = alloca [50 x i32]
+    %var1 = add i32 1, 0
+    %var2 = icmp eq i32 %var1, 1
+    br i1 %var2, label %label_28, label %label_30
+    label_28:
+        br label %label_32
+    label_30:
+        br label %label_32
+    label_32:
+        %var3 = phi i32 [1, %label_28], [0, %label_30]
+        %var4 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 0
+        store i32 %var3, i32* %var4
+        %var5 = add i32 1, 0
+        %var6 = icmp eq i32 %var5, 1
+        br i1 %var6, label %label_39, label %label_43
+    label_39:
+        %var8 = getelementptr [43 x i8] , [43 x i8]* @.var7, i32 0, i32 0
+        call void (i8*) @print(i8* %var8)
+        br label %label_43
+    label_43:
+        ret void
+}
+
+define void @main()
+{
+    %myArr_1 = alloca [50 x i32]
+        call void @var0maxTestsTestBooleansBasic()
+        ret void
+}
+

@@ -1,0 +1,11 @@
+int failed2return(int x, int y, int z, byte w) {
+    int a = x + y + z + w;
+    int aa = a * y;
+    return aa;
+}
+
+void main() { 
+    print("Expecting 32");
+    printi(failed2return(failed2return(1,1,failed2return(1,1,1,1b),1b), 2, 3, 4b));
+    print("done");
+}

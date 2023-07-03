@@ -1,0 +1,82 @@
+declare i32 @printf(i8*, ...)
+declare void @exit(i32)
+@.int_specifier = constant [4 x i8] c"%d\0A\00"
+@.str_specifier = constant [4 x i8] c"%s\0A\00"
+@.divide_by_zero_error = constant [23 x i8] c"Error division by zero\00"
+
+define void @printi(i32) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.int_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i32 %0)
+    ret void
+}
+
+define void @print(i8*) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.str_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i8* %0)
+    ret void
+}
+
+
+define void @divByZero() {
+    %spec_ptr = getelementptr [23 x i8], [23 x i8]* @.divide_by_zero_error, i32 0, i32 0
+    call void (i8*) @print(i8* %spec_ptr)
+    %exitCode = add i32 0, 0
+    call void @exit(i32 %exitCode)
+    ret void
+}
+
+define void @var0Func(i32, i32, i32)
+{
+    %myArr_0 = alloca [50 x i32]
+    %var1 = add i32 %0, 0
+    call void @printi(i32 %var1)
+    %var2 = add i32 %1, 0
+    call void @printi(i32 %var2)
+    %var3 = add i32 %2, 0
+    call void @printi(i32 %var3)
+    ret void
+}
+
+define void @var4maxTestsPassMultipleParametersToFunc()
+{
+    %myArr_1 = alloca [50 x i32]
+    %var5 = add i32 33, 0
+    %var6 = getelementptr [50 x i32], [50 x i32]* %myArr_1, i32 0, i32 0
+    store i32 %var5, i32* %var6
+    %var7 = add i32 3, 0
+    %var8 = getelementptr [50 x i32], [50 x i32]* %myArr_1, i32 0, i32 1
+    store i32 %var7, i32* %var8
+    %var9 = add i32 8, 0
+    %var10 = add i32 2, 0
+    %var11 = add i32 %var9, %var10
+    %var12 = getelementptr [50 x i32], [50 x i32]* %myArr_1, i32 0, i32 0
+    %var13 = load i32, i32* %var12
+    %var14 = getelementptr [50 x i32], [50 x i32]* %myArr_1, i32 0, i32 1
+    %var15 = load i32, i32* %var14
+    %var16 = add i32 8, 0
+    %var17 = trunc i32 %var15 to i8
+    %var18 = trunc i32 %var16 to i8
+    %var19 = add i8 %var17, %var18
+    %var20 = zext i8 %var19 to i32
+    call void @var0Func(i32 %var11, i32 %var13, i32 %var20)
+    %var22 = add i32 14, 0
+    %var23 = getelementptr [50 x i32], [50 x i32]* %myArr_1, i32 0, i32 0
+    %var24 = load i32, i32* %var23
+    %var25 = getelementptr [50 x i32], [50 x i32]* %myArr_1, i32 0, i32 1
+    %var26 = load i32, i32* %var25
+    %var27 = add i32 8, 0
+    %var28 = trunc i32 %var26 to i8
+    %var29 = trunc i32 %var27 to i8
+    %var30 = add i8 %var28, %var29
+    %var31 = zext i8 %var30 to i32
+    call void @var0Func(i32 %var22, i32 %var24, i32 %var31)
+    ret void
+}
+
+define void @main()
+{
+    %myArr_2 = alloca [50 x i32]
+    call void @var4maxTestsPassMultipleParametersToFunc()
+    ret void
+}
+

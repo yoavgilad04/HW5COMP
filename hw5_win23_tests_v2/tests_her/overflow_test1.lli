@@ -1,0 +1,197 @@
+declare i32 @printf(i8*, ...)
+declare void @exit(i32)
+@.int_specifier = constant [4 x i8] c"%d\0A\00"
+@.str_specifier = constant [4 x i8] c"%s\0A\00"
+@.divide_by_zero_error = constant [23 x i8] c"Error division by zero\00"
+
+define void @printi(i32) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.int_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i32 %0)
+    ret void
+}
+
+define void @print(i8*) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.str_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i8* %0)
+    ret void
+}
+
+
+define void @divByZero() {
+    %spec_ptr = getelementptr [23 x i8], [23 x i8]* @.divide_by_zero_error, i32 0, i32 0
+    call void (i8*) @print(i8* %spec_ptr)
+    %exitCode = add i32 0, 0
+    call void @exit(i32 %exitCode)
+    ret void
+}
+
+define void @main()
+{
+    %myArr_0 = alloca [50 x i32]
+    %var0 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 0
+    store i32 0, i32* %var0
+    %var1 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 1
+    store i32 0, i32* %var1
+    %var2 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 0
+    %var3 = load i32, i32* %var2
+    %var4 = add i32 1, 0
+    %var5 = trunc i32 %var3 to i8
+    %var6 = trunc i32 %var4 to i8
+    %var7 = sub i8 %var5, %var6
+    %var8 = zext i8 %var7 to i32
+    call void @printi(i32 %var8)
+    %var9 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 0
+    %var10 = load i32, i32* %var9
+    %var11 = add i32 1, 0
+    %var12 = trunc i32 %var10 to i8
+    %var13 = trunc i32 %var11 to i8
+    %var14 = sub i8 %var12, %var13
+    %var15 = zext i8 %var14 to i32
+    %var16 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 1
+    store i32 %var15, i32* %var16
+    %var17 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 1
+    %var18 = load i32, i32* %var17
+    call void @printi(i32 %var18)
+    %var19 = add i32 16, 0
+    %var20 = add i32 16, 0
+    %var21 = trunc i32 %var19 to i8
+    %var22 = trunc i32 %var20 to i8
+    %var23 = mul i8 %var21, %var22
+    %var24 = zext i8 %var23 to i32
+    call void @printi(i32 %var24)
+    %var25 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 1
+    %var26 = load i32, i32* %var25
+    %var27 = add i32 1, 0
+    %var28 = trunc i32 %var26 to i8
+    %var29 = trunc i32 %var27 to i8
+    %var30 = add i8 %var28, %var29
+    %var31 = zext i8 %var30 to i32
+    call void @printi(i32 %var31)
+    %var32 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 1
+    %var33 = load i32, i32* %var32
+    %var34 = add i32 3, 0
+    %var35 = trunc i32 %var33 to i8
+    %var36 = trunc i32 %var34 to i8
+    %var37 = add i8 %var35, %var36
+    %var38 = zext i8 %var37 to i32
+    call void @printi(i32 %var38)
+    %var39 = add i32 255, 0
+    %var40 = add i32 255, 0
+    %var41 = trunc i32 %var39 to i8
+    %var42 = trunc i32 %var40 to i8
+    %var43 = add i8 %var41, %var42
+    %var44 = zext i8 %var43 to i32
+    call void @printi(i32 %var44)
+    %var45 = add i32 2147483647, 0
+    %var46 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 2
+    store i32 %var45, i32* %var46
+    %var47 = add i32 2147483646, 0
+    %var48 = add i32 1, 0
+    %var49 = add i32 %var47, %var48
+    %var50 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 3
+    store i32 %var49, i32* %var50
+    %var51 = add i32 0, 0
+    %var52 = add i32 2147483647, 0
+    %var53 = sub i32 %var51, %var52
+    %var54 = add i32 1, 0
+    %var55 = sub i32 %var53, %var54
+    %var56 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 4
+    store i32 %var55, i32* %var56
+    %var57 = add i32 0, 0
+    %var58 = add i32 2147483647, 0
+    %var59 = sub i32 %var57, %var58
+    %var60 = add i32 1, 0
+    %var61 = sub i32 %var59, %var60
+    %var62 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 5
+    store i32 %var61, i32* %var62
+    %var63 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 6
+    store i32 0, i32* %var63
+    %var64 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 7
+    store i32 0, i32* %var64
+    %var65 = add i32 255, 0
+    %var66 = add i32 255, 0
+    %var67 = add i32 %var65, %var66
+    call void @printi(i32 %var67)
+    %var68 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 2
+    %var69 = load i32, i32* %var68
+    call void @printi(i32 %var69)
+    %var70 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 3
+    %var71 = load i32, i32* %var70
+    call void @printi(i32 %var71)
+    %var72 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 5
+    %var73 = load i32, i32* %var72
+    call void @printi(i32 %var73)
+    %var74 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 4
+    %var75 = load i32, i32* %var74
+    call void @printi(i32 %var75)
+    %var76 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 2
+    %var77 = load i32, i32* %var76
+    %var78 = add i32 1, 0
+    %var79 = add i32 %var77, %var78
+    %var80 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 6
+    store i32 %var79, i32* %var80
+    %var81 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 6
+    %var82 = load i32, i32* %var81
+    call void @printi(i32 %var82)
+    %var83 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 2
+    %var84 = load i32, i32* %var83
+    %var85 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 2
+    %var86 = load i32, i32* %var85
+    %var87 = add i32 %var84, %var86
+    %var88 = add i32 2, 0
+    %var89 = add i32 %var87, %var88
+    %var90 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 7
+    store i32 %var89, i32* %var90
+    %var91 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 7
+    %var92 = load i32, i32* %var91
+    call void @printi(i32 %var92)
+    %var93 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 2
+    %var94 = load i32, i32* %var93
+    %var95 = add i32 1, 0
+    %var96 = add i32 %var94, %var95
+    %var97 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 6
+    %var98 = load i32, i32* %var97
+    %var99 = add i32 %var96, %var98
+    %var100 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 7
+    store i32 %var99, i32* %var100
+    %var101 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 7
+    %var102 = load i32, i32* %var101
+    call void @printi(i32 %var102)
+    %var103 = add i32 100000, 0
+    %var104 = add i32 100000, 0
+    %var105 = mul i32 %var103, %var104
+    call void @printi(i32 %var105)
+    %var106 = add i32 200, 0
+    %var107 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 0
+    store i32 %var106, i32* %var107
+    %var108 = add i32 100, 0
+    %var109 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 1
+    store i32 %var108, i32* %var109
+    %var110 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 0
+    %var111 = load i32, i32* %var110
+    %var112 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 1
+    %var113 = load i32, i32* %var112
+    %var114 = trunc i32 %var111 to i8
+    %var115 = trunc i32 %var113 to i8
+    %var116 = add i8 %var114, %var115
+    %var117 = zext i8 %var116 to i32
+    %var118 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 6
+    store i32 %var117, i32* %var118
+    %var119 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 6
+    %var120 = load i32, i32* %var119
+    call void @printi(i32 %var120)
+    %var121 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 0
+    %var122 = load i32, i32* %var121
+    %var123 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 1
+    %var124 = load i32, i32* %var123
+    %var125 = add i32 0, 0
+    %var126 = add i32 %var124, %var125
+    %var127 = add i32 %var122, %var126
+    %var128 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 7
+    store i32 %var127, i32* %var128
+    %var129 = getelementptr [50 x i32], [50 x i32]* %myArr_0, i32 0, i32 7
+    %var130 = load i32, i32* %var129
+    call void @printi(i32 %var130)
+    ret void
+}
+

@@ -1,0 +1,345 @@
+declare i32 @printf(i8*, ...)
+declare void @exit(i32)
+@.int_specifier = constant [4 x i8] c"%d\0A\00"
+@.str_specifier = constant [4 x i8] c"%s\0A\00"
+@.divide_by_zero_error = constant [23 x i8] c"Error division by zero\00"
+@.var107 = constant [3 x i8] c"ok\00"
+@.var129 = constant [17 x i8] c"should not print\00"
+@.var151 = constant [13 x i8] c"should print\00"
+
+define void @printi(i32) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.int_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i32 %0)
+    ret void
+}
+
+define void @print(i8*) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.str_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i8* %0)
+    ret void
+}
+
+
+define void @divByZero() {
+    %spec_ptr = getelementptr [23 x i8], [23 x i8]* @.divide_by_zero_error, i32 0, i32 0
+    call void (i8*) @print(i8* %spec_ptr)
+    %exitCode = add i32 0, 0
+    call void @exit(i32 %exitCode)
+    ret void
+}
+
+define i32 @var0little(i32, i32, i32, i32, i32, i32, i32, i32, i32, i32)
+{
+    %myArr_0 = alloca [50 x i32]
+    %var1 = add i32 24, 0
+    call void @printi(i32 %var1)
+    %var2 = add i32 %0, 0
+    %var3 = icmp eq i32 %var2, 1
+    br i1 %var3, label %label_30, label %label_104
+    label_30:
+        %var4 = add i32 %1, 0
+        %var5 = icmp eq i32 %var4, 1
+        br i1 %var5, label %label_34, label %label_104
+    label_34:
+        %var6 = add i32 %2, 0
+        %var7 = icmp eq i32 %var6, 1
+        br i1 %var7, label %label_38, label %label_104
+    label_38:
+        %var8 = add i32 %3, 0
+        %var9 = add i32 %4, 0
+        %var10 = icmp slt i32 %var8, %var9
+        br i1 %var10, label %label_43, label %label_104
+    label_43:
+        %var11 = add i32 %4, 0
+        %var12 = add i32 %5, 0
+        %var13 = icmp slt i32 %var11, %var12
+        br i1 %var13, label %label_48, label %label_104
+    label_48:
+        %var14 = add i32 %5, 0
+        %var15 = add i32 %6, 0
+        %var16 = icmp slt i32 %var14, %var15
+        br i1 %var16, label %label_53, label %label_104
+    label_53:
+        %var17 = add i32 %6, 0
+        %var18 = add i32 %7, 0
+        %var19 = icmp sle i32 %var17, %var18
+        br i1 %var19, label %label_58, label %label_104
+    label_58:
+        %var20 = add i32 %7, 0
+        %var21 = add i32 %8, 0
+        %var22 = icmp sle i32 %var20, %var21
+        br i1 %var22, label %label_63, label %label_104
+    label_63:
+        %var23 = add i32 %9, 0
+        %var24 = icmp eq i32 %var23, 1
+        br i1 %var24, label %label_104, label %label_67
+    label_67:
+        %var25 = add i32 %0, 0
+        %var26 = icmp eq i32 %var25, 1
+        br i1 %var26, label %label_71, label %label_104
+    label_71:
+        %var27 = add i32 %1, 0
+        %var28 = icmp eq i32 %var27, 1
+        br i1 %var28, label %label_75, label %label_104
+    label_75:
+        %var29 = add i32 %2, 0
+        %var30 = icmp eq i32 %var29, 1
+        br i1 %var30, label %label_79, label %label_104
+    label_79:
+        %var31 = add i32 %9, 0
+        %var32 = icmp eq i32 %var31, 1
+        br i1 %var32, label %label_104, label %label_83
+    label_83:
+        %var33 = add i32 %3, 0
+        %var34 = add i32 %4, 0
+        %var35 = add i32 %var33, %var34
+        %var36 = add i32 %3, 0
+        %var37 = add i32 %4, 0
+        %var38 = add i32 %var36, %var37
+        %var39 = add i32 %5, 0
+        %var40 = add i32 %var38, %var39
+        %var41 = add i32 %6, 0
+        %var42 = add i32 %var40, %var41
+        %var43 = add i32 %7, 0
+        %var44 = add i32 %var42, %var43
+        %var45 = add i32 %8, 0
+        %var46 = add i32 %var44, %var45
+        %var47 = add i32 1, 0
+        %var48 = add i32 %var46, %var47
+        %var49 = icmp sle i32 %var35, %var48
+        br i1 %var49, label %label_102, label %label_104
+    label_102:
+        br label %label_106
+    label_104:
+        br label %label_106
+    label_106:
+        %var50 = phi i32 [1, %label_102], [0, %label_104]
+        ret i32 %var50
+        ret i32 0
+}
+
+define i32 @var51little2(i32, i32, i32, i32, i32, i32, i32, i32, i32, i32)
+{
+    %myArr_1 = alloca [50 x i32]
+        %var52 = add i32 777, 0
+        call void @printi(i32 %var52)
+        %var53 = add i32 %0, 0
+        %var54 = icmp eq i32 %var53, 1
+        br i1 %var54, label %label_171, label %label_120
+    label_120:
+        %var55 = add i32 %1, 0
+        %var56 = icmp eq i32 %var55, 1
+        br i1 %var56, label %label_124, label %label_136
+    label_124:
+        %var57 = add i32 %2, 0
+        %var58 = icmp eq i32 %var57, 1
+        br i1 %var58, label %label_128, label %label_136
+    label_128:
+        %var59 = add i32 %9, 0
+        %var60 = icmp eq i32 %var59, 1
+        br i1 %var60, label %label_136, label %label_132
+    label_132:
+        %var61 = add i32 %1, 0
+        %var62 = icmp eq i32 %var61, 1
+        br i1 %var62, label %label_171, label %label_136
+    label_136:
+        %var63 = add i32 %0, 0
+        %var64 = icmp eq i32 %var63, 1
+        br i1 %var64, label %label_144, label %label_140
+    label_140:
+        %var65 = add i32 %1, 0
+        %var66 = icmp eq i32 %var65, 1
+        br i1 %var66, label %label_171, label %label_144
+    label_144:
+        %var67 = add i32 %0, 0
+        %var68 = icmp eq i32 %var67, 1
+        br i1 %var68, label %label_171, label %label_148
+    label_148:
+        %var69 = add i32 %9, 0
+        %var70 = icmp eq i32 %var69, 1
+        br i1 %var70, label %label_152, label %label_173
+    label_152:
+        %var71 = add i32 %1, 0
+        %var72 = icmp eq i32 %var71, 1
+        br i1 %var72, label %label_173, label %label_156
+    label_156:
+        %var73 = add i32 %3, 0
+        %var74 = add i32 %4, 0
+        %var75 = add i32 %var73, %var74
+        %var76 = add i32 %5, 0
+        %var77 = add i32 %var75, %var76
+        %var78 = add i32 %6, 0
+        %var79 = add i32 %var77, %var78
+        %var80 = add i32 %7, 0
+        %var81 = add i32 %var79, %var80
+        %var82 = add i32 %8, 0
+        %var83 = add i32 %var81, %var82
+        %var84 = add i32 50, 0
+        %var85 = icmp slt i32 %var83, %var84
+        br i1 %var85, label %label_171, label %label_173
+    label_171:
+        br label %label_175
+    label_173:
+        br label %label_175
+    label_175:
+        %var86 = phi i32 [1, %label_171], [0, %label_173]
+        ret i32 %var86
+        ret i32 0
+}
+
+define void @main()
+{
+    %myArr_2 = alloca [50 x i32]
+        %var87 = add i32 1, 0
+        %var88 = icmp eq i32 %var87, 1
+        br i1 %var88, label %label_187, label %label_189
+    label_187:
+        br label %label_191
+    label_189:
+        br label %label_191
+    label_191:
+        %var89 = phi i32 [1, %label_187], [0, %label_189]
+        %var90 = add i32 1, 0
+        %var91 = icmp eq i32 %var90, 1
+        br i1 %var91, label %label_196, label %label_198
+    label_196:
+        br label %label_200
+    label_198:
+        br label %label_200
+    label_200:
+        %var92 = phi i32 [1, %label_196], [0, %label_198]
+        %var93 = add i32 1, 0
+        %var94 = icmp eq i32 %var93, 1
+        br i1 %var94, label %label_205, label %label_207
+    label_205:
+        br label %label_209
+    label_207:
+        br label %label_209
+    label_209:
+        %var95 = phi i32 [1, %label_205], [0, %label_207]
+        %var96 = add i32 1, 0
+        %var97 = add i32 2, 0
+        %var98 = add i32 3, 0
+        %var99 = add i32 4, 0
+        %var100 = add i32 5, 0
+        %var101 = add i32 6, 0
+        %var102 = add i32 0, 0
+        %var103 = icmp eq i32 %var102, 1
+        br i1 %var103, label %label_220, label %label_222
+    label_220:
+        br label %label_224
+    label_222:
+        br label %label_224
+    label_224:
+        %var104 = phi i32 [1, %label_220], [0, %label_222]
+        %var105 = call i32 @var0little(i32 %var89, i32 %var92, i32 %var95, i32 %var96, i32 %var97, i32 %var98, i32 %var99, i32 %var100, i32 %var101, i32 %var104)
+        %var106 = icmp eq i32 %var105, 1
+        br i1 %var106, label %label_229, label %label_233
+    label_229:
+        %var108 = getelementptr [3 x i8] , [3 x i8]* @.var107, i32 0, i32 0
+        call void (i8*) @print(i8* %var108)
+        br label %label_233
+    label_233:
+        %var109 = add i32 0, 0
+        %var110 = icmp eq i32 %var109, 1
+        br i1 %var110, label %label_237, label %label_239
+    label_237:
+        br label %label_241
+    label_239:
+        br label %label_241
+    label_241:
+        %var111 = phi i32 [1, %label_237], [0, %label_239]
+        %var112 = add i32 0, 0
+        %var113 = icmp eq i32 %var112, 1
+        br i1 %var113, label %label_246, label %label_248
+    label_246:
+        br label %label_250
+    label_248:
+        br label %label_250
+    label_250:
+        %var114 = phi i32 [1, %label_246], [0, %label_248]
+        %var115 = add i32 1, 0
+        %var116 = icmp eq i32 %var115, 1
+        br i1 %var116, label %label_255, label %label_257
+    label_255:
+        br label %label_259
+    label_257:
+        br label %label_259
+    label_259:
+        %var117 = phi i32 [1, %label_255], [0, %label_257]
+        %var118 = add i32 9, 0
+        %var119 = add i32 8, 0
+        %var120 = add i32 7, 0
+        %var121 = add i32 6, 0
+        %var122 = add i32 5, 0
+        %var123 = add i32 4, 0
+        %var124 = add i32 0, 0
+        %var125 = icmp eq i32 %var124, 1
+        br i1 %var125, label %label_270, label %label_272
+    label_270:
+        br label %label_274
+    label_272:
+        br label %label_274
+    label_274:
+        %var126 = phi i32 [1, %label_270], [0, %label_272]
+        %var127 = call i32 @var51little2(i32 %var111, i32 %var114, i32 %var117, i32 %var118, i32 %var119, i32 %var120, i32 %var121, i32 %var122, i32 %var123, i32 %var126)
+        %var128 = icmp eq i32 %var127, 1
+        br i1 %var128, label %label_279, label %label_283
+    label_279:
+        %var130 = getelementptr [17 x i8] , [17 x i8]* @.var129, i32 0, i32 0
+        call void (i8*) @print(i8* %var130)
+        br label %label_283
+    label_283:
+        %var131 = add i32 1, 0
+        %var132 = icmp eq i32 %var131, 1
+        br i1 %var132, label %label_287, label %label_289
+    label_287:
+        br label %label_291
+    label_289:
+        br label %label_291
+    label_291:
+        %var133 = phi i32 [1, %label_287], [0, %label_289]
+        %var134 = add i32 0, 0
+        %var135 = icmp eq i32 %var134, 1
+        br i1 %var135, label %label_296, label %label_298
+    label_296:
+        br label %label_300
+    label_298:
+        br label %label_300
+    label_300:
+        %var136 = phi i32 [1, %label_296], [0, %label_298]
+        %var137 = add i32 1, 0
+        %var138 = icmp eq i32 %var137, 1
+        br i1 %var138, label %label_305, label %label_307
+    label_305:
+        br label %label_309
+    label_307:
+        br label %label_309
+    label_309:
+        %var139 = phi i32 [1, %label_305], [0, %label_307]
+        %var140 = add i32 9, 0
+        %var141 = add i32 8, 0
+        %var142 = add i32 7, 0
+        %var143 = add i32 6, 0
+        %var144 = add i32 5, 0
+        %var145 = add i32 4, 0
+        %var146 = add i32 0, 0
+        %var147 = icmp eq i32 %var146, 1
+        br i1 %var147, label %label_320, label %label_322
+    label_320:
+        br label %label_324
+    label_322:
+        br label %label_324
+    label_324:
+        %var148 = phi i32 [1, %label_320], [0, %label_322]
+        %var149 = call i32 @var51little2(i32 %var133, i32 %var136, i32 %var139, i32 %var140, i32 %var141, i32 %var142, i32 %var143, i32 %var144, i32 %var145, i32 %var148)
+        %var150 = icmp eq i32 %var149, 1
+        br i1 %var150, label %label_329, label %label_333
+    label_329:
+        %var152 = getelementptr [13 x i8] , [13 x i8]* @.var151, i32 0, i32 0
+        call void (i8*) @print(i8* %var152)
+        br label %label_333
+    label_333:
+        ret void
+}
+

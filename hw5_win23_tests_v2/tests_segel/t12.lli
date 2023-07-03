@@ -1,0 +1,91 @@
+declare i32 @printf(i8*, ...)
+declare void @exit(i32)
+@.int_specifier = constant [4 x i8] c"%d\0A\00"
+@.str_specifier = constant [4 x i8] c"%s\0A\00"
+@.divide_by_zero_error = constant [23 x i8] c"Error division by zero\00"
+@.var1 = constant [5 x i8] c"foo!\00"
+
+define void @printi(i32) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.int_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i32 %0)
+    ret void
+}
+
+define void @print(i8*) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.str_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i8* %0)
+    ret void
+}
+
+
+define void @divByZero() {
+    %spec_ptr = getelementptr [23 x i8], [23 x i8]* @.divide_by_zero_error, i32 0, i32 0
+    call void (i8*) @print(i8* %spec_ptr)
+    %exitCode = add i32 0, 0
+    call void @exit(i32 %exitCode)
+    ret void
+}
+
+define void @var0foo()
+{
+    %myArr_0 = alloca [50 x i32]
+    %var2 = getelementptr [5 x i8] , [5 x i8]* @.var1, i32 0, i32 0
+    call void (i8*) @print(i8* %var2)
+    ret void
+}
+
+define void @var3bar(i32)
+{
+    %myArr_1 = alloca [50 x i32]
+    %var4 = add i32 %0, 0
+    call void @printi(i32 %var4)
+    ret void
+}
+
+define void @var5moo(i32)
+{
+    %myArr_2 = alloca [50 x i32]
+    %var6 = add i32 %0, 0
+    %var7 = icmp eq i32 %var6, 1
+    br i1 %var7, label %label_44, label %label_47
+    label_44:
+        call void @var0foo()
+        br label %label_51
+    label_47:
+        %var9 = add i32 110, 0
+        call void @var3bar(i32 %var9)
+        br label %label_51
+    label_51:
+        ret void
+}
+
+define void @main()
+{
+    %myArr_3 = alloca [50 x i32]
+        call void @var0foo()
+        %var12 = add i32 150, 0
+        call void @var3bar(i32 %var12)
+        %var14 = add i32 1, 0
+        %var15 = icmp eq i32 %var14, 1
+        br i1 %var15, label %label_64, label %label_66
+    label_64:
+        br label %label_68
+    label_66:
+        br label %label_68
+    label_68:
+        %var16 = phi i32 [1, %label_64], [0, %label_66]
+        call void @var5moo(i32 %var16)
+        call void @var0foo()
+        %var19 = add i32 0, 0
+        %var20 = icmp eq i32 %var19, 1
+        br i1 %var20, label %label_75, label %label_77
+    label_75:
+        br label %label_79
+    label_77:
+        br label %label_79
+    label_79:
+        %var21 = phi i32 [1, %label_75], [0, %label_77]
+        call void @var5moo(i32 %var21)
+        ret void
+}
+

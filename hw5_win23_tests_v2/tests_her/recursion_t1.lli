@@ -1,0 +1,80 @@
+declare i32 @printf(i8*, ...)
+declare void @exit(i32)
+@.int_specifier = constant [4 x i8] c"%d\0A\00"
+@.str_specifier = constant [4 x i8] c"%s\0A\00"
+@.divide_by_zero_error = constant [23 x i8] c"Error division by zero\00"
+
+define void @printi(i32) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.int_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i32 %0)
+    ret void
+}
+
+define void @print(i8*) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.str_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i8* %0)
+    ret void
+}
+
+
+define void @divByZero() {
+    %spec_ptr = getelementptr [23 x i8], [23 x i8]* @.divide_by_zero_error, i32 0, i32 0
+    call void (i8*) @print(i8* %spec_ptr)
+    %exitCode = add i32 0, 0
+    call void @exit(i32 %exitCode)
+    ret void
+}
+
+define i32 @var0foo(i32)
+{
+    %myArr_0 = alloca [50 x i32]
+    %var1 = add i32 %0, 0
+    %var2 = add i32 0, 0
+    %var3 = icmp eq i32 %var1, %var2
+    br i1 %var3, label %label_29, label %label_33
+    label_29:
+        %var4 = add i32 0, 0
+        ret i32 %var4
+        br label %label_33
+    label_33:
+        %var5 = add i32 %0, 0
+        %var6 = add i32 1, 0
+        %var7 = icmp eq i32 %var5, %var6
+        br i1 %var7, label %label_38, label %label_42
+    label_38:
+        %var8 = add i32 1, 0
+        ret i32 %var8
+        br label %label_42
+    label_42:
+        %var9 = add i32 %0, 0
+        %var10 = add i32 2, 0
+        %var11 = sub i32 %var9, %var10
+        %var12 = call i32 @var0foo(i32 %var11)
+        ret i32 %var12
+        ret i32 0
+}
+
+define void @main()
+{
+    %myArr_1 = alloca [50 x i32]
+        %var13 = add i32 5, 0
+        %var14 = call i32 @var0foo(i32 %var13)
+        call void @printi(i32 %var14)
+        %var15 = add i32 4, 0
+        %var16 = call i32 @var0foo(i32 %var15)
+        call void @printi(i32 %var16)
+        %var17 = add i32 3, 0
+        %var18 = call i32 @var0foo(i32 %var17)
+        call void @printi(i32 %var18)
+        %var19 = add i32 2, 0
+        %var20 = call i32 @var0foo(i32 %var19)
+        call void @printi(i32 %var20)
+        %var21 = add i32 1, 0
+        %var22 = call i32 @var0foo(i32 %var21)
+        call void @printi(i32 %var22)
+        %var23 = add i32 0, 0
+        %var24 = call i32 @var0foo(i32 %var23)
+        call void @printi(i32 %var24)
+        ret void
+}
+

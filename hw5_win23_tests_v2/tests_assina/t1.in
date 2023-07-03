@@ -1,0 +1,13 @@
+void main() {
+    print("This is the second test!");
+    print("Here we will test loading and storing prev calc");
+    print("now calculating 1 + 2:");
+    int x = 1 + 2;
+    print("The result is:");
+    printi(x);
+    print("now calculating prev_res /3 ");
+    int y = x / 3;
+    print("The result is:");
+    printi(y);
+    print("Bye!");
+}

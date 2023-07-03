@@ -1,0 +1,14 @@
+void main()
+{
+    print("Expecting a child");
+    print("- the child is false");
+    bool x = false or false or false or false or false;
+    if(not x) {
+        print("false");
+    }
+    else {
+        print("true");
+        return;
+    }
+    print("Nice! youre done! Bye now");
+}

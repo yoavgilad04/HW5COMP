@@ -1,0 +1,63 @@
+declare i32 @printf(i8*, ...)
+declare void @exit(i32)
+@.int_specifier = constant [4 x i8] c"%d\0A\00"
+@.str_specifier = constant [4 x i8] c"%s\0A\00"
+@.divide_by_zero_error = constant [23 x i8] c"Error division by zero\00"
+
+define void @printi(i32) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.int_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i32 %0)
+    ret void
+}
+
+define void @print(i8*) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.str_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i8* %0)
+    ret void
+}
+
+
+define void @divByZero() {
+    %spec_ptr = getelementptr [23 x i8], [23 x i8]* @.divide_by_zero_error, i32 0, i32 0
+    call void (i8*) @print(i8* %spec_ptr)
+    %exitCode = add i32 0, 0
+    call void @exit(i32 %exitCode)
+    ret void
+}
+
+define i32 @var0trutru()
+{
+    %myArr_0 = alloca [50 x i32]
+    %var1 = add i32 9001, 0
+    call void @printi(i32 %var1)
+    %var2 = add i32 1, 0
+    %var3 = icmp eq i32 %var2, 1
+    br i1 %var3, label %label_30, label %label_32
+    label_30:
+        br label %label_34
+    label_32:
+        br label %label_34
+    label_34:
+        %var4 = phi i32 [1, %label_30], [0, %label_32]
+        ret i32 %var4
+        ret i32 0
+}
+
+define void @main()
+{
+    %myArr_1 = alloca [50 x i32]
+        %var5 = add i32 1, 0
+        %var6 = icmp eq i32 %var5, 1
+        br i1 %var6, label %label_50, label %label_46
+    label_46:
+        %var7 = call i32 @var0trutru()
+        %var8 = icmp eq i32 %var7, 1
+        br i1 %var8, label %label_50, label %label_54
+    label_50:
+        %var9 = add i32 9002, 0
+        call void @printi(i32 %var9)
+        br label %label_54
+    label_54:
+        ret void
+}
+

@@ -1,0 +1,132 @@
+declare i32 @printf(i8*, ...)
+declare void @exit(i32)
+@.int_specifier = constant [4 x i8] c"%d\0A\00"
+@.str_specifier = constant [4 x i8] c"%s\0A\00"
+@.divide_by_zero_error = constant [23 x i8] c"Error division by zero\00"
+@.var65 = constant [23 x i8] c"this should not happen\00"
+
+define void @printi(i32) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.int_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i32 %0)
+    ret void
+}
+
+define void @print(i8*) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.str_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i8* %0)
+    ret void
+}
+
+
+define void @divByZero() {
+    %spec_ptr = getelementptr [23 x i8], [23 x i8]* @.divide_by_zero_error, i32 0, i32 0
+    call void (i8*) @print(i8* %spec_ptr)
+    %exitCode = add i32 0, 0
+    call void @exit(i32 %exitCode)
+    ret void
+}
+
+define i32 @var0zero()
+{
+    %myArr_0 = alloca [50 x i32]
+    %var1 = add i32 0, 0
+    ret i32 %var1
+    ret i32 0
+}
+
+define i32 @var2willThisNeedManyRegisters(i32, i32, i32, i32, i32, i32, i32)
+{
+    %myArr_1 = alloca [50 x i32]
+    %var3 = call i32 @var0zero()
+    %var4 = add i32 %0, 0
+    %var5 = mul i32 %var3, %var4
+    %var6 = add i32 %0, 0
+    %var7 = mul i32 %var5, %var6
+    %var8 = add i32 %0, 0
+    %var9 = add i32 %0, 0
+    %var10 = mul i32 %var8, %var9
+    %var11 = add i32 %var7, %var10
+    %var12 = add i32 %1, 0
+    %var13 = add i32 %2, 0
+    %var14 = mul i32 %var12, %var13
+    %var15 = add i32 %0, 0
+    %var16 = mul i32 %var14, %var15
+    %var17 = add i32 %var11, %var16
+    %var18 = add i32 %3, 0
+    %var19 = add i32 %1, 0
+    %var20 = mul i32 %var18, %var19
+    %var21 = add i32 %4, 0
+    %var22 = mul i32 %var20, %var21
+    %var23 = add i32 %5, 0
+    %var25 = icmp eq i32 %var23, 0
+    br i1 %var25, label %label_56, label %label_59
+    label_56:
+        call void @divByZero()
+        br label %label_59
+    label_59:
+        %var24 = sdiv i32 %var22, %var23
+        %var26 = sub i32 %var17, %var24
+        %var27 = add i32 %5, 0
+        %var28 = add i32 %var26, %var27
+        %var29 = add i32 %6, 0
+        %var30 = add i32 %6, 0
+        %var31 = mul i32 %var29, %var30
+        %var32 = add i32 %6, 0
+        %var33 = mul i32 %var31, %var32
+        %var34 = add i32 %var28, %var33
+        %var35 = add i32 %1, 0
+        %var36 = sub i32 %var34, %var35
+        ret i32 %var36
+        ret i32 0
+}
+
+define void @main()
+{
+    %myArr_2 = alloca [50 x i32]
+        %var37 = add i32 2, 0
+        %var38 = add i32 3, 0
+        %var39 = add i32 6, 0
+        %var40 = mul i32 %var38, %var39
+        %var41 = add i32 4, 0
+        %var43 = icmp eq i32 %var41, 0
+        br i1 %var43, label %label_86, label %label_89
+    label_86:
+        call void @divByZero()
+        br label %label_89
+    label_89:
+        %var42 = sdiv i32 %var40, %var41
+        %var44 = add i32 %var37, %var42
+        %var45 = add i32 1, 0
+        %var46 = sub i32 %var44, %var45
+        call void @printi(i32 %var46)
+        %var47 = add i32 23, 0
+        %var48 = add i32 12, 0
+        %var49 = mul i32 %var47, %var48
+        %var50 = add i32 459, 0
+        %var51 = add i32 %var49, %var50
+        call void @printi(i32 %var51)
+        %var52 = add i32 0, 0
+        %var53 = add i32 1, 0
+        %var54 = add i32 2, 0
+        %var55 = add i32 3, 0
+        %var56 = add i32 4, 0
+        %var57 = add i32 5, 0
+        %var58 = add i32 6, 0
+        %var59 = call i32 @var2willThisNeedManyRegisters(i32 %var52, i32 %var53, i32 %var54, i32 %var55, i32 %var56, i32 %var57, i32 %var58)
+        call void @printi(i32 %var59)
+        %var60 = add i32 12, 0
+        %var61 = call i32 @var0zero()
+        %var63 = icmp eq i32 %var61, 0
+        br i1 %var63, label %label_114, label %label_117
+    label_114:
+        call void @divByZero()
+        br label %label_117
+    label_117:
+        %var62 = sdiv i32 %var60, %var61
+        %var64 = getelementptr [50 x i32], [50 x i32]* %myArr_2, i32 0, i32 0
+        store i32 %var62, i32* %var64
+        %var66 = getelementptr [23 x i8] , [23 x i8]* @.var65, i32 0, i32 0
+        call void (i8*) @print(i8* %var66)
+        ret void
+}
+

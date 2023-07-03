@@ -1,0 +1,75 @@
+declare i32 @printf(i8*, ...)
+declare void @exit(i32)
+@.int_specifier = constant [4 x i8] c"%d\0A\00"
+@.str_specifier = constant [4 x i8] c"%s\0A\00"
+@.divide_by_zero_error = constant [23 x i8] c"Error division by zero\00"
+@.var3 = constant [85 x i8] c"Definiteness of purpose is the starting point of all achievement. - W. Clement Stone\00"
+
+define void @printi(i32) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.int_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i32 %0)
+    ret void
+}
+
+define void @print(i8*) {
+    %spec_ptr = getelementptr [4 x i8], [4 x i8]* @.str_specifier, i32 0, i32 0
+    call i32 (i8*, ...) @printf(i8* %spec_ptr, i8* %0)
+    ret void
+}
+
+
+define void @divByZero() {
+    %spec_ptr = getelementptr [23 x i8], [23 x i8]* @.divide_by_zero_error, i32 0, i32 0
+    call void (i8*) @print(i8* %spec_ptr)
+    %exitCode = add i32 0, 0
+    call void @exit(i32 %exitCode)
+    ret void
+}
+
+define void @var0Func(i32)
+{
+    %myArr_0 = alloca [50 x i32]
+    %var1 = add i32 %0, 0
+    %var2 = icmp eq i32 %var1, 1
+    br i1 %var2, label %label_28, label %label_32
+    label_28:
+        %var4 = getelementptr [85 x i8] , [85 x i8]* @.var3, i32 0, i32 0
+        call void (i8*) @print(i8* %var4)
+        br label %label_32
+    label_32:
+        ret void
+}
+
+define void @var5maxTestsTestPassRelopToFunc()
+{
+    %myArr_1 = alloca [50 x i32]
+        %var6 = add i32 0, 0
+        %var7 = icmp eq i32 %var6, 1
+        br i1 %var7, label %label_42, label %label_44
+    label_42:
+        br label %label_46
+    label_44:
+        br label %label_46
+    label_46:
+        %var8 = phi i32 [1, %label_42], [0, %label_44]
+        call void @var0Func(i32 %var8)
+        %var10 = add i32 1, 0
+        %var11 = icmp eq i32 %var10, 1
+        br i1 %var11, label %label_52, label %label_54
+    label_52:
+        br label %label_56
+    label_54:
+        br label %label_56
+    label_56:
+        %var12 = phi i32 [1, %label_52], [0, %label_54]
+        call void @var0Func(i32 %var12)
+        ret void
+}
+
+define void @main()
+{
+    %myArr_2 = alloca [50 x i32]
+        call void @var5maxTestsTestPassRelopToFunc()
+        ret void
+}
+

@@ -1,23 +1,14 @@
-int epicBool(bool a, bool d, bool c) {
-    print("EPIC BOOL");
-    if (a) {
-        return 1;
-    }
-    if (d) {
-        return 2;
-    }
-    else {
-        if (c) {
-            return 3;
-        }
-    }
-
-    if (a or d) {
-        return 0-1;
-    }
+//errorUndef.
+int f1() {
+    int x;
+    //return f1;
+    return 8;
 }
 
-void main ()
-{
-    printi(epicBool(true, true, 1 > 2));
+void main() {
+    //int f1;
+    //int f1 = 5;
+    f1=5;
+    printi(8);
+    return;
 }
